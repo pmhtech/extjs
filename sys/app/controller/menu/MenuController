@@ -1,0 +1,13 @@
+Ext.define('SysApp.controller.menu.MenuController',{
+    extend : 'Ext.app.Controller',
+    statics : {
+        createMainMenu : function(){
+
+        },
+        createSubMenu : function(){
+
+
+        }
+
+    }
+});

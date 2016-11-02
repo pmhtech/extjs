@@ -1,0 +1,3 @@
+Ext.define('SysApp.controller.menu.SubMenuController',{
+   extend : 'Ext.app.Controller'
+});
