@@ -38,7 +38,8 @@ Ext.define('Ext.util.Event', function() {
             observable = me.observable,
             eventName = me.name,
             listeners, listener, priority, isNegativePriority, highestNegativePriorityIndex,
-            hasNegativePriorityIndex, length, index, i, listenerPriority;
+            hasNegativePriorityIndex, length, index, i, listenerPriority,
+            managedListeners;
 
         //<debug>
         if (scope && !Ext._namedScopes[scope] && (typeof fn === 'string') && (typeof scope[fn] !== 'function')) {
@@ -114,6 +115,20 @@ Ext.define('Ext.util.Event', function() {
                 );
             }
 
+            // If the listener was passed with a manager, add it to the manager's list.
+            if (manager) {
+                // if scope is an observable, the listener will be automatically managed
+                // this eliminates the need to call mon() in a majority of cases
+                managedListeners = manager.managedListeners || (manager.managedListeners = []);
+                managedListeners.push({
+                    item: me.observable,
+                    ename: (options && options.managedName) || me.name,
+                    fn: fn,
+                    scope: scope,
+                    options: options
+                });
+            }
+
             added = true;
         }
 
@@ -147,6 +162,10 @@ Ext.define('Ext.util.Event', function() {
             }
             if (o.target) {
                 handler = me.createTargeted(handler, listener, o, scope, wrapped);
+                wrapped = true;
+            }
+            if (o.onFrame) {
+                handler = me.createAnimFrame(handler, listener, o, scope, wrapped);
                 wrapped = true;
             }
             if (o.delay) {
@@ -197,83 +216,91 @@ Ext.define('Ext.util.Event', function() {
             removed = false,
             observable = me.observable,
             eventName = me.name,
-            listener, highestNegativePriorityIndex, options,
-            k, manager, managedListeners, managedListener, i;
+            listener, options, manager, managedListeners, managedListener, i;
 
-        index = index || me.findListener(fn, scope);
+        index = index != null ? index : me.findListener(fn, scope);
 
         if (index !== -1) {
             listener = me.listeners[index];
-            options = listener.o;
-            highestNegativePriorityIndex = me._highestNegativePriorityIndex;
 
             if (me.firing) {
                 me.listeners = me.listeners.slice(0);
             }
 
-            // cancel and remove a buffered handler that hasn't fired yet.
-            // When the buffered listener is invoked, it must check whether
-            // it still has a task.
-            if (listener.task) {
-                listener.task.cancel();
-                delete listener.task;
-            }
-
-            // cancel and remove all delayed handlers that haven't fired yet
-            k = listener.tasks && listener.tasks.length;
-            if (k) {
-                while (k--) {
-                    listener.tasks[k].cancel();
-                }
-                delete listener.tasks;
-            }
-
-            // Remove this listener from the listeners array
-            // We can use splice directly. The IE8 bug which Ext.Array works around only affects *insertion*
+            // Remove this listener from the listeners array. We can use splice directly here.
+            // The IE8 bug which Ext.Array works around only affects *insertion*
             // http://social.msdn.microsoft.com/Forums/en-US/iewebdevelopment/thread/6e946d03-e09f-4b22-a4dd-cd5e276bf05a/
             me.listeners.splice(index, 1);
 
-            manager = listener.manager;
-            if (manager) {
-                // If this is a managed listener we need to remove it from the manager's
-                // managedListeners array.  This ensures that if we listen using mon
-                // and then remove without using mun, the managedListeners array is updated
-                // accordingly, for example
-                //
-                //     manager.on(target, 'foo', fn);
-                //
-                //     target.un('foo', fn);
-                managedListeners = manager.managedListeners;
-                if (managedListeners) {
-                    for (i = managedListeners.length; i--;) {
-                        managedListener = managedListeners[i];
-                        if (managedListener.item === me.observable && managedListener.ename === eventName &&
-                                managedListener.fn === fn && managedListener.scope === scope) {
-                            managedListeners.splice(i, 1);
-                        }
-                    }
-                }
-            }
-
             // if the listeners array contains negative priority listeners, adjust the
             // internal index if needed.
-            if (highestNegativePriorityIndex) {
-                if (index < highestNegativePriorityIndex) {
-                    me._highestNegativePriorityIndex --;
-                } else if (index === highestNegativePriorityIndex && index === me.listeners.length) {
+            if (me._highestNegativePriorityIndex) {
+                if (index < me._highestNegativePriorityIndex) {
+                    me._highestNegativePriorityIndex--;
+                }
+                else if (index === me._highestNegativePriorityIndex && index === me.listeners.length) {
                     delete me._highestNegativePriorityIndex;
                 }
             }
 
-            if (observable.isElement) {
-                observable._getPublisher(eventName).unsubscribe(
-                    observable,
-                    eventName,
-                    options.delegated !== false,
-                    options.capture
-                );
-            }
+            if (listener) {
+                options = listener.o;
+    
+                // cancel and remove a buffered handler that hasn't fired yet.
+                // When the buffered listener is invoked, it must check whether
+                // it still has a task.
+                if (listener.task) {
+                    listener.task.cancel();
+                    delete listener.task;
+                }
+    
+                // cancel and remove all delayed handlers that haven't fired yet
+                i = listener.tasks && listener.tasks.length;
 
+                if (i) {
+                    while (i--) {
+                        listener.tasks[i].cancel();
+                    }
+
+                    delete listener.tasks;
+                }
+    
+                manager = listener.manager;
+
+                if (manager) {
+                    // If this is a managed listener we need to remove it from the manager's
+                    // managedListeners array.  This ensures that if we listen using mon
+                    // and then remove without using mun, the managedListeners array is updated
+                    // accordingly, for example
+                    //
+                    //     manager.on(target, 'foo', fn);
+                    //
+                    //     target.un('foo', fn);
+                    managedListeners = manager.managedListeners;
+
+                    if (managedListeners) {
+                        for (i = managedListeners.length; i--;) {
+                            managedListener = managedListeners[i];
+
+                            if (managedListener.item === me.observable &&
+                                managedListener.ename === eventName &&
+                                managedListener.fn === fn && managedListener.scope === scope) {
+                                managedListeners.splice(i, 1);
+                            }
+                        }
+                    }
+                }
+    
+                if (observable.isElement) {
+                    observable._getPublisher(eventName).unsubscribe(
+                        observable,
+                        eventName,
+                        options.delegated !== false,
+                        options.capture
+                    );
+                }
+            }
+            
             removed = true;
         }
 
@@ -327,11 +354,21 @@ Ext.define('Ext.util.Event', function() {
             me.firing = true;
             args = arguments.length ? arraySlice.call(arguments, 0) : [];
             len = args.length;
+            
             if (isElement) {
                 e = args[0];
             }
+
             for (i = 0; i < count; i++) {
                 listener = listeners[i];
+                
+                // Listener may be undefined if one of the previous listeners
+                // destroyed the observable that was listening to these events.
+                // We'd be still in the middle of the loop here, unawares.
+                if (!listener) {
+                    continue;
+                }
+                
                 options = listener.o;
 
                 if (isElement) {
@@ -412,10 +449,39 @@ Ext.define('Ext.util.Event', function() {
                 // We don't want to keep closure and scope on the Event prototype!
                 fireInfo.fn = fireInfo.scope = null;
                 
-                if (fireFn.apply(fireScope, firingArgs) === false) {
+                // If the scope is already destroyed, we absolutely cannot deliver events to it.
+                // We also need to clean up the listener to avoid it hanging around forever
+                // like a zombie. Scope can be null/undefined, that's normal.
+                if (fireScope && fireScope.destroyed) {
+                    //<debug>
+                    // DON'T raise errors if the destroyed scope is an Ext.container.Monitor!
+                    // It is to be deprecated and removed shortly.
+                    if (fireScope.$className !== 'Ext.container.Monitor') {
+                        Ext.raise({
+                            msg: 'Attempting to fire "' + me.name + '" event on destroyed ' +
+                                  (fireScope.$className || 'object') + ' instance with id: ' +
+                                  (fireScope.id || 'unknown'),
+                            instance: fireScope
+                        });
+                    }
+                    //</debug>
+                    
+                    me.removeListener(fireFn, fireScope, i);
+                    
+                    fireFn = null;
+                }
+                
+                // N.B. This is where actual listener code is called. Step boldly into!
+                if (fireFn && fireFn.apply(fireScope, firingArgs) === false) {
                     Ext.EventObject = null;
                     
                     return (me.firing = false);
+                }
+
+                // We should remove the last item here to avoid future listeners
+                // in the Array to inherit these options by mistake
+                if (options) {
+                    args.length--;
                 }
 
                 if (chained) {
@@ -505,6 +571,21 @@ Ext.define('Ext.util.Event', function() {
         return fireArgs;
     },
 
+    createAnimFrame: function (handler, listener, o, scope, wrapped) {
+        var fireInfo;
+
+        if (!wrapped) {
+            fireInfo = listener.ev.getFireInfo(listener, true);
+            handler = fireInfo.fn;
+            scope = fireInfo.scope;
+
+            // We don't want to keep closure and scope references on the Event prototype!
+            fireInfo.fn = fireInfo.scope = null;
+        }
+
+        return Ext.Function.createAnimationFrame(handler, scope, o.args);
+    },
+
     createTargeted: function (handler, listener, o, scope, wrapped) {
         return function(){
             if (o.target === arguments[0]) {
@@ -528,7 +609,7 @@ Ext.define('Ext.util.Event', function() {
         listener.task = new Ext.util.DelayedTask();
         return function() {
             // If the listener is removed during the event call, the listener stays in the
-            // list of listenes to be invoked in the fire method, but the task is deleted
+            // list of listeners to be invoked in the fire method, but the task is deleted
             // So if we get here with no task, it's because the listener has been removed.
             if (listener.task) {
                 var fireInfo;

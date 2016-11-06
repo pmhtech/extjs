@@ -16,11 +16,32 @@ Ext.define('Ext.rtl.scroll.Scroller', {
     updateRtl: Ext.emptyFn,
 
     privates: {
-        updateSpacerXY: function(pos) {
+        convertX: function(x) {
+            var element;
+
             if (this.getRtl()) {
-                pos.x = -pos.x;
+                element = this.getElement();
+
+                if (element) {
+                    x = element.rtlNormalizeScrollLeft(x);
+                }
             }
-            this.callOverridden([pos]);
+
+            return x;
+        },
+
+        getElementScroll: function(element) {
+            return this.getRtl() ? element.rtlGetScroll() : element.getScroll();
+        },
+
+        // rtl hook
+        translateSpacer: function(x, y) {
+            if (this.getRtl()) {
+                this.getSpacer().dom.style.right = (x - 1) + 'px';
+                this.callParent([null, y]);
+            } else {
+                this.callParent([x, y]);
+            }
         }
     }
 });

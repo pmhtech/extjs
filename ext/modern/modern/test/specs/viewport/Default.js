@@ -173,85 +173,21 @@ describe("Ext.viewport.Default", function() {
             it("should fire an 'orientationchange' event and pass the new orientation, width and height as arguments, if the orientation did change", function(){
                 var newOrientation = viewport.LANDSCAPE;
 
-                viewport.setWidth(100);
-                viewport.setHeight(200);
                 viewport.setOrientation(viewport.PORTRAIT);
 
                 spyOn(viewport, 'determineOrientation').andReturn(newOrientation);
                 spyOn(viewport, 'fireEvent');
 
+                viewport.updateSize = function() {
+                    this.windowWidth = 100;
+                    this.windowHeight = 200;
+
+                    return this;
+                };
                 viewport.onOrientationChange();
 
                 expect(viewport.fireEvent).toHaveBeenCalledWith('orientationchange', viewport, newOrientation, 100, 200);
             });
         });
     });
-    
-    
-    describe("scrolling", function(){
-        var viewport,
-            viewportScroller,
-            DomScroller = Ext.scroll.DomScroller,
-            viewportScrollCount = 0,
-            documentScrollCount = 0;
-
-        beforeEach(function() {
-            // Gets destroyed by viewports, so restore to initial conditions for tests
-            if (!DomScroller.document) {
-                DomScroller.document = new DomScroller({
-                    x: true,
-                    y: true,
-                    element: document.documentElement
-                });
-            }
-
-            document.documentElement.style.height = '500px';
-            document.documentElement.style.overflow = 'auto';
-
-            // This must not fire.
-            // We can't use a single global listener because different
-            // event sources are used on different platforms.
-            // We are checking that the global instance is destroyed and fires
-            // no events.
-            DomScroller.document.on('scroll', function() {
-                documentScrollCount++;
-            });
-            viewport = new Viewport({
-                layout: 'default',
-                scrollable: true,
-                items: [{
-                    xtype: 'component',
-                    height: 5000,
-                    width: 100
-                }]
-            });
-            viewportScroller = viewport.getScrollable();
-            viewportScroller.on({
-                scroll: function() {
-                    viewportScrollCount++;
-                }
-            });
-        });
-
-        afterEach(function(){
-            viewport.destroy();
-        });
-
-        it('should only a fire scroll event through the viewport. The global dom scroller must be destroyed', function() {
-            viewportScroller.scrollTo(null, 500);
-
-            // Wait for potentially asynchronous scroll events to fire.
-            waits(100);
-
-            runs(function() {
-                expect(DomScroller.document).toBeFalsy();
-
-                expect(viewportScrollCount).toBe(1);
-
-                // We must have received no scroll events from the document scroller
-                expect(documentScrollCount).toBe(0);
-            });
-        });
-    });
-
 });

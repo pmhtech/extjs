@@ -5,7 +5,7 @@ Ext.define('SysApp.controller.AjaxUtil', {
 
             var url = SysApp.controller.ajax[packageName].getUrl(httpMethod,paramObj,config);
             Ext.Ajax.request({
-                url : PmhTech.serverUrl+ url,
+                url : url,
                 mode :httpMethod ,
                 params : {
                     dataJson :Ext.encode(paramObj)
@@ -14,7 +14,6 @@ Ext.define('SysApp.controller.AjaxUtil', {
                 scope : Ext.isEmpty(scope) ? null : scope,
                 failure : function(response){
 
-                    debugger;
                     console.log('server-side failure with status code ' + response.status);
                 }
             });

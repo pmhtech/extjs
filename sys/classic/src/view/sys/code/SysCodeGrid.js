@@ -1,39 +1,27 @@
-Ext.define('SysApp.view.sys.code.SysCodeGrid',{
-    extend : 'Ext.grid.Panel',
-    alias : 'widget.sys_code_grid',
-    controller : 'sys_code_grid',
-    tbar: [,{
-        xtype: 'button',
-        itemId: 'insertBtn',
-        text: '조회',
-        httpMethod : 'GET',
-        handler : 'actionSysCode'
-    },{
-        xtype: 'button',
-        itemId: 'insertBtn',
-        text: '추가',
-        handler : 'onBtnInsertHandler'
-    },{
-        xtype: 'button',
-        itemId: 'updateBtn',
-        httpMethod : 'PUT',
-        handler : 'actionSysCode',
-        text: '수정'
-    },{
-        xtype: 'button',
-        itemId: 'deleteBtn',
-        text: '삭제',
-        httpMethod : 'DELETE',
-        handler : 'actionSysCode'
+Ext.define('SysApp.view.sys.code.SysCodeGrid', {
+    extend: 'PmhTech.grid.Base',
+    alias: 'widget.sys-code-grid',
+    controller: 'sys-code-grid',
+    tbar: [{xtype: 'tbfill'}, {
+        xtype: 'pmhtech-button-search',
+        handler: 'onBtnSearch'
+    }, {
+        xtype: 'pmhtech-button-insert',
+        handler: 'onBtnInsert'
+    }, {
+        xtype: 'pmhtech-button-update',
+        handler: 'onBtnUpdate'
+    }, {
+        xtype: 'pmhtech-button-delete',
+        handler: 'onBtnDelete'
     }],
-    store : Ext.create('Ext.data.Store',{
-       fields : ['COMPANY','PRE_CD','CODE','CODE_NM','USE_YN','MEMO']
-    }),
-    columns : [
-        { text : '회사코드', dataIndex : 'COMPANY'},
-        { text : '회사코드', dataIndex : 'PRE_CD'},
-        { text : '회사코드', dataIndex : 'CODE'},
-        { text : '회사코드', dataIndex : 'CODE_NM'},
-        { text : '회사코드', dataIndex : 'USE_YN'}
+
+    storeProps: {
+        fields: ['COMPANY', 'PRE_CD', 'CODE', 'CODE_NM', 'USE_YN', 'MEMO']
+    },
+    columns: [
+        { text: '회사코드', dataIndex: 'COMPANY'},
+        { text: '코드그룹', dataIndex: 'PRE_CD' },
+        { text: '코드명', dataIndex: 'CODE_NM' }
     ]
 });

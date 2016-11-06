@@ -1,26 +1,13 @@
 Ext.define('SysApp.view.global.GlobalMain', {
     extend: 'Ext.container.Viewport',
-    alias: 'widget.global_main',
-    requires: [
-        'SysApp.view.global.north.GlobalNorth',
-        'SysApp.view.global.center.GlobalCenter',
-        'SysApp.view.global.west.GlobalWest',
-
-        'Ext.layout.container.Border',
-        'Ext.resizer.Splitter',
-        'Ext.panel.Panel',
-        'SysApp.view.dashboard.SiteMap',
-        'SysApp.view.sys.code.SysCode',
-        'SysApp.view.menu.MenuMgt'
-    ],
+    alias: 'widget.global-main',
     layout: {
         type: 'border'
     },
     style: 'background-color : #FEFEFE',
     border: false,
-    items: [
-        {
-            xtype: 'global_north',
+    items: [{
+            xtype: 'global-north',
             region: 'north',
             layout : {
                 type : 'hbox',
@@ -29,15 +16,17 @@ Ext.define('SysApp.view.global.GlobalMain', {
             height: 22
         },
         {
-            xtype: 'global_west',
+            xtype: 'global-west',
             region: 'west',
-            width: 150
-        }, {
+            collapsible: true,
+            width: 220,
+            maxHeight : 500
+        },{
             xtype: 'container',
             layout: 'fit',
             region: 'center',
             items: [{
-                xtype: 'global_center'
+                xtype: 'global-center'
             }]
         }
     ]

@@ -189,10 +189,17 @@ Ext.Array = (function() {
     },
 
     spliceSim = function (array, index, removeCount) {
-        var pos = fixArrayIndex(array, index),
-            removed = array.slice(index, fixArrayIndex(array, pos+removeCount));
+        var len = arguments.length,
+            pos = fixArrayIndex(array, index),
+            removed;
 
-        if (arguments.length < 4) {
+        if (len < 3) {
+            removeCount = array.length - pos;
+        }
+
+        removed = array.slice(index, fixArrayIndex(array, pos+removeCount));
+
+        if (len < 4) {
             replaceSim(array, pos, removeCount);
         } else {
             replaceSim(array, pos, removeCount, slice.call(arguments, 3));
@@ -529,8 +536,8 @@ Ext.Array = (function() {
                 'Ext.Array.map must have a callback function passed as second argument.');
             //</debug>
 
-            var results = [],
-                len = array.length,
+            var len = array.length,
+                results = new Array(len),
                 i;
 
             for (i = 0; i < len; i++) {
@@ -739,7 +746,7 @@ Ext.Array = (function() {
          * @param {Array} array The array to search
          * @param {Function} fn The selection function to execute for each item.
          * @param {Mixed} fn.item The array item.
-         * @param {String} fn.index The index of the array item.
+         * @param {Number} fn.index The index of the array item.
          * @param {Object} scope (optional) The scope (<code>this</code> reference) in which the
          * function is executed. Defaults to the array
          * @return {Object} The first item in the array which returned true from the selection

@@ -1,7 +1,7 @@
 Ext.define('SysApp.view.sys.code.SysCodeWindow', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.sys_code_window',
-    controller: 'sys_code_window',
+    alias: 'widget.sys-code-window',
+    controller: 'sys-code-window',
     modal : true,
     width : 400,
     closable: true,

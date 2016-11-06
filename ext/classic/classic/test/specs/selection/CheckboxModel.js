@@ -1,12 +1,21 @@
+/* global Ext, expect, jasmine, xit, spyOn */
+
 describe('Ext.selection.CheckboxModel', function() {
-    var grid, view, store, checkboxModel, data,
+    var grid, column, view, store, checkboxModel, data,
         donRec, evanRec, nigeRec,
         synchronousLoad = true,
         proxyStoreLoad = Ext.data.ProxyStore.prototype.load,
-        loadStore;
+        loadStore = function() {
+            proxyStoreLoad.apply(this, arguments);
+            if (synchronousLoad) {
+                this.flushLoad.apply(this, arguments);
+            }
+            return this;
+        };
 
     function makeGrid(selectionCfg, cfg) {
         checkboxModel = new Ext.selection.CheckboxModel(selectionCfg);
+
         grid = new Ext.grid.Panel(Ext.apply({
             store: store,
             columns: [
@@ -18,18 +27,14 @@ describe('Ext.selection.CheckboxModel', function() {
             height: 300,
             renderTo: Ext.getBody()
         }, cfg));
+        
         view = grid.view;
+        column = checkboxModel.column;
     }
 
     beforeEach(function() {
         // Override so that we can control asynchronous loading
-        loadStore = Ext.data.ProxyStore.prototype.load = function() {
-            proxyStoreLoad.apply(this, arguments);
-            if (synchronousLoad) {
-                this.flushLoad.apply(this, arguments);
-            }
-            return this;
-        };
+        Ext.data.ProxyStore.prototype.load = loadStore;
 
         Ext.define('spec.CheckboxModel', {
             extend: 'Ext.data.Model',
@@ -63,20 +68,37 @@ describe('Ext.selection.CheckboxModel', function() {
         Ext.data.ProxyStore.prototype.load = proxyStoreLoad;
 
         donRec = evanRec = nigeRec = data = null;
-        grid.destroy();
-        checkboxModel.destroy();
-        store.destroy();
+        Ext.destroy(grid, checkboxModel, store);
         Ext.undefine('spec.CheckboxModel');
         Ext.data.Model.schema.clear();
+        
+        grid = column = view = store = checkboxModel = null;
     });
 
     function expectHeaderChecked(checked) {
-        var headerCheckbox = checkboxModel.column;
-        expect(headerCheckbox.hasCls(checkboxModel.checkerOnCls)).toBe(checked);
+        var col = checkboxModel.column;
+        
+        expect(col.hasCls(checkboxModel.checkerOnCls)).toBe(checked);
+        
+        if (col.useAriaElements) {
+            expect(col).toHaveAttr('role', 'columnheader');
+            
+            if (col.headerCheckbox) {
+                expect(col).toHaveAttr('aria-describedby', col.id + '-header-description' +
+                                            (!checked ? '-not' : '') + '-selected');
+            }
+            else {
+                expect(col).not.toHaveAttr('aria-describedby');
+            }
+        }
+        else {
+            expect(col).toHaveAttr('role', 'presentation');
+            expect(col).not.toHaveAttr('aria-describedby');
+        }
     }
 
     function clickOnHeaderCheckbox() {
-        jasmine.fireMouseEvent(checkboxModel.column.el.dom, 'click', 10, 10);
+        jasmine.fireMouseEvent(checkboxModel.column, 'click', 10, 10);
     }
 
     function clickCheckbox(rowIdx) {
@@ -84,7 +106,6 @@ describe('Ext.selection.CheckboxModel', function() {
             row: rowIdx,
             column: 0
         });
-        view.focus();
         jasmine.fireMouseEvent(cell.down(checkboxModel.checkSelector), 'click');
     }
 
@@ -93,7 +114,6 @@ describe('Ext.selection.CheckboxModel', function() {
             row: rowIdx,
             column: colIdx
         });
-        view.focus();
         jasmine.fireMouseEvent(cell, 'click');
     }
 
@@ -105,6 +125,22 @@ describe('Ext.selection.CheckboxModel', function() {
         jasmine.fireKeyEvent(cell.down(checkboxModel.checkSelector), 'keydown', keyCode, shiftKey, ctrlKey, altKey);
     }
 
+    describe("grid reconfigure", function() {
+        it("should be able to change the columns without hiding the checkcolumn", function() {
+            var store2 = new Ext.data.Store({
+                fields: ['foo'],
+                data: [{
+                    foo: 'bar'
+                }]
+            });
+            makeGrid();
+
+            grid.reconfigure(store2, [{dataIndex: 'foo'}]);
+
+            expect(grid.view.body.el.down('.x-grid-checkcolumn')).not.toBeNull();
+        });
+    });
+
     describe("column insertion", function() {
         var cols;
 
@@ -112,7 +148,7 @@ describe('Ext.selection.CheckboxModel', function() {
             cols = null;
         });
 
-        it("should ignore any xtype defaults and insert a gridcolumn", function() {
+        it("should ignore any xtype defaults and insert a checkcolumn", function() {
             makeGrid(null, {
                 columns: {
                     defaults: {
@@ -127,8 +163,7 @@ describe('Ext.selection.CheckboxModel', function() {
                 }
             });
             var allCols = grid.getColumnManager().getColumns();
-            expect(allCols[0].$className).toBe('Ext.grid.column.Column');
-            expect(allCols[0].isCheckerHd).toBe(true);
+            expect(allCols[0].$className).toBe('Ext.grid.column.Check');
         });
 
         describe("without locking", function() {
@@ -139,7 +174,7 @@ describe('Ext.selection.CheckboxModel', function() {
                     dataIndex: 'name'
                 }, {
                     dataIndex: 'name'
-                }]
+                }];
             });
 
             it("should insert the column at the start by default", function() {
@@ -150,8 +185,8 @@ describe('Ext.selection.CheckboxModel', function() {
                 var allCols = grid.getColumnManager().getColumns(),
                     col = allCols[0];
 
-                expect(col.isCheckerHd).toBe(true);
-                expect(grid.query('[isCheckerHd]').length).toBe(1);
+                expect(col.isCheckColumn).toBe(true);
+                expect(grid.query('checkcolumn').length).toBe(1);
                 expect(allCols.length).toBe(4);
             });
 
@@ -165,8 +200,8 @@ describe('Ext.selection.CheckboxModel', function() {
                 var allCols = grid.getColumnManager().getColumns(),
                     col = allCols[0];
 
-                expect(col.isCheckerHd).toBe(true);
-                expect(grid.query('[isCheckerHd]').length).toBe(1);
+                expect(col.isCheckColumn).toBe(true);
+                expect(grid.query('checkcolumn').length).toBe(1);
                 expect(allCols.length).toBe(4);
             });
 
@@ -180,8 +215,8 @@ describe('Ext.selection.CheckboxModel', function() {
                 var allCols = grid.getColumnManager().getColumns(),
                     col = allCols[3];
 
-                expect(col.isCheckerHd).toBe(true);
-                expect(grid.query('[isCheckerHd]').length).toBe(1);
+                expect(col.isCheckColumn).toBe(true);
+                expect(grid.query('checkcolumn').length).toBe(1);
                 expect(allCols.length).toBe(4);
             });
 
@@ -195,8 +230,8 @@ describe('Ext.selection.CheckboxModel', function() {
                 var allCols = grid.getColumnManager().getColumns(),
                     col = allCols[1];
 
-                expect(col.isCheckerHd).toBe(true);
-                expect(grid.query('[isCheckerHd]').length).toBe(1);
+                expect(col.isCheckColumn).toBe(true);
+                expect(grid.query('checkcolumn').length).toBe(1);
                 expect(allCols.length).toBe(4);
             });
         });
@@ -272,9 +307,9 @@ describe('Ext.selection.CheckboxModel', function() {
                 var allCols = grid.getColumnManager().getColumns(),
                     col = allCols[0];
 
-                expect(col.isCheckerHd).toBe(true);
-                expect(grid.query('[isCheckerHd]').length).toBe(1);
-                expect(grid.normalGrid.query('[isCheckerHd]').length).toBe(0);
+                expect(col.isCheckColumn).toBe(true);
+                expect(grid.query('checkcolumn').length).toBe(1);
+                expect(grid.normalGrid.query('checkcolumn').length).toBe(0);
                 expect(allCols.length).toBe(7);
             });
 
@@ -309,9 +344,9 @@ describe('Ext.selection.CheckboxModel', function() {
                 var allCols = grid.getColumnManager().getColumns(),
                     col = allCols[0];
 
-                expect(col.isCheckerHd).toBe(true);
-                expect(grid.query('[isCheckerHd]').length).toBe(1);
-                expect(grid.normalGrid.query('[isCheckerHd]').length).toBe(0);
+                expect(col.isCheckColumn).toBe(true);
+                expect(grid.query('checkcolumn').length).toBe(1);
+                expect(grid.normalGrid.query('checkcolumn').length).toBe(0);
                 expect(allCols.length).toBe(7);
             });
 
@@ -325,9 +360,9 @@ describe('Ext.selection.CheckboxModel', function() {
                 var allCols = grid.getColumnManager().getColumns(),
                     col = allCols[3];
 
-                expect(col.isCheckerHd).toBe(true);
-                expect(grid.query('[isCheckerHd]').length).toBe(1);
-                expect(grid.normalGrid.query('[isCheckerHd]').length).toBe(0);
+                expect(col.isCheckColumn).toBe(true);
+                expect(grid.query('checkcolumn').length).toBe(1);
+                expect(grid.normalGrid.query('checkcolumn').length).toBe(0);
                 expect(allCols.length).toBe(7);
             });
 
@@ -341,9 +376,9 @@ describe('Ext.selection.CheckboxModel', function() {
                 var allCols = grid.getColumnManager().getColumns(),
                     col = allCols[1];
 
-                expect(col.isCheckerHd).toBe(true);
-                expect(grid.query('[isCheckerHd]').length).toBe(1);
-                expect(grid.normalGrid.query('[isCheckerHd]').length).toBe(0);
+                expect(col.isCheckColumn).toBe(true);
+                expect(grid.query('checkcolumn').length).toBe(1);
+                expect(grid.normalGrid.query('checkcolumn').length).toBe(0);
                 expect(allCols.length).toBe(7);
             });
         });
@@ -354,9 +389,7 @@ describe('Ext.selection.CheckboxModel', function() {
             makeGrid();
         });
         describe('by clicking', function() {
-            // for some reason this spec fails in IE10+, although the functionality works
-            // when tested manually
-            (Ext.isIE ? xit : it)('should select unselected records on click, and deselect selected records on click', function() {
+            it('should select unselected records on click, and deselect selected records on click', function() {
                 grid.focus();
 
                 // Wait for the asynchronous focus processing to occur for IE
@@ -609,7 +642,7 @@ describe('Ext.selection.CheckboxModel', function() {
                         mode: 'SINGLE',
                         showHeaderCheckbox: true
                     });
-                }).toThrow('The header checkbox is not supported for SINGLE mode selection models.')
+                }).toThrow('The header checkbox is not supported for SINGLE mode selection models.');
             });
         });
 
@@ -896,125 +929,585 @@ describe('Ext.selection.CheckboxModel', function() {
         });
 
         describe("multi", function() {
-            beforeEach(function() {
-                makeGrid({
-                    mode: 'MULTI'
-                });
-            });
-
-            describe("selection when clicking on the checkbox", function() {
-                describe("on a selected record", function() {
-                    it("should deselect when there are no other selections", function() {
-                        checkboxModel.select(donRec);
-                        makeSpies();
-                        clickCheckbox(0);
-                        expect(checkboxModel.isSelected(donRec)).toBe(false);
-                        expectChangeSpy([]);
-                        expectDeselectSpy(donRec);
-                        expect(selectSpy).not.toHaveBeenCalled();
-                    });
-
-                    it("should deselect and keep existing selections", function() {
-                        checkboxModel.selectAll();
-                        makeSpies();
-                        clickCheckbox(0);
-                        expect(checkboxModel.isSelected(donRec)).toBe(false);
-                        expectChangeSpy([evanRec, nigeRec]);
-                        expectDeselectSpy(donRec);
-                        expect(selectSpy).not.toHaveBeenCalled();
-                    });
-                });
-
-                describe("on an unselected record", function() {
-                    it("should select the record when there are no other selections", function() {
-                        makeSpies();
-                        clickCheckbox(0);
-                        expect(checkboxModel.isSelected(donRec)).toBe(true);
-                        expectChangeSpy([donRec]);
-                        expectSelectSpy(donRec);
-                        expect(deselectSpy).not.toHaveBeenCalled();
-                    });
-
-                    it("should select and keep existing selections", function() {
-                        checkboxModel.select([evanRec, nigeRec]);
-                        makeSpies();
-                        clickCheckbox(0);
-                        expect(checkboxModel.isSelected(donRec)).toBe(true);
-                        expectChangeSpy([evanRec, nigeRec, donRec]);
-                        expectSelectSpy(donRec);
-                        expect(deselectSpy).not.toHaveBeenCalled();
-                    });
-                });
-            });
-
-            describe("with shiftKey", function() {
-                var philRec;
-
+            describe("with checkOnly: false", function() {
                 beforeEach(function() {
-                    philRec = store.add({
-                        id: 4,
-                        name: 'Phil'
-                    })[0];
+                    makeGrid({
+                        mode: 'MULTI',
+                        checkOnly: false
+                    });
                 });
+    
+                describe("selection when clicking on the checkbox", function() {
+                    describe("on a selected record", function() {
+                        it("should deselect when there are no other selections", function() {
+                            checkboxModel.select(donRec);
+                            makeSpies();
+                            clickCheckbox(0);
+                            expect(checkboxModel.isSelected(donRec)).toBe(false);
+                            expectChangeSpy([]);
+                            expectDeselectSpy(donRec);
+                            expect(selectSpy).not.toHaveBeenCalled();
+                        });
+    
+                        it("should deselect and keep existing selections", function() {
+                            checkboxModel.selectAll();
+                            makeSpies();
+                            clickCheckbox(0);
+                            expect(checkboxModel.isSelected(donRec)).toBe(false);
+                            expectChangeSpy([nigeRec, evanRec]);
+                            expectDeselectSpy(donRec);
+                            expect(selectSpy).not.toHaveBeenCalled();
+                        });
+                    });
+    
+                    describe("on an unselected record", function() {
+                        it("should select the record when there are no other selections", function() {
+                            makeSpies();
+                            clickCheckbox(0);
+                            expect(checkboxModel.isSelected(donRec)).toBe(true);
+                            expectChangeSpy([donRec]);
+                            expectSelectSpy(donRec);
+                            expect(deselectSpy).not.toHaveBeenCalled();
+                        });
+    
+                        it("should select and keep existing selections", function() {
+                            checkboxModel.select([evanRec, nigeRec]);
+                            makeSpies();
+                            clickCheckbox(0);
+                            expect(checkboxModel.isSelected(donRec)).toBe(true);
+                            expectChangeSpy([evanRec, nigeRec, donRec]);
+                            expectSelectSpy(donRec);
+                            expect(deselectSpy).not.toHaveBeenCalled();
+                        });
+                    });
+                });
+    
+                describe("with shiftKey", function() {
+                    var philRec;
+    
+                    beforeEach(function() {
+                        philRec = store.add({
+                            id: 4,
+                            name: 'Phil'
+                        })[0];
+                    });
+    
+                    it("should deselect everything past & including the clicked item", function() {
+                        checkboxModel.selectAll();
+                        var view = grid.getView();
+    
+                        clickCell(0, 1);
+                        spyOn(view, 'processUIEvent').andCallFake(function(e) {
+                            if (e.type === 'click') {
+                                e.shiftKey = true;
+                            }
+                            Ext.grid.View.prototype.processUIEvent.apply(view, arguments);
+                        });
+    
+                        clickCell(2, 1);
+                        clickCell(1, 1);
+                        expect(checkboxModel.isSelected(donRec)).toBe(true);
+                        expect(checkboxModel.isSelected(evanRec)).toBe(true);
+                        expect(checkboxModel.isSelected(nigeRec)).toBe(false);
+                        expect(checkboxModel.isSelected(philRec)).toBe(false);
+                    });
+                });
+            });
 
-                it("should deselect everything past & including the clicked item", function() {
-                    checkboxModel.selectAll();
-                    var view = grid.getView(),
-                        cell;
-
-                    clickCell(0, 1);
-                    spyOn(view, 'processUIEvent').andCallFake(function(e) {
-                        if (e.type === 'click') {
-                            e.shiftKey = true;
-                        }
-                        Ext.grid.View.prototype.processUIEvent.apply(view, arguments);
+            describe("with checkOnly: true", function() {
+                beforeEach(function() {
+                    makeGrid({
+                        mode: 'MULTI',
+                        checkOnly: true
+                    });
+                });
+    
+                describe("selection when clicking on the checkbox", function() {
+                    describe("on a selected record", function() {
+                        it("should deselect when there are no other selections", function() {
+                            checkboxModel.select(donRec);
+                            makeSpies();
+                            clickCheckbox(0);
+                            expect(checkboxModel.isSelected(donRec)).toBe(false);
+                            expectChangeSpy([]);
+                            expectDeselectSpy(donRec);
+                            expect(selectSpy).not.toHaveBeenCalled();
+                        });
+    
+                        it("should deselect and keep existing selections", function() {
+                            checkboxModel.selectAll();
+                            makeSpies();
+                            clickCheckbox(0);
+                            expect(checkboxModel.isSelected(donRec)).toBe(false);
+                            expectChangeSpy([nigeRec, evanRec]);
+                            expectDeselectSpy(donRec);
+                            expect(selectSpy).not.toHaveBeenCalled();
+                        });
+                    });
+    
+                    describe("on an unselected record", function() {
+                        it("should select the record when there are no other selections", function() {
+                            makeSpies();
+                            clickCheckbox(0);
+                            expect(checkboxModel.isSelected(donRec)).toBe(true);
+                            expectChangeSpy([donRec]);
+                            expectSelectSpy(donRec);
+                            expect(deselectSpy).not.toHaveBeenCalled();
+                        });
+    
+                        it("should select and keep existing selections", function() {
+                            checkboxModel.select([evanRec, nigeRec]);
+                            makeSpies();
+                            clickCheckbox(0);
+                            expect(checkboxModel.isSelected(donRec)).toBe(true);
+                            expectChangeSpy([evanRec, nigeRec, donRec]);
+                            expectSelectSpy(donRec);
+                            expect(deselectSpy).not.toHaveBeenCalled();
+                        });
+                    });
+                });
+    
+                describe("with shiftKey", function() {
+                    var philRec;
+    
+                    beforeEach(function() {
+                        philRec = store.add({
+                            id: 4,
+                            name: 'Phil'
+                        })[0];
                     });
 
-                    clickCell(2, 1);
-                    clickCell(1, 1);
-                    expect(checkboxModel.isSelected(donRec)).toBe(true);
-                    expect(checkboxModel.isSelected(evanRec)).toBe(true);
-                    expect(checkboxModel.isSelected(nigeRec)).toBe(false);
-                    expect(checkboxModel.isSelected(philRec)).toBe(false);
+                    it("should deselect everything past & including the clicked item", function() {
+                        checkboxModel.selectAll();
+                        var view = grid.getView();
+    
+                        spyOn(view, 'processUIEvent').andCallFake(function(e) {
+                            if (e.type === 'click') {
+                                e.shiftKey = true;
+                            }
+                            Ext.grid.View.prototype.processUIEvent.apply(view, arguments);
+                        });
+    
+                        clickCell(2, 0);
+                        clickCell(1, 0);
+                        expect(checkboxModel.isSelected(donRec)).toBe(true);
+                        expect(checkboxModel.isSelected(evanRec)).toBe(true);
+                        expect(checkboxModel.isSelected(nigeRec)).toBe(false);
+                        expect(checkboxModel.isSelected(philRec)).toBe(false);
+                    });
+    
+                    it("should NOT change selection if clicked not on checkbox", function() {
+                        checkboxModel.selectAll();
+                        var view = grid.getView();
+    
+                        clickCell(0, 1);
+                        spyOn(view, 'processUIEvent').andCallFake(function(e) {
+                            if (e.type === 'click') {
+                                e.shiftKey = true;
+                            }
+                            Ext.grid.View.prototype.processUIEvent.apply(view, arguments);
+                        });
+    
+                        clickCell(2, 1);
+                        clickCell(1, 1);
+                        expect(checkboxModel.isSelected(donRec)).toBe(true);
+                        expect(checkboxModel.isSelected(evanRec)).toBe(true);
+                        expect(checkboxModel.isSelected(nigeRec)).toBe(true);
+                        expect(checkboxModel.isSelected(philRec)).toBe(true);
+                    });
                 });
             });
         });
 
         describe("single", function() {
-            beforeEach(function() {
-                makeGrid({
-                    mode: 'SINGLE'
+            describe("with checkOnly: false", function() {
+                beforeEach(function() {
+                    makeGrid({
+                        mode: 'SINGLE'
+                    });
+                });
+                
+                describe("on the checkbox", function() {
+                    it("should select the record on click", function() {
+                        clickCheckbox(0);
+                        expect(checkboxModel.isSelected(donRec)).toBe(true);
+                        
+                        // Actionable mode MUST NOT be set
+                        expect(grid.actionableMode).toBeFalsy();
+                    });
+                    
+                    it("should deselect any selected records", function() {
+                        clickCheckbox(0);
+                        clickCheckbox(1);
+                        expect(checkboxModel.isSelected(donRec)).toBe(false);
+                        expect(checkboxModel.isSelected(evanRec)).toBe(true);
+    
+                        // Actionable mode MUST NOT be set
+                        expect(grid.actionableMode).toBeFalsy();
+                    });
+                });
+
+                describe("on the row", function() {
+                    it("should select the record on click", function() {
+                        clickCheckbox(0);
+                        expect(checkboxModel.isSelected(donRec)).toBe(true);
+                    });
+    
+                    it("should deselect any selected records", function() {
+                        clickCheckbox(0);
+                        clickCheckbox(1);
+                        expect(checkboxModel.isSelected(donRec)).toBe(false);
+                        expect(checkboxModel.isSelected(evanRec)).toBe(true);
+                    });
                 });
             });
-
-            describe("on the checkbox", function() {
-                it("should select the record on click", function() {
-                    clickCheckbox(0);
-                    expect(checkboxModel.isSelected(donRec)).toBe(true);
+            
+            describe("with checkOnly: true", function() {
+                beforeEach(function() {
+                    makeGrid({
+                        mode: 'SINGLE',
+                        checkOnly: true
+                    });
+                });
+    
+                describe("on the checkbox", function() {
+                    it("should select the record on click", function() {
+                        clickCheckbox(0);
+                        expect(checkboxModel.isSelected(donRec)).toBe(true);
+    
+                        // Actionable mode MUST NOT be set and the checkbox cell must be focused
+                        expect(grid.actionableMode).toBeFalsy();
+                        
+                        var cell = view.getCellByPosition({
+                            row: 0,
+                            column: 0
+                        });
+                        
+                        expectFocused(cell, true);
+                    });
+    
+                    it("should deselect any selected records", function() {
+                        clickCheckbox(0);
+                        clickCheckbox(1);
+                        expect(checkboxModel.isSelected(donRec)).toBe(false);
+                        expect(checkboxModel.isSelected(evanRec)).toBe(true);
+    
+                        // Actionable mode MUST NOT be set and the checkbox cell must be focused
+                        expect(grid.actionableMode).toBeFalsy();
+                        
+                        var cell = view.getCellByPosition({
+                            row: 1,
+                            column: 0
+                        });
+                        
+                        expectFocused(cell, true);
+                    });
                 });
 
-                it("should deselect any selected records", function() {
-                    clickCheckbox(0);
-                    clickCheckbox(1);
-                    expect(checkboxModel.isSelected(donRec)).toBe(false);
-                    expect(checkboxModel.isSelected(evanRec)).toBe(true);
-                });
-            });
-
-            describe("on the row", function() {
-                it("should select the record on click", function() {
-                    clickCheckbox(0);
-                    expect(checkboxModel.isSelected(donRec)).toBe(true);
-                });
-
-                it("should deselect any selected records", function() {
-                    clickCheckbox(0);
-                    clickCheckbox(1);
-                    expect(checkboxModel.isSelected(donRec)).toBe(false);
-                    expect(checkboxModel.isSelected(evanRec)).toBe(true);
+                describe("on the row", function() {
+                    it("should select the record on click", function() {
+                        clickCheckbox(0);
+                        expect(checkboxModel.isSelected(donRec)).toBe(true);
+                    });
+    
+                    it("should deselect any selected records", function() {
+                        clickCheckbox(0);
+                        clickCheckbox(1);
+                        expect(checkboxModel.isSelected(donRec)).toBe(false);
+                        expect(checkboxModel.isSelected(evanRec)).toBe(true);
+                    });
                 });
             });
         });
     });
+    
+    describe("ARIA", function() {
+        describe("with checkOnly: false", function() {
+            describe("with showHeaderCheckbox: false", function() {
+                beforeEach(function() {
+                    makeGrid({
+                        checkOnly: false,
+                        showHeaderCheckbox: false
+                    });
+                });
+                
+                describe("header", function() {
+                    it("should not have tabIndex", function() {
+                        expect(column).not.toHaveAttr('tabIndex');
+                    });
+                    
+                    it("should have presentation role", function() {
+                        expect(column).toHaveAttr('role', 'presentation');
+                    });
+                    
+                    it("should not have aria-label", function() {
+                        expect(column).not.toHaveAttr('aria-label');
+                    });
+                    
+                    it("should not have aria-labelledby", function() {
+                        expect(column).not.toHaveAttr('aria-labelledby');
+                    });
+                    
+                    it("should not have aria-describedby", function() {
+                        expect(column).not.toHaveAttr('aria-describedby');
+                    });
+                });
+                
+                describe("cells", function() {
+                    var cell;
+                    
+                    beforeEach(function() {
+                        cell = view.getCellByPosition({
+                            row: 0,
+                            column: 0
+                        });
+                    });
+                    
+                    afterEach(function() {
+                        cell = null;
+                    });
+                    
+                    it("should not have tabIndex", function() {
+                        expect(cell).not.toHaveAttr('tabIndex');
+                    });
+                    
+                    it("should have presentation role", function() {
+                        expect(cell).toHaveAttr('role', 'presentation');
+                    });
+                    
+                    it("should not have aria-label", function() {
+                        expect(cell).not.toHaveAttr('aria-label');
+                    });
+                    
+                    it("should not have aria-labelledby", function() {
+                        expect(cell).not.toHaveAttr('aria-labelledby');
+                    });
+                    
+                    it("should not have aria-describedby", function() {
+                        expect(cell).not.toHaveAttr('aria-describedby');
+                    });
+                });
+            });
 
+            describe("with showHeaderCheckbox: true", function() {
+                beforeEach(function() {
+                    makeGrid({
+                        checkOnly: false,
+                        showHeaderCheckbox: true
+                    });
+                });
+                
+                describe("header", function() {
+                    it("should not have tabIndex", function() {
+                        expect(column).not.toHaveAttr('tabIndex');
+                    });
+                    
+                    it("should have presentation role", function() {
+                        expect(column).toHaveAttr('role', 'presentation');
+                    });
+                    
+                    it("should not have aria-label", function() {
+                        expect(column).not.toHaveAttr('aria-label');
+                    });
+                    
+                    it("should not have aria-labelledby", function() {
+                        expect(column).not.toHaveAttr('aria-labelledby');
+                    });
+                    
+                    it("should not have aria-describedby", function() {
+                        expect(column).not.toHaveAttr('aria-describedby');
+                    });
+                });
+                
+                describe("cells", function() {
+                    var cell;
+                    
+                    beforeEach(function() {
+                        cell = view.getCellByPosition({
+                            row: 0,
+                            column: 0
+                        });
+                    });
+                    
+                    afterEach(function() {
+                        cell = null;
+                    });
+                    
+                    it("should not have tabIndex", function() {
+                        expect(cell).not.toHaveAttr('tabIndex');
+                    });
+                    
+                    it("should have presentation role", function() {
+                        expect(cell).toHaveAttr('role', 'presentation');
+                    });
+                    
+                    it("should not have aria-label", function() {
+                        expect(cell).not.toHaveAttr('aria-label');
+                    });
+                    
+                    it("should not have aria-labelledby", function() {
+                        expect(cell).not.toHaveAttr('aria-labelledby');
+                    });
+                    
+                    it("should not have aria-describedby", function() {
+                        expect(cell).not.toHaveAttr('aria-describedby');
+                    });
+                });
+            });
+        });
+        
+        describe("with checkOnly: true", function() {
+            describe("with showHeaderCheckbox: false", function() {
+                beforeEach(function() {
+                    makeGrid({
+                        checkOnly: true,
+                        showHeaderCheckbox: false
+                    });
+                });
+                
+                describe("header", function() {
+                    it("should have tabIndex", function() {
+                        expect(column).toHaveAttr('tabIndex', -1);
+                    });
+                    
+                    it("should have columnheader role", function() {
+                        expect(column).toHaveAttr('role', 'columnheader');
+                    });
+                    
+                    it("should have aria-label", function() {
+                        expect(column).toHaveAttr('aria-label', checkboxModel.headerAriaLabel);
+                    });
+                    
+                    it("should not have aria-labelledby", function() {
+                        expect(column).not.toHaveAttr('aria-labelledby');
+                    });
+                    
+                    it("should not have aria-describedby when not all rows are selected", function() {
+                        expect(column).not.toHaveAttr('aria-describedby');
+                    });
+                    
+                    it("should not have aria-describedby when all rows are selected", function() {
+                        checkboxModel.selectAll();
+                        expect(column).not.toHaveAttr('aria-describedby');
+                    });
+                });
+                
+                describe("cells", function() {
+                    var cell;
+                    
+                    beforeEach(function() {
+                        cell = view.getCellByPosition({
+                            row: 0,
+                            column: 0
+                        });
+                    });
+                    
+                    afterEach(function() {
+                        cell = null;
+                    });
+                    
+                    it("should have tabIndex", function() {
+                        expect(cell).toHaveAttr('tabIndex', -1);
+                    });
+                    
+                    it("should have gridcell role", function() {
+                        expect(cell).toHaveAttr('role', 'gridcell');
+                    });
+                    
+                    it("should not have aria-label", function() {
+                        expect(cell).not.toHaveAttr('aria-label');
+                    });
+                    
+                    it("should not have aria-labelledby", function() {
+                        expect(cell).not.toHaveAttr('aria-labelledby');
+                    });
+                    
+                    it("should have aria-describedby when not selected", function() {
+                        expect(cell).toHaveAttr('aria-describedby', column.id + '-cell-description-not-selected');
+                    });
+                    
+                    it("should have aria-describedby when selected", function() {
+                        checkboxModel.select(0);
+                        expect(cell).toHaveAttr('aria-describedby', column.id + '-cell-description-selected');
+                    });
+                });
+            });
+
+            describe("with showHeaderCheckbox: true", function() {
+                beforeEach(function() {
+                    makeGrid({
+                        checkOnly: true,
+                        showHeaderCheckbox: true
+                    });
+                });
+                
+                describe("header", function() {
+                    it("should have tabIndex", function() {
+                        expect(column).toHaveAttr('tabIndex', -1);
+                    });
+                    
+                    it("should have columnheader role", function() {
+                        expect(column).toHaveAttr('role', 'columnheader');
+                    });
+                    
+                    it("should have aria-label", function() {
+                        expect(column).toHaveAttr('aria-label', checkboxModel.headerAriaLabel);
+                    });
+                    
+                    it("should not have aria-labelledby", function() {
+                        expect(column).not.toHaveAttr('aria-labelledby');
+                    });
+                    
+                    it("should have aria-describedby when not all rows are selected", function() {
+                        expect(column).toHaveAttr('aria-describedby', column.id + '-header-description-not-selected');
+                    });
+                    
+                    it("should have aria-describedby when all rows are selected", function() {
+                        checkboxModel.selectAll();
+                        expect(column).toHaveAttr('aria-describedby', column.id + '-header-description-selected');
+                    });
+                });
+                
+                describe("cells", function() {
+                    var cell;
+                    
+                    beforeEach(function() {
+                        cell = view.getCellByPosition({
+                            row: 0,
+                            column: 0
+                        });
+                    });
+                    
+                    afterEach(function() {
+                        cell = null;
+                    });
+                    
+                    it("should have tabIndex", function() {
+                        expect(cell).toHaveAttr('tabIndex', -1);
+                    });
+                    
+                    it("should have gridcell role", function() {
+                        expect(cell).toHaveAttr('role', 'gridcell');
+                    });
+                    
+                    it("should not have aria-label", function() {
+                        expect(cell).not.toHaveAttr('aria-label');
+                    });
+                    
+                    it("should not have aria-labelledby", function() {
+                        expect(cell).not.toHaveAttr('aria-labelledby');
+                    });
+                    
+                    it("should have aria-describedby when not selected", function() {
+                        expect(cell).toHaveAttr('aria-describedby', column.id + '-cell-description-not-selected');
+                    });
+                    
+                    it("should have aria-describedby when selected", function() {
+                        checkboxModel.select(0);
+                        expect(cell).toHaveAttr('aria-describedby', column.id + '-cell-description-selected');
+                    });
+                });
+            });
+        });
+    });
 });

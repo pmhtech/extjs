@@ -1,17 +1,14 @@
-
 <!DOCTYPE HTML>
 <html manifest="">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=10, user-scalable=yes">
 
     <title>SysApp</title>
 
-
+    
     <script type="text/javascript">
-        var userId;
-        SysCode = {};
         var Ext = Ext || {}; // Ext namespace won't be defined yet...
 
         // This function is called by the Microloader after it has performed basic
@@ -37,6 +34,7 @@
                 //profile = tags.phone ? 'modern' : 'classic';
             }
 
+            SysCode = {};
             Ext.manifest = profile; // this name must match a build profile name
 
             // This function is called once the manifest is available but before
@@ -50,7 +48,7 @@
     
     
     <!-- The line below must be kept intact for Sencha Cmd to build your application -->
-    <script id="microloader" data-app="f11d6170-4878-47e9-aaac-50d8e0eda441" type="text/javascript" src="bootstrap.js"></script>
+    <script id="microloader" data-app="0971da01-c46a-462b-b500-14a97db6f65f" type="text/javascript" src="bootstrap.js"></script>
 
 </head>
 <body></body>

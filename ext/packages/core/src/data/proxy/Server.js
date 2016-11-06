@@ -259,6 +259,12 @@ Ext.define('Ext.data.proxy.Server', {
     processResponse: function(success, operation, request, response) {
         var me = this,
             exception, reader, resultSet, meta;
+        
+        // Async callback could have landed at any time, including during and after
+        // destruction. We don't want to unravel the whole response chain in such case.
+        if (me.destroying || me.destroyed) {
+            return;
+        }
 
         // Processing a response may involve updating or committing many records
         // each of which will inform the owning stores, which will ultimately
@@ -530,11 +536,16 @@ Ext.define('Ext.data.proxy.Server', {
     afterRequest: Ext.emptyFn,
 
     destroy: function() {
-        this.callParent();
+        var me = this;
         
-        Ext.destroy(this.getReader(), this.getWriter());
+        me.destroying = true;
         
-        this.reader = this.writer = null;
+        // Don't force Reader and Writer creation if they weren't yet instantiated
+        me.reader = me.writer = Ext.destroy(me.reader, me.writer);
+        
+        me.callParent();
+        
+        me.destroying = false;
+        me.destroyed = true;
     }
 });
-

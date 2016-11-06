@@ -52,6 +52,9 @@
 Ext.define('Ext.selection.CheckboxModel', {
     alias: 'selection.checkboxmodel',
     extend: 'Ext.selection.RowModel',
+    requires: [
+        'Ext.grid.column.Check'
+    ],
 
     /**
      * @cfg {"SINGLE"/"SIMPLE"/"MULTI"} mode
@@ -76,7 +79,7 @@ Ext.define('Ext.selection.CheckboxModel', {
     checkOnly: false,
     
     /**
-     * @cfg {Boolean} showHeaderCheckbox
+     * @cfg {Boolean} [showHeaderCheckbox=false]
      * Configure as `false` to not display the header checkbox at the top of the column.
      * When the store is a {@link Ext.data.BufferedStore BufferedStore}, this configuration will
      * not be available because the buffered data set does not always contain all data.
@@ -84,20 +87,65 @@ Ext.define('Ext.selection.CheckboxModel', {
     showHeaderCheckbox: undefined,
 
     /**
-     * @cfg {String} [checkSelector="x-grid-row-checker"]
-     * The selector for determining whether the checkbox element is clicked. This may be changed to
-     * allow for a wider area to be clicked, for example, the whole cell for the selector.
+     * @cfg {String} [headerText]
+     * Displays the configured text in the check column's header.
+     *
+     * if {@link #cfg-showHeaderCheckbox} is `true`, the text is shown *above* the checkbox.
+     * @since 6.0.1
      */
-    checkSelector: '.' + Ext.baseCSSPrefix + 'grid-row-checker',
+    headerText: undefined,
+    
+    //<locale>
+    /**
+     * @cfg {String} [headerAriaLabel="Row selector"]
+     * ARIA label for screen readers to announce for the check column's header when it is focused.
+     * Note that this label will not be visible on screen.
+     *
+     * @since 6.2.0
+     */
+    headerAriaLabel: 'Row selector',
+    
+    /**
+     * @cfg {String} [headerSelectText="Press Space to select all rows"]
+     * ARIA description text to announce for the check column's header when it is focused,
+     * {@link #showHeaderCheckbox} is shown, and not all rows are selected.
+     *
+     * @since 6.2.0
+     */
+    headerSelectText: 'Press Space to select all rows',
+    
+    /**
+     * @cfg {String} [headerDeselectText="Press Space to deselect all rows"]
+     * ARIA description text to announce for the check column's header when it is focused,
+     * {@link #showHeaderCheckbox} is shown, and all rows are selected.
+     */
+    headerDeselectText: 'Press Space to deselect all rows',
+    
+    /**
+     * @cfg {String} [rowSelectText="Press Space to select this row"]
+     * ARIA description text to announce when check column cell is focused and the row
+     * is not selected.
+     */
+    rowSelectText: 'Press Space to select this row',
+    
+    /**
+     * @cfg {String} [rowDeselectText="Press Space to deselect this row"]
+     * ARIA description text to announce when check column cell is focused and the row
+     * is selected.
+     */
+    rowDeselectText: 'Press Space to deselect this row',
+    //</locale>
 
     allowDeselect: true,
 
     headerWidth: 24,
 
-    // private
+    /**
+     * @private
+     */
     checkerOnCls: Ext.baseCSSPrefix + 'grid-hd-checker-on',
 
-    tdCls: Ext.baseCSSPrefix + 'grid-cell-special ' + Ext.baseCSSPrefix + 'grid-cell-row-checker',
+    tdCls: Ext.baseCSSPrefix + 'grid-cell-special ' + Ext.baseCSSPrefix + 'selmodel-column',
 
     constructor: function() {
         var me = this;
@@ -140,7 +188,7 @@ Ext.define('Ext.selection.CheckboxModel', {
             // If the view is the locked one and there are locked headers, add the column.
             // If the view is the normal one and we have not already added the column, add it.
             if (!ownerLockable || (view.isLockedView && me.hasLockedHeader()) || (view.isNormalView && !me.column)) {
-                me.addCheckbox(view, true);
+                me.addCheckbox(view);
                 owner = view.ownerCt;
                 // Listen to the outermost reconfigure event
                 if (view.headerCt.lockedCt) {
@@ -212,21 +260,24 @@ Ext.define('Ext.selection.CheckboxModel', {
      */
     addCheckbox: function(view){
         var me = this,
-            checkbox = me.injectCheckbox,
+            checkboxIndex = me.injectCheckbox,
             headerCt = view.headerCt;
 
         // Preserve behaviour of false, but not clear why that would ever be done.
-        if (checkbox !== false) {
-            if (checkbox === 'first') {
-                checkbox = 0;
-            } else if (checkbox === 'last') {
-                checkbox = headerCt.getColumnCount();
+        if (checkboxIndex !== false) {
+            if (checkboxIndex === 'first') {
+                checkboxIndex = 0;
+            } else if (checkboxIndex === 'last') {
+                checkboxIndex = headerCt.getColumnCount();
             }
             Ext.suspendLayouts();
+
+            // Cannot select all in a buffered store.
+            // We do not have all the records
             if (view.getStore().isBufferedStore) {
                 me.showHeaderCheckbox = false;
             }
-            me.column = headerCt.add(checkbox, me.column || me.getHeaderConfig());
+            me.column = headerCt.add(checkboxIndex, me.column || me.getHeaderConfig());
             Ext.resumeLayouts();
         }
     },
@@ -236,10 +287,13 @@ Ext.define('Ext.selection.CheckboxModel', {
      * @private
      */
     onBeforeReconfigure: function(grid, store, columns, oldStore, oldColumns) {
+        var column = this.column,
+            headerCt = column.ownerCt;
+
         // Save out check column from destruction.
         // addCheckbox will reuse it instead of creation a new one.
-        if (columns) {
-            this.column.ownerCt.remove(this.column, false)
+        if (columns && headerCt) {
+            headerCt.remove(column, false);
         }
     },
 
@@ -264,36 +318,19 @@ Ext.define('Ext.selection.CheckboxModel', {
             } else {
                 me.addCheckbox(me.view);
             }
-        }
-    },
-
-    /**
-     * Toggle the ui header between checked and unchecked state.
-     * @param {Boolean} isChecked
-     * @private
-     */
-    toggleUiHeader: function(isChecked) {
-        var view     = this.views[0],
-            headerCt = view.headerCt,
-            checkHd  = headerCt.child('gridcolumn[isCheckerHd]'),
-            cls = this.checkerOnCls;
-
-        if (checkHd) {
-            if (isChecked) {
-                checkHd.addCls(cls);
-            } else {
-                checkHd.removeCls(cls);
-            }
+            grid.view.refreshView();
         }
     },
 
     /**
      * Toggle between selecting all and deselecting all when clicking on
      * a checkbox header.
+     * @private
      */
     onHeaderClick: function(headerCt, header, e) {
         var me = this,
             store = me.store,
+            column = me.column,
             isChecked, records, i, len,
             selections, selection;
 
@@ -324,32 +361,61 @@ Ext.define('Ext.selection.CheckboxModel', {
 
     /**
      * Retrieve a configuration to be used in a HeaderContainer.
-     * This should be used when injectCheckbox is set to false.
+     * This is called when injectCheckbox is not `false`.
      */
     getHeaderConfig: function() {
         var me = this,
-            showCheck = me.showHeaderCheckbox !== false;
+            showCheck = me.showHeaderCheckbox !== false,
+            htmlEncode = Ext.String.htmlEncode,
+            config;
 
-        return {
-            xtype: 'gridcolumn',
+        config = {
+            xtype: 'checkcolumn',
+            headerCheckbox: showCheck,
+            isCheckerHd: showCheck, // historically used as a dicriminator property before isCheckColumn
             ignoreExport: true,
-            isCheckerHd: showCheck,
-            text : '&#160;',
-            clickTargetName: 'el',
+            text: me.headerText,
             width: me.headerWidth,
             sortable: false,
             draggable: false,
             resizable: false,
             hideable: false,
             menuDisabled: true,
-            dataIndex: '',
+            checkOnly: me.checkOnly,
+            checkboxAriaRole: 'presentation',
             tdCls: me.tdCls,
-            cls: showCheck ? Ext.baseCSSPrefix + 'column-header-checkbox ' : '',
-            defaultRenderer: me.renderer.bind(me),
-            editRenderer: me.editRenderer || me.renderEmpty,
+            cls: Ext.baseCSSPrefix + 'selmodel-column',
+            editRenderer: me.editRenderer || me.renderEmpty,            
             locked: me.hasLockedHeader(),
-            processEvent: me.processColumnEvent
+            processEvent: me.processColumnEvent,
+
+            // It must not attempt to set anything in the records on toggle.
+            // We handle that in onHeaderClick.
+            toggleAll: Ext.emptyFn,
+
+            // The selection model listens to the navigation model to select/deselect
+            setRecordCheck: Ext.emptyFn,
+            
+            // It uses our isRowSelected to test whether a row is checked
+            isRecordChecked: me.isRowSelected.bind(me)
         };
+        
+        if (!me.checkOnly) {
+            config.tabIndex = undefined;
+            config.ariaRole = 'presentation';
+            config.focusable = false;
+            config.cellFocusable = false;
+        }
+        else {
+            config.useAriaElements = true;
+            config.ariaLabel = htmlEncode(me.headerAriaLabel);
+            config.headerSelectText = htmlEncode(me.headerSelectText);
+            config.headerDeselectText = htmlEncode(me.headerDeselectText);
+            config.rowSelectText = htmlEncode(me.rowSelectText);
+            config.rowDeselectText = htmlEncode(me.rowDeselectText);
+        }
+        
+        return config;
     },
 
     /**
@@ -358,12 +424,14 @@ Ext.define('Ext.selection.CheckboxModel', {
      * Also fires any configured click handlers. By default, cancels the mousedown event to prevent selection.
      * Returns the event handler's status to allow canceling of GridView's bubbling process.
      */
-    processColumnEvent : function(type, view, cell, recordIndex, cellIndex, e, record, row) {
+    processColumnEvent: function(type, view, cell, recordIndex, cellIndex, e, record, row) {
         var navModel = view.getNavigationModel();
 
         // Fire a navigate event upon SPACE in actionable mode.
         // SPACE events are ignored by the NavModel in actionable mode.
-        if (e.type === 'keydown' && view.actionableMode && e.getKey() === e.SPACE) {
+        // `this` is the Column instance!
+        if ((e.type === 'keydown' && view.actionableMode && e.getKey() === e.SPACE) ||
+            (!this.checkOnly && e.type === this.triggerEvent)) {
             navModel.fireEvent('navigate', {
                 view: view,
                 navigationModel: navModel,
@@ -379,6 +447,10 @@ Ext.define('Ext.selection.CheckboxModel', {
         }
     },
 
+    toggleRecord: function (record, recordIndex, checked, cell) {
+        this[checked ? 'select' : 'deselect']([record], this.mode !== 'SINGLE');
+    },
+
     renderEmpty: function() {
         return '&#160;';
     },
@@ -389,15 +461,6 @@ Ext.define('Ext.selection.CheckboxModel', {
         this.updateHeaderState();
     },
 
-    /**
-     * Generates the HTML to be rendered in the injected checkbox column for each row.
-     * Creates the standard checkbox markup by default; can be overridden to provide custom rendering.
-     * See {@link Ext.grid.column.Column#renderer} for description of allowed parameters.
-     */
-    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-        return '<div class="' + Ext.baseCSSPrefix + 'grid-row-checker" role="button" tabIndex="-1">&#160;</div>';
-    },
-   
     selectByPosition: function (position, keepExisting) {
         if (!position.isCellContext) {
             position = new Ext.grid.CellContext(this.view).setPosition(position.row, position.column);
@@ -413,10 +476,18 @@ Ext.define('Ext.selection.CheckboxModel', {
      * Synchronize header checker value as selection changes.
      * @private
      */
-    onSelectChange: function() {
-        this.callParent(arguments);
-        if (!this.suspendChange) {
-            this.updateHeaderState();
+    onSelectChange: function(record, isSelected) {
+        var me = this,
+            label;
+        
+        me.callParent(arguments);
+        
+        if (me.column) {
+            me.column.updateCellAriaDescription(record, isSelected);
+        }
+        
+        if (!me.suspendChange) {
+            me.updateHeaderState();
         }
     },
 
@@ -482,7 +553,7 @@ Ext.define('Ext.selection.CheckboxModel', {
         }
             
         if (views && views.length) {
-            me.toggleUiHeader(hdSelectStatus);
+            me.column.setHeaderStatus(hdSelectStatus);
         }
     },
 
@@ -492,30 +563,28 @@ Ext.define('Ext.selection.CheckboxModel', {
             veto, isClick, isSpace;
 
         if (me.checkOnly) {
-            isClick = e.type === 'click' && e.getTarget(me.checkSelector);
+            isClick = e.type === column.triggerEvent && e.getTarget(me.column.getCellSelector());
             isSpace = e.getKey() === e.SPACE && e.position.column === column;
             veto = !(isClick || isSpace);
         }
         return veto || me.callParent([e]);
     },
 
-    destroy: function() {
-        this.column = null;
-        this.callParent();
-    },
-
     privates: {
         onBeforeNavigate: function(metaEvent) {
             var e = metaEvent.keyEvent;
+            
             if (this.selectionMode !== 'SINGLE') {
-                metaEvent.ctrlKey = metaEvent.ctrlKey || e.ctrlKey || (e.type === 'click' && !e.shiftKey) || e.getKey() === e.SPACE;
+                metaEvent.ctrlKey = metaEvent.ctrlKey || e.ctrlKey ||
+                                    (e.type === this.column.triggerEvent && !e.shiftKey) ||
+                                    e.getKey() === e.SPACE;
             }
         },
 
         selectWithEventMulti: function(record, e, isSelected) {
             var me = this;
 
-            if (!e.shiftKey && !e.ctrlKey && e.getTarget(me.checkSelector)) {
+            if (!e.shiftKey && !e.ctrlKey && e.getTarget(me.column.getCellSelector())) {
                 if (isSelected) {
                     me.doDeselect(record);
                 } else {
@@ -526,4 +595,7 @@ Ext.define('Ext.selection.CheckboxModel', {
             }
         }
     }
+},
+function (CheckboxModel) {
+    CheckboxModel.prototype.checkSelector = '.' + Ext.grid.column.Check.prototype.checkboxCls;
 });
