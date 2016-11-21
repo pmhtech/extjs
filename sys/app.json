@@ -231,6 +231,8 @@
             // Remove this entry to individually load sources from the framework.
             {
                 "path": "${framework.dir}/build/ext-all-rtl-debug.js"
+            },{
+                "path": "resources/libs/xlsx.core.min.js"
             }
         ]
     },
@@ -280,6 +282,8 @@
             "path": "${build.out.css.path}",
             "bundle": true,
             "exclude": ["fashion"]
+        },{
+            "path" : "resources/SysApp-addon.css"
         }
     ],
 

@@ -2,6 +2,16 @@ Ext.define('PmhTech.Format', {
     extend: 'Ext.Base',
     statics: {
 
+        comboRenderer : function(value, metaData, record, rowIndex, colIndex, store){
+            var combo = this.getColumns()[colIndex].getEditor();
+            var comboStore = combo.getStore();
+            var findIdx = combo.getStore().find(combo.valueField,value);
+
+            if(findIdx==-1){
+                return value;
+            }
+            return comboStore.getAt(findIdx).get(combo.displayField);
+        },
         dateRenderer: function (value) {
 
             if (Ext.isDate(value)) {

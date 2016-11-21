@@ -6,16 +6,17 @@ Ext.define('SysApp.view.global.content.hbox.DefaultView', {
         type : 'hbox',
         align : 'stretch'
     },
+    rightItems : [],
     initComponent: function () {
         var me = this;
 
         Ext.apply(me, {
             items: [{
                 xtype: 'container',
+                flex: 1,
                 items: [{
                     xtype: 'container',
                     itemId: 'leftContents',
-                    flex: 1,
                     layout : {
                         type : 'vbox',
                         align : 'stretch'
@@ -24,16 +25,13 @@ Ext.define('SysApp.view.global.content.hbox.DefaultView', {
                 }]
             },{
                 xtype: 'container',
-                items: [{
-                    xtype: 'container',
-                    itemId: 'rightContents',
-                    flex: 1,
-                    layout : {
-                        type : 'vbox',
-                        align : 'stretch'
-                    },
-                    items: me.rightItems
-                }]
+                flex: 1,
+                itemId: 'rightContents',
+                layout : {
+                    type : 'vbox',
+                    align : 'stretch'
+                },
+                items: me.rightItems
             }],
             listeners: {
                 beforerender: 'onBeforeGlobalDefaultView'

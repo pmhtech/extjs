@@ -51,7 +51,7 @@
 
 
  */
-Ext.define('PmhTech.util.TaskUtil', {
+Ext.define('PmhTech.util.Task', {
 
     statics: {
 

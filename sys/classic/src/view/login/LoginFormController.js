@@ -14,7 +14,10 @@ Ext.define('SysApp.view.login.LoginFormController', {
 
         this.getView().hide();
         Ext.iterate(resObj.sysCodeGroup,function(key,value){
-            SysCode[key]= value;
+
+            SysCode[key]=Ext.create('Ext.data.Store',{
+                data : value
+            });
 
         });
 
@@ -43,11 +46,9 @@ Ext.define('SysApp.view.login.LoginFormController', {
     },
     onAfterRender : function(comp){
 
-       /* if(!Ext.isEmpty(userId)){
-            comp.getForm().setValues({USER_ID: userId});
-            this.doLoginProcess();
-        }*/
-        comp.show();
+        //comp.show();
+        this.doLoginProcess();
+
 
 
     }

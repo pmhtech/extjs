@@ -3,26 +3,8 @@ Ext.define('SysApp.view.global.content.DefaultView', {
     alternateClassName: ['SysApp.view.content.DefaultView'],
     alias: ['widget.global-defaultview'],
     layout: 'fit',
-
-
-    initComponent: function () {
-        var me = this;
-
-        Ext.apply(me, {
-            items: [{
-                xtype: 'container',
-                items: [{
-                    xtype: 'container',
-                    itemId: 'centerContent',
-                    flex: 1,
-                    items: me.centerItems
-                }]
-            }],
-            listeners: {
-                beforerender: 'onBeforeGlobalDefaultView'
-            }
-        });
-        me.callParent(arguments);
+    listeners: {
+        beforerender: 'onBeforeGlobalDefaultView'
     },
     onBeforeGlobalDefaultView: function (comp) {
 

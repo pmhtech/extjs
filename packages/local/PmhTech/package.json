@@ -72,6 +72,11 @@
      */
     "compatVersion": "1.0.0",
 
+    "css" : [
+        {
+            "path": "${package.dir}/resources/test.css"
+        }
+    ],
     /**
      * Spec. version of this package.json file.
      * This is set automatically by Sencha Cmd when first generating this file

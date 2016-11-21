@@ -1,6 +1,24 @@
 Ext.define('PmhTech.override.form.Basic', {
     override: 'Ext.form.Basic',
     trackResetOnLoad : true,
+    setReadOnlyFields : function(readOnly,fields){
+        var me = this;
+
+        if(!Ext.isArray(fields)){
+            fields=[];
+            var keyMap = me.getValues();
+
+            Ext.iterate(keyMap,function(key,value){
+                fields.push(key);
+            });
+        }
+
+        for(var i=0;i<fields.length;i++){
+            var field = fields[i];
+            me.findField(field).setReadOnly(readOnly);
+        }
+
+    },
     resetClearFields : function(){
         var me = this;
         var valueObject = me.getValues();

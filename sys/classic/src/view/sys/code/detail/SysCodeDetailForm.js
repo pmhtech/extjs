@@ -1,21 +1,15 @@
-Ext.define('SysApp.view.sys.code.SysCodeWindow', {
-    extend: 'Ext.form.Panel',
-    alias: 'widget.sys-code-window',
-    controller: 'sys-code-window',
-    modal : true,
-    width : 400,
-    closable: true,
-    bodyPadding : 10,
-    closeAction : 'hide',
-    title : '기준정보그룹추가',
-    floating : true,
-    layout : 'column',
-    defaults : {
-        columnWidth : 0.5
+Ext.define('SysApp.view.sys.code.detail.SysCodeDetailForm', {
+    extend: 'PmhTech.form.Panel',
+    alias: 'widget.sys-code-detail-form',
+    controller: 'sys-code-detail-form',
+    defaults: {
+        columnWidth: 0.5,
+        padding: '0 5 5 5'
     },
-    items: [{
-        xtype: 'textfield',
+    items : [{
+        xtype: 'pmh-combo-code',
         fieldLabel: '회사코드',
+        sysCodeName : 'COM_000001',
         name: 'COMPANY'
     }, {
         xtype: 'textfield',
@@ -60,24 +54,11 @@ Ext.define('SysApp.view.sys.code.SysCodeWindow', {
         xtype: 'textfield',
         fieldLabel: '사용유무',
         name: 'USE_YN'
-    }, {
-        xtype: 'textfield',
-        fieldLabel: '회사코드',
-        name: 'MEMO',
-        columnWidth: 1
-    }],
-    bbar : [
-        {
-            xtype : 'button',
-            text : '저장',
-            handler : 'onBtnSave',
-            scope : this
-        },{
-            xtype : 'button',
-            text : '닫기',
-            handler : 'onBtnClose',
-            scope : this
-        }
+    }],listeners : {
+        InitMode : 'onInitMode',
+        UpdateMode : 'onUpdateMode',
+        InsertMode : 'onInsertMode'
+    }
 
-    ]
+
 });
