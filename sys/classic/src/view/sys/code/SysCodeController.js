@@ -2,11 +2,11 @@ Ext.define('SysApp.view.sys.SysCodeController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.sys-code',
 
-    onSelectGrid : function(selModel,record,index) {
+    onSelectGrid: function (selModel, record, index) {
 
         var paramObj = {
             LOCALE_CD: record.get('LOCALE_CD'),
-            PRE_CD : record.get('PRE_CD')
+            PRE_CD: record.get('PRE_CD')
         };
 
         PmhTech.Ajax.request({
@@ -16,12 +16,12 @@ Ext.define('SysApp.view.sys.SysCodeController', {
             scope: this
         });
     },
-    successLoad : function(resObj){
+    successLoad: function (resObj) {
 
         var target = this.getView().down('sys-code-detail-grid');
         target.getStore().loadRawData(resObj);
     },
-    onSelectDetailGrid :function(grid,record,index){
+    onSelectDetailGrid: function (grid, record, index) {
         var target = this.getView().down('sys-code-detail-form');
         target.getForm().setValues(record.data);
     }

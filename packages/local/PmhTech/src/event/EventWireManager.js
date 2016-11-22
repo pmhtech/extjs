@@ -32,12 +32,13 @@ Ext.define('PmhTech.event.EventWireManager', {
             var cmpXType = eventNode.CompXType;
             var cmpEvent = eventNode.Event;
             var cmpEventDtl = eventNode.CustomEvent;
-            var eventComment = eventNode.COMMENT;
+            var eventComment = eventNode.Comment;
 
             var component = masterView.down(cmpName);
             if(component.getXTypes().search(cmpXType)==-1){
                 alert('Component의 Xtype이 잘못되었습니다');
                 console.log(component);
+                console.log(eventNode);
                 return false;
             }
 
@@ -74,7 +75,7 @@ Ext.define('PmhTech.event.EventWireManager', {
                     var component = eventProps.component;
                     var eventName = eventProps.eventName;
                     var args = eventProps.arguments;
-                    console.log(this.COMMENT);
+                    console.log(this.Comment);
                     component.fireEvent(eventName,args[0],args[1],args[2],args[3],args[4],args[5]);
 
 
