@@ -57,18 +57,9 @@ Ext.define('SysApp.view.sys.code.SysCode', {
 
             var selectMaster = [{
                 "EVENT_TYPE": "selectMaster",
-                "EVENT_NAME": "select",
+                "EVENT_NAME": "storeLoad",
                 "PRE_EVENT_ID": '',
                 "EVENT_ID": '1',
-                "COMPONENT": "sys-code-grid",
-                "XTYPE": "grid",
-                "DETAIL_EVENT_NAME": "",
-                "COMMENT": "기준정보그룹선택"
-            }, {
-                "EVENT_TYPE": "selectMaster",
-                "EVENT_NAME": "storeLoad",
-                "PRE_EVENT_ID": '1',
-                "EVENT_ID": '2',
                 "COMPONENT": "sys-code-detail-grid",
                 "XTYPE": "grid",
                 "DETAIL_EVENT_NAME": "",
@@ -76,8 +67,8 @@ Ext.define('SysApp.view.sys.code.SysCode', {
             }, {
                 "EVENT_TYPE": "selectMaster",
                 "EVENT_NAME": "",
-                "PRE_EVENT_ID": '2',
-                "EVENT_ID": '3',
+                "PRE_EVENT_ID": '1',
+                "EVENT_ID": '2',
                 "COMPONENT": "sys-code-detail-form",
                 "XTYPE": "form",
                 "DETAIL_EVENT_NAME": "insertMode",

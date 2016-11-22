@@ -10,6 +10,11 @@ Ext.define('PmhTech.event.EventWireManager', {
             var cmpName = eventNode.COMPONENT;
             var cmpXType = eventNode.XTYPE;
             var eventName = eventNode.EVENT_NAME;
+
+            if(!eventName){
+                eventName = eventNode.DETAIL_EVENT_NAME;
+            }
+
             var component = masterView.down(cmpName);
             if(component.getXTypes().search(cmpXType)==-1){
                 alert('Component의 Xtype이 잘못되었습니다');
@@ -57,6 +62,7 @@ Ext.define('PmhTech.event.EventWireManager', {
             var parentEvent = masterEventProps.eventName;
 
 
+
             for(var i=0;i<childNodes.length;i++){
                 var childNode = childNodes[i];
 
@@ -71,15 +77,12 @@ Ext.define('PmhTech.event.EventWireManager', {
                     console.log(this.COMMENT);
                     component.fireEvent(eventName,args[0],args[1],args[2],args[3],args[4],args[5]);
 
-                    if(Ext.isArray(this.children)) {
-
-                        if(me.eventWired!==true){
-                            me._getEventWire(masterView, this, this.children);
-                            me.eventWired=true;
-                        }
-                    }
 
                 },childNode);
+
+                if(Ext.isArray(childNode.children)) {
+                    me._getEventWire(masterView, childNode, childNode.children);
+                }
             }
 
         },

@@ -2,9 +2,7 @@ Ext.define('SysApp.view.sys.SysCodeController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.sys-code',
 
-    onSelectGrid : function(grid,record,index) {
-
-
+    onSelectGrid : function(selModel,record,index) {
 
         var paramObj = {
             LOCALE_CD: record.get('LOCALE_CD'),

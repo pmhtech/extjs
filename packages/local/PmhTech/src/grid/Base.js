@@ -8,7 +8,7 @@ Ext.define('PmhTech.grid.Base', {
         rootProperty: 'list'
     },
     onGridLoad: Ext.emptyFn,
-    onGridSelect: Ext.emptyFn,
+    //onGridSelect: Ext.emptyFn,
 
     initComponent: function () {
         var me = this;
@@ -34,7 +34,7 @@ Ext.define('PmhTech.grid.Base', {
                 listeners: {
                     load: function (store) {
                         me.show();
-                        this.fireEvent('storeLoad', store)
+                        me.fireEvent('storeload', store)
                     }
                 }
             }),
