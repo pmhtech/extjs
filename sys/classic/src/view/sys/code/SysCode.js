@@ -27,72 +27,72 @@ Ext.define('SysApp.view.sys.code.SysCode', {
 
 
             var initPageEvent = [{
-                "EVENT_TYPE": "InitPage",
-                "EVENT_NAME": "storeLoad",
-                "PRE_EVENT_ID": '',
-                "EVENT_ID": '1',
-                "COMPONENT": "sys-code-grid",
-                "XTYPE": "grid",
-                "DETAIL_EVENT_NAME": "",
+                "EventType": "InitPage",
+                "Event": "storeLoad",
+                "PRE_ID": '',
+                "ID": '1',
+                "CompName": "sys-code-grid",
+                "CompXType": "grid",
+                "CustomEvent": "",
                 "COMMENT": "코드그룹 로드"
             }, {
-                "EVENT_TYPE": "InitPage",
-                "EVENT_NAME": "",
-                "PRE_EVENT_ID": '1',
-                "EVENT_ID": '2',
-                "COMPONENT": "sys-code-detail-grid",
-                "XTYPE": "grid",
-                "DETAIL_EVENT_NAME": "InitMode",
+                "EventType": "InitPage",
+                "Event": "",
+                "PRE_ID": '1',
+                "ID": '2',
+                "CompName": "sys-code-detail-grid",
+                "CompXType": "grid",
+                "CustomEvent": "InitMode",
                 "COMMENT": "sys-code-detail-grid : 코드상세정보 초기화"
             },{
-                "EVENT_TYPE": "InitPage",
-                "EVENT_NAME": "",
-                "PRE_EVENT_ID": '2',
-                "EVENT_ID": '3',
-                "COMPONENT": "sys-code-detail-form",
-                "XTYPE": "form",
-                "DETAIL_EVENT_NAME": "InitMode",
+                "EventType": "InitPage",
+                "Event": "",
+                "PRE_ID": '2',
+                "ID": '3',
+                "CompName": "sys-code-detail-form",
+                "CompXType": "form",
+                "CustomEvent": "InitMode",
                 "COMMENT": "sys-code-detail-form : 코드상세정보 읽기전용"
             }];
 
             var selectMaster = [{
-                "EVENT_TYPE": "selectMaster",
-                "EVENT_NAME": "storeLoad",
-                "PRE_EVENT_ID": '',
-                "EVENT_ID": '1',
-                "COMPONENT": "sys-code-detail-grid",
-                "XTYPE": "grid",
-                "DETAIL_EVENT_NAME": "",
+                "EventType": "selectMaster",
+                "Event": "storeLoad",
+                "PRE_ID": '',
+                "ID": '1',
+                "CompName": "sys-code-detail-grid",
+                "CompXType": "grid",
+                "CustomEvent": "",
                 "COMMENT": "sys-code-detail-grid :코드리스트 로드"
             }, {
-                "EVENT_TYPE": "selectMaster",
-                "EVENT_NAME": "",
-                "PRE_EVENT_ID": '1',
-                "EVENT_ID": '2',
-                "COMPONENT": "sys-code-detail-form",
-                "XTYPE": "form",
-                "DETAIL_EVENT_NAME": "insertMode",
+                "EventType": "selectMaster",
+                "Event": "",
+                "PRE_ID": '1',
+                "ID": '2',
+                "CompName": "sys-code-detail-form",
+                "CompXType": "form",
+                "CustomEvent": "insertMode",
                 "COMMENT": "sys-code-detail-form : 코드상세정보 입력모드"
             }];
 
 
             var selectDetail = [{
-                "EVENT_TYPE": "selectDetail",
-                "EVENT_NAME": "select",
-                "PRE_EVENT_ID": '',
-                "EVENT_ID": '1',
-                "COMPONENT": "sys-code-detail-grid",
-                "XTYPE": "grid",
-                "DETAIL_EVENT_NAME": "",
+                "EventType": "selectDetail",
+                "Event": "select",
+                "PRE_ID": '',
+                "ID": '1',
+                "CompName": "sys-code-detail-grid",
+                "CompXType": "grid",
+                "CustomEvent": "",
                 "COMMENT": "코드정보 선택"
             }, {
-                "EVENT_TYPE": "selectDetail",
-                "EVENT_NAME": "",
-                "PRE_EVENT_ID": '1',
-                "EVENT_ID": '2',
-                "COMPONENT": "sys-code-detail-form",
-                "XTYPE": "form",
-                "DETAIL_EVENT_NAME": "updateMode",
+                "EventType": "selectDetail",
+                "Event": "",
+                "PRE_ID": '1',
+                "ID": '2',
+                "CompName": "sys-code-detail-form",
+                "CompXType": "form",
+                "CustomEvent": "updateMode",
                 "COMMENT": "코드정보 수정모드"
             }];
 

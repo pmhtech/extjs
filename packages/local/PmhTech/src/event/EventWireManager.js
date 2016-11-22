@@ -7,12 +7,12 @@ Ext.define('PmhTech.event.EventWireManager', {
     statics: {
         _getComponent : function(masterView,eventNode){
 
-            var cmpName = eventNode.COMPONENT;
-            var cmpXType = eventNode.XTYPE;
-            var eventName = eventNode.EVENT_NAME;
+            var cmpName = eventNode.CompName;
+            var cmpXType = eventNode.CompXType;
+            var eventName = eventNode.Event;
 
             if(!eventName){
-                eventName = eventNode.DETAIL_EVENT_NAME;
+                eventName = eventNode.CustomEvent;
             }
 
             var component = masterView.down(cmpName);
@@ -28,10 +28,10 @@ Ext.define('PmhTech.event.EventWireManager', {
         },
         _getEventArgs : function(masterView,eventNode){
 
-            var cmpName = eventNode.COMPONENT;
-            var cmpXType = eventNode.XTYPE;
-            var cmpEvent = eventNode.EVENT_NAME;
-            var cmpEventDtl = eventNode.DETAIL_EVENT_NAME;
+            var cmpName = eventNode.CompName;
+            var cmpXType = eventNode.CompXType;
+            var cmpEvent = eventNode.Event;
+            var cmpEventDtl = eventNode.CustomEvent;
             var eventComment = eventNode.COMMENT;
 
             var component = masterView.down(cmpName);
@@ -89,7 +89,7 @@ Ext.define('PmhTech.event.EventWireManager', {
         initEvent : function(masterView,array){
 
 
-            var treeData = PmhTech.util.StoreUtil.convertListToTree(array,'EVENT_ID','PRE_EVENT_ID','');
+            var treeData = PmhTech.util.StoreUtil.convertListToTree(array,'ID','PRE_ID','');
             var rootNode = treeData[0];
             this._getEventWire(masterView,rootNode,rootNode.children);
 
