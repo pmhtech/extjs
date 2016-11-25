@@ -3,7 +3,7 @@ Ext.define('SysApp.view.sys.code.popup.SysCodePopup', {
     alias: 'widget.sys-code-popup',
     controller: 'sys-code-popup',
     modal: true,
-    width: 800,
+    width: 600,
     height: 400,
     closable: true,
     hidden: true,
@@ -15,8 +15,7 @@ Ext.define('SysApp.view.sys.code.popup.SysCodePopup', {
         align: 'stretch'
     },
     items: [{
-        xtype: 'sys-code-form',
-        title: '기본정보'
+        xtype: 'sys-code-form'
     },{
         xtype : 'tabpanel'
     }],

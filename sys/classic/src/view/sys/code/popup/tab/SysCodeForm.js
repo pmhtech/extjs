@@ -1,69 +1,70 @@
 Ext.define('SysApp.view.sys.code.detail.SysCodeForm', {
     extend: 'PmhTech.form.Panel',
     alias: 'widget.sys-code-form',
-    title : '기본정보',
     controller: 'sys-code-popup',
-    defaults: {
-        columnWidth: 0.5,
-        padding: '0 5 5 5'
+    layout: {
+        type: 'vbox',
+        align: 'stretch'
     },
-    items : [{
-        xtype: 'pmh-combo-code',
-        fieldLabel: '회사코드',
-        sysCodeName : 'COM_000001',
-        readOnly : true,
-        hidden : true,
-        name: 'COMPANY',
-        value : '000000'
+    items: [{
+        xtype: 'fieldset',
+        title: '기본정보',
+        layout: 'column',
+        defaults: {
+            margin: '0 5 10 5',
+            columnWidth: 0.5
+        },
+        items: [{
+            xtype: 'textfield',
+            fieldLabel: '코드그룹',
+            name: 'PRE_CD'
+        }, {
+            xtype: 'textfield',
+            fieldLabel: '코드그룹명',
+            readOnly: true,
+            value: '0000000000',
+            name: 'CODE_NM'
+        }, {
+            xtype: 'textfield',
+            fieldLabel: '코드',
+            readOnly: true,
+            hidden: true,
+            value: '0000000000',
+            name: 'CODE'
+        }]
     }, {
-        xtype: 'textfield',
-        fieldLabel: '코드그룹',
-        name: 'PRE_CD'
-    },{
-        xtype: 'textfield',
-        fieldLabel: '코드',
-        readOnly : true,
-        value : '0000000000',
-        name: 'CODE'
-    }, {
-        xtype: 'pmh-combo',
-        fieldLabel: '참조 기준정보1',
-        displayField : 'CODE_NM',
-        valueField : 'PRE_CD' ,
-        isShowCode: true,
-        name: 'REF1_CODE'
-    }, {
-        xtype: 'pmh-combo',
-        fieldLabel: '참조 기준정보2',
-        displayField : 'CODE_NM',
-        valueField : 'PRE_CD' ,
-        name: 'REF2_CODE'
-    }, {
-        xtype: 'pmh-combo',
-        fieldLabel: '참조 기준정보3',
-        displayField : 'CODE_NM',
-        valueField : 'PRE_CD' ,
+        xtype: 'fieldset',
+        title: '참조3 정보',
+        layout: 'column',
+        defaults: {
+            margin: '0 5 5 5',
+        },
+        items: [{
+            xtype: 'checkboxfield',
+            labelWidth: 0,
+            columnWidth: 0.3,
+            boxLabel: '참조3 값수정가능',
+            name: 'REF3_EDIT_YN'
 
-        name: 'REF3_CODE'
-    }, {
-        xtype: 'pmh-combo',
-        fieldLabel: '참조 기준정보4',
-        displayField : 'CODE_NM',
-        valueField : 'PRE_CD' ,
-        name: 'REF4_CODE'
-    }, {
-        xtype: 'pmh-combo',
-        fieldLabel: '참조 기준정보5',
-        displayField : 'CODE_NM',
-        valueField : 'PRE_CD' ,
-        name: 'REF5_CODE'
-    }, {
-        xtype: 'textfield',
-        fieldLabel: '사용유무',
-        name: 'USE_YN'
-    },{
-        xtype : 'textfield',
-        fieldLabel : '메모',
-        name : 'MEMO'
-    }]
+        }, {
+            xtype: 'textfield',
+            fieldLabel: '참조3 값입력형태',
+            columnWidth: 0.3,
+            name: 'REF3_TYPE'
+        }, {
+            xtype: 'textfield',
+            columnWidth: 0.3,
+            name: 'REF3_CD'
+        }]
+    },
+
+        {
+            xtype: 'textfield',
+            fieldLabel: '사용유무',
+            name: 'USE_YN'
+        }, {
+            xtype: 'textfield',
+            fieldLabel: '메모',
+            name: 'MEMO'
+        }]
 });
