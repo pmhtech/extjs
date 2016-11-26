@@ -1,13 +1,11 @@
 Ext.define('SysApp.view.sys.code.popup.SysCodePopup', {
-    extend: 'Ext.form.Panel',
+    extend: 'PmhTech.window.Base',
     alias: 'widget.sys-code-popup',
     controller: 'sys-code-popup',
-    modal: true,
     width: 600,
-    height: 400,
+    height: 600,
     closable: true,
     hidden: true,
-    closeAction: 'hide',
     title: '기준정보그룹추가',
     floating: true,
     layout: {
@@ -16,12 +14,21 @@ Ext.define('SysApp.view.sys.code.popup.SysCodePopup', {
     },
     items: [{
         xtype: 'sys-code-form'
-    },{
-        xtype : 'tabpanel'
-    }],
+    }, {
+        xtype: 'sys-code-ref',
+        flex: 1
+    }, {
 
-
-    showPopup: function (mode, paramObj, callBackFunc) {
-        Ext.callback(this.getController().showPopup, this.getController(), arguments);
-    }
+        xtype: 'fieldset',
+        collapsible : true,
+        title: '다국어설정',
+        items: [{
+            xtype: 'tabpanel',
+            itemId: 'sysCodeLocale',
+            listeners: {
+                afterrender: 'onAfterRenderLocale'
+            }
+        }
+        ]
+    }]
 });

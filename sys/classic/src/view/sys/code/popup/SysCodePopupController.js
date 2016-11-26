@@ -1,57 +1,41 @@
 Ext.define('SysApp.view.sys.code.popup.SysCodePopupController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.sys-code-popup',
-    callBackFunc : Ext.emptyFn,
-    onAfterRender : function(comp){
+
+    onAfterRenderLocale : function(comp){
 
 
         var store = SysCode['COM_000003'];
-        var arrPanel = [];
+        var localeStore = SysCode['COM_000004'];
+        var items = [];
+
         for(var i=0;i<store.getCount();i++){
-
             var rec = store.getAt(i);
-            var code = rec.get('REF1');
 
-            if(!code  || rec.get('CODE')=='ALL'){
+            if(rec.get('CODE')=='ALL'){
                 continue;
             }
-            debugger;
-            arrPanel.push({
+
+            var locale = rec.get('REF1');
+            var findIdx = localeStore.find('CODE',locale);
+
+            var title = localeStore.getAt(findIdx).get('CODE_NM');
+
+            if(rec.get('CODE')=='DEFAULT'){
+                title= '<b>'+title +'(Default)</b>';
+            }
+            items.push({
                 xtype : 'sys-code-locale-form',
-                title : SysCode['COM_000004'].findRecord('CODE',code).get('CODE_NM')
+                title : title
             });
         }
-
-        this.getView().down('tabpanel').add(arrPanel);
-
-
-
+        comp.add(items);
 
     },
-
-
-    onAfterRenderSysCodeForm : function(comp){
-        var view = this.getView();
-        var store =Ext.ComponentQuery.query('sys-code-grid')[0].getStore();
-
-
-        view.down('[name=REF1_CODE]').setStore(store);
-        view.down('[name=REF2_CODE]').setStore(store);
-        view.down('[name=REF3_CODE]').setStore(store);
-        view.down('[name=REF4_CODE]').setStore(store);
-        view.down('[name=REF5_CODE]').setStore(store);
-    },
-
-    setInsertMode : function(){
-
-    },
-    setUpdateMode : function(){
-
-    },showPopup : function(mode,paramObj,callBackFunc){
-
-        this.getView().show();
+    initSetting: function (mode, params) {
 
 
     }
+
 
 });

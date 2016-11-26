@@ -534,7 +534,7 @@
         "classic": {
             "toolkit": "classic",
             
-            "theme": "theme-neptune",
+            "theme": "custom-pmhtech-theme",
             
             "sass": {
                 "generated": {

@@ -4,11 +4,8 @@ Ext.define('SysApp.view.sys.code.master.SysCodeGridController', {
 
     onBtnSearch: function () {
 
-        var paramObj = {
-            LOCALE_CD : 'KOR'
-        };
         PmhTech.Ajax.request({
-            url: Ext.String.format('/sys/codes/{0}',paramObj.LOCALE_CD),
+            url: '/sys/codes',
             mode : 'GET',
             success: this.successLoad,
             scope : this
@@ -20,14 +17,12 @@ Ext.define('SysApp.view.sys.code.master.SysCodeGridController', {
 
     },
     onBtnInsert: function () {
-        var grid = this.getView().getSelectionModel().deselectAll();
-        var popup = Ext.ComponentQuery.query('sys-code-popup')[0];
 
-        if(!popup){
-            popup = Ext.widget('sys-code-popup');
-        }
-        var paramObj = {};
-        popup.showPopup('INSERT',paramObj);
+        var options = {
+            mode : 'INSERT'
+        };
+
+        PmhTech.Utils.showPopup('sys-code-popup',options);
 
     },
     onBtnUpdate: function () {

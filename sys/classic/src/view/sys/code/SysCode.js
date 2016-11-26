@@ -3,8 +3,6 @@ Ext.define('SysApp.view.sys.code.SysCode', {
 
     alias: 'widget.sys-code',
     controller: 'sys-code',
-
-
     leftItems: [{
         xtype: 'sys-code-grid',
         reference: 'sys-code-grid',
@@ -21,5 +19,4 @@ Ext.define('SysApp.view.sys.code.SysCode', {
         title: '코드상세',
         flex: 3
     }]
-
 });
