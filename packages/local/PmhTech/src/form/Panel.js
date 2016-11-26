@@ -7,6 +7,6 @@ Ext.define('PmhTech.form.Panel', {
     autoScroll: true,
     defaults: {
         columnWidth: 1,
-        padding: '0 5 5 5'
+        margin: '0 5 5 5'
     }
 });

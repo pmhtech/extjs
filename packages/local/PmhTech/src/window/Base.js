@@ -13,17 +13,19 @@ Ext.define('PmhTech.window.Base', {
     },
     items: [],
     initSetting: function (mode,params,callBackFunc,callBackScope) {
-        this.show();
+        //this.show();
 
         if(Ext.isFunction(callBackFunc)){
             this.getController().callBackFunc =function(){
                 Ext.callback(callBackFunc,callBackScope,arguments);
             };
-            if(mode){
-                Ext.callback(this.getController().initSetting, this.getController(), [mode,params]);
-            }else{
-                Ext.callback(this.getController().initSetting, this.getController(), [params]);
-            }
+        }
+
+        this.show();
+        if(mode){
+            Ext.callback(this.getController().initSetting, this.getController(), [mode,params]);
+        }else{
+            Ext.callback(this.getController().initSetting, this.getController(), [params]);
         }
     }
 });
