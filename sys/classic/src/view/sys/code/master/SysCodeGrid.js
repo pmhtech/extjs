@@ -38,8 +38,6 @@ Ext.define('SysApp.view.sys.code.master.SysCodeGrid', {
         {text: '코드명', dataIndex: 'CODE_NM', align: 'left'},
         {text: '사용유무', dataIndex: 'USE_YN', align: 'center'}
     ]
-
-
 });
 
 
