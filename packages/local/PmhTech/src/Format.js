@@ -10,7 +10,17 @@ Ext.define('PmhTech.Format', {
             if(findIdx==-1){
                 return value;
             }
-            return comboStore.getAt(findIdx).get(combo.displayField);
+            var rec =  comboStore.getAt(findIdx);
+
+
+            var value = '';
+            if(combo.isShowCode===true){
+                value = '['+rec.get(combo.valueField)+'] ';
+            }
+
+            value +=rec.get(combo.displayField);
+
+            return value;
         },
         dateRenderer: function (value) {
 
