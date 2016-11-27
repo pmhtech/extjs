@@ -18,34 +18,25 @@ Ext.define('SysApp.view.sys.code.master.SysCodeGridController', {
     },
     onBtnInsert: function () {
 
+        var params = {};
         var options = {
-            mode : 'INSERT'
+            mode : 'INSERT',
+            params : params
         };
 
         PmhTech.Utils.showPopup('sys-code-popup',options);
 
     },
     onBtnUpdate: function () {
-        var popup = Ext.ComponentQuery.query('sys-code-popup')[0];
 
-        if(!popup){
-            popup = Ext.widget('sys-code-popup');
-        }
 
         var record = this.getView().getSelectionModel().getSelection()[0];
+        var options = {
+            mode : 'UPDATE',
+            params : record.data
+        };
 
-        if(!record){
-            Ext.Msg.alert('확인','선택한 항목이 없습니다.');
-            return false;
-
-        }
-        var paramObj = record.data;
-
-        popup.showPopup('UPDATE',paramObj);
-
-
-
-
+        PmhTech.Utils.showPopup('sys-code-popup',options);
 
     },
     onBtnDelete: function () {

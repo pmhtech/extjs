@@ -15,7 +15,8 @@ Ext.application({
         'SysApp.view.global.GlobalMain'
     ],
     stores: [
-        'SysApp.store.Navigation'
+        'SysApp.store.Navigation',
+        'SysApp.store.FieldType'
     ],
 
     launch: function () {

@@ -18,22 +18,25 @@ Ext.define('SysApp.view.sys.code.master.SysCodeGrid', {
     }],
 
     storeProps: {
-        fields: ['COMPANY', 'PRE_CD', 'CODE', 'CODE_NM', 'USE_YN', 'MEMO'],
+        fields: [
+            { name : 'PRE_CD'},
+            { name : 'CODE'},
+            { name : 'CODE_NM'},
+            { name : 'REF1_CONFIG'},
+            { name : 'REF2_CONFIG'},
+            { name : 'REF3_CONFIG'},
+            { name : 'REF4_CONFIG'},
+            { name : 'REF5_CONFIG'},
+            { name : 'USE_YN'},
+            { name : 'MEMO'}
+
+        ],
         rootProperty: 'sysCodeGroup'
     },
     columns: [
-        {
-            text: '회사코드', dataIndex: 'COMPANY', align: '',
-
-            editor: {
-                xtype: 'pmh-combo-code',
-                displayField: 'CODE_NM',
-                valueField: 'CODE',
-                sysCodeName: 'COM_000001'
-            }, renderer: PmhTech.Format.comboRenderer
-        },
         {text: '코드그룹', dataIndex: 'PRE_CD', align: 'right'},
-        {text: '코드명', dataIndex: 'CODE_NM', align: 'center'}
+        {text: '코드명', dataIndex: 'CODE_NM', align: 'left'},
+        {text: '사용유무', dataIndex: 'USE_YN', align: 'center'}
     ]
 
 
