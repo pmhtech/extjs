@@ -4,6 +4,7 @@ Ext.define('SysApp.view.global.center.GlobalCenter', {
     layout: 'fit',
     items: [{
         xtype: 'tabpanel',
+        itemId : 'mainTab',
         defaults: {
             bodyPadding: 0,
             scrollable: true,

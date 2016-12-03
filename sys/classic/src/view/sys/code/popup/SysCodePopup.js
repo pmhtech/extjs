@@ -38,12 +38,9 @@ Ext.define('SysApp.view.sys.code.popup.SysCodePopup', {
         }]
     }],
     dockedItems : [{
-        xtype : 'toolbar',
-        docked : 'bottom',
-        items : [{
-            xtype : 'pmhtech-button-update',
-            handler : 'onBtnSave'
-        }]
+        xtype : 'pmh-button-toolbar',
+        btnItems : ['save','close'],
+        dock : 'bottom'
 
     }]
 });

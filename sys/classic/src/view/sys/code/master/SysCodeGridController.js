@@ -15,6 +15,9 @@ Ext.define('SysApp.view.sys.code.master.SysCodeGridController', {
             var store =this.getView().getStore();
             store.loadRawData(resObj);
 
+
+
+
     },
     onBtnInsert: function () {
 
@@ -27,7 +30,7 @@ Ext.define('SysApp.view.sys.code.master.SysCodeGridController', {
         PmhTech.Utils.showPopup('sys-code-popup',options);
 
     },
-    onBtnUpdate: function () {
+    onBtnModify: function () {
 
 
         var record = this.getView().getSelectionModel().getSelection()[0];
@@ -35,11 +38,6 @@ Ext.define('SysApp.view.sys.code.master.SysCodeGridController', {
             mode : 'UPDATE',
             params : record.data
         };
-
         PmhTech.Utils.showPopup('sys-code-popup',options);
-
-    },
-    onBtnDelete: function () {
-
     }
 });

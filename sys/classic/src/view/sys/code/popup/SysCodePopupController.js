@@ -6,11 +6,20 @@ Ext.define('SysApp.view.sys.code.popup.SysCodePopupController', {
 
         this.mode=mode;
         var thisStore = this.getView().down('grid').getStore();
-        thisStore.removeAll();
-
+        this.getView().down('#sysCodeForm').getForm().setValues(params);
         var datas = this.getRefData(params);
-
+        thisStore.removeAll();
         thisStore.add(datas);
+
+        var localeDatas =  params.LANGUAGE;
+
+        var tabpanel = this.getView().down('tabpanel');
+
+        for(var i=0;i<localeDatas.length;i++){
+            var localeData = localeDatas[i];
+            tabpanel.down('#'+localeData.LOCALE_CD).getForm().setValues(localeData);
+        }
+
     },
 
     onAfterRenderLocale: function (comp) {
@@ -37,6 +46,8 @@ Ext.define('SysApp.view.sys.code.popup.SysCodePopupController', {
             }
             items.push({
                 xtype: 'sys-code-locale-form',
+                LOCALE_CD : locale,
+                itemId : locale,
                 title: title
             });
         }
@@ -74,17 +85,26 @@ Ext.define('SysApp.view.sys.code.popup.SysCodePopupController', {
     onBtnSave : function(button){
         var sysCodeForm = this.getView().down('sys-code-form form');
         var sysCodeRef = this.getView().down('grid');
-        var sysCodeLocale = this.getView().query('tabpanel form');
 
 
+
+        var localeForms = this.getView().query('tabpanel form');
+        var sysCodeLocales = [];
         var sysCodeGroup=sysCodeForm.getForm().getValues();
 
+
+        for(var i=0;i<localeForms.length;i++){
+            var valueObject = localeForms[i].getForm().getValues();
+            Ext.apply(valueObject,sysCodeGroup);
+            sysCodeLocales.push(valueObject);
+
+        }
 
         for(var i=1;i<=5;i++){
             var rec = sysCodeRef.getStore().getAt(i-1);
 
-            var REF_EDIT_YN = rec.get('REF_EDIT_YN');
-            var REF_TYPE = rec.get('REF_TYPE')==true ? 'Y': 'N';
+            var REF_EDIT_YN = rec.get('REF_EDIT_YN')==true ? 'Y': 'N';
+            var REF_TYPE = rec.get('REF_TYPE');
             var REF_CD = rec.get('REF_CD');
 
             var REF_CONFIG= Ext.String.format('{0}-{1}',REF_EDIT_YN,REF_TYPE);
@@ -94,21 +114,13 @@ Ext.define('SysApp.view.sys.code.popup.SysCodePopupController', {
                 REF_CONFIG+='-'+REF_CD;
             }
             sysCodeGroup['REF'+i+'_CONFIG']= REF_CONFIG;
-
         }
-
-
-        var sysCode = sysCodeForm.getForm().getValues();
-        var sysCodeLocale = sysCodeForm.getForm().getValues();
-
-
-
         PmhTech.Ajax.request({
-            url: '/sys/codes',
-            mode : 'GET',
+            url: Ext.String.format('/sys/codes/{0}',sysCodeGroup.PRE_CD),
+            mode : this.mode=='INSERT'? 'POST': 'PUT',
             params : {
                 'sysCodeGroup' : Ext.encode(sysCodeGroup),
-                'listSysCodeLocale' : Ext.encode(listSysCodeLocale),
+                'sysCodeLocales' : Ext.encode(sysCodeLocales)
             },
             confirmMsg :{
                 title : '확인',
@@ -123,13 +135,12 @@ Ext.define('SysApp.view.sys.code.popup.SysCodePopupController', {
 
         var me = this.getView();
         Ext.Msg.alert('확인','정상처리되었습니다.',function(btn){
-
             me.hide();
-
-        })
-
+        });
+    },
+    onBtnClose : function(button){
+        var me = this;
+        me.getView().hide();
 
     }
-
-
 });

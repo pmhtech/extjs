@@ -11,12 +11,13 @@ Ext.define('SysApp.view.sys.code.SysCode', {
     }],
     rightItems: [{
         xtype: 'sys-code-detail-grid',
+        layout : 'fit',
         title: '코드목록',
         flex: 1,
         onGridSelect: 'onSelectDetailGrid'
     }, {
-        xtype: 'sys-code-detail-form',
-        title: '코드상세',
+        xtype: 'sys-code-locale-tabpanel',
+        layout : 'fit',
         flex: 3
     }]
 });

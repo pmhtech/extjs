@@ -8,7 +8,7 @@ Ext.define('SysApp.controller.menu.MenuController', {
     },
     refs: [{
         ref: 'centerTabPanel',
-        selector: 'global-center tabpanel'
+        selector: 'global-center #mainTab'
     }, {
         ref: 'globalNorth',
         selector: 'global-north'
@@ -34,12 +34,6 @@ Ext.define('SysApp.controller.menu.MenuController', {
     onGlobalCenterTabChange: function (component, newcard, oldcard) {
 
         var node = newcard.menuNode;
-
-
-        var globalEmpGridSelectCallBackFunc = Ext.emptyFn;
-
-
-        
 
         var globalNorth = this.getGlobalNorth();
         var masterId = this.getParentMenuByDepth(node, 1, "");

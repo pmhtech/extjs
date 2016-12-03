@@ -14,6 +14,7 @@ Ext.define('SysApp.view.sys.code.popup.tab.SysCodeLocaleForm', {
             items : [{
                 xtype : 'textfield',
                 fieldLabel : '언어설정',
+                value : me.LOCALE_CD,
                 name : 'LOCALE_CD',
                 hidden : true
             },{

@@ -2,10 +2,13 @@ Ext.define('SysApp.view.sys.code.detail.SysCodeDetailForm', {
     extend: 'PmhTech.form.Panel',
     alias: 'widget.sys-code-detail-form',
     controller: 'sys-code-detail-form',
+    layout : 'column',
     defaults: {
         columnWidth: 0.5,
-        padding: '0 5 5 5'
+        margin: '0 5 5 5'
     },
+    bodyPadding : 5,
+    border : false,
     items : [{
         xtype: 'pmh-combo-code',
         fieldLabel: '회사코드',

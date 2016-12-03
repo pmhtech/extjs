@@ -9,6 +9,7 @@ Ext.define('SysApp.view.sys.code.popup.tab.SysCodeForm', {
     items : [{
         xtype : 'pmhtech-form',
         border : false,
+        itemId : 'sysCodeForm',
         frame : false,
         defaults: {
             columnWidth: 0.5,
@@ -18,6 +19,13 @@ Ext.define('SysApp.view.sys.code.popup.tab.SysCodeForm', {
             xtype: 'textfield',
             fieldLabel: '코드그룹',
             name: 'PRE_CD'
+        }, {
+            xtype: 'textfield',
+            fieldLabel: '회사코드',
+            readOnly: true,
+            hidden: true,
+            value: '000000',
+            name: 'COMPANY'
         }, {
             xtype: 'textfield',
             fieldLabel: '코드',

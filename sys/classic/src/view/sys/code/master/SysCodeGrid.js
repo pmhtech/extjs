@@ -2,22 +2,16 @@ Ext.define('SysApp.view.sys.code.master.SysCodeGrid', {
     extend: 'PmhTech.grid.Base',
     alias: 'widget.sys-code-grid',
     controller: 'sys-code-grid',
-    height: 300,
-    tbar: [{xtype: 'tbfill'}, {
-        xtype: 'pmhtech-button-search',
-        handler: 'onBtnSearch'
-    }, {
-        xtype: 'pmhtech-button-insert',
-        handler: 'onBtnInsert'
-    }, {
-        xtype: 'pmhtech-button-update',
-        handler: 'onBtnUpdate'
-    }, {
-        xtype: 'pmhtech-button-delete',
-        handler: 'onBtnDelete'
-    }],
+    height : '100%',
+    dockedItems : [{
+        xtype : 'pmh-button-toolbar',
+        dock : 'top',
+        buttonAlign : 'right',
+        btnItems : ['search','insert','modify']
 
+    }],
     storeProps: {
+
         fields: [
             { name : 'PRE_CD'},
             { name : 'CODE'},
@@ -31,7 +25,7 @@ Ext.define('SysApp.view.sys.code.master.SysCodeGrid', {
             { name : 'MEMO'}
 
         ],
-        rootProperty: 'sysCodeGroup'
+        rootProperty: 'sysCodeGroups'
     },
     columns: [
         {text: '코드그룹', dataIndex: 'PRE_CD', align: 'right'},

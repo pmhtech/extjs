@@ -4,7 +4,7 @@ Ext.define('SysApp.view.sys.code.detail.SysCodeDetailGrid',{
     controller : 'sys-code-detail-grid',
     storeProps : {
         fields : ['COMPANY','PRE_CD','CODE','CODE_NM','REF1','REF2','REF3','REF4','REF5','USE_YN','MEMO'],
-        rootProperty : 'sysCode'
+        rootProperty : 'sysCodes'
     },
     columns : [
         { text : '회사코드', dataIndex : 'COMPANY'  },
