@@ -4,7 +4,7 @@ Ext.define('PmhTech.grid.Base', {
     storeProps: {
         url: null,
         fields: [],
-        rootProperty: 'list'
+        rootProperty: null
     },
     excelMode: false,
     frame: true,
@@ -15,7 +15,6 @@ Ext.define('PmhTech.grid.Base', {
     usePagingToolbar: true,
     dragTarget: null,
     dropTarget: null,
-    height: '100%',
     ddGroup: null,
     enableDrag: true,
     enableDrop: true,
@@ -76,26 +75,22 @@ Ext.define('PmhTech.grid.Base', {
     configStore: function () {
 
         var me = this;
-        if (!Ext.isEmpty(me.store)) {
-            return me.store;
-        }
-
 
         return Ext.create('Ext.data.Store', {
             fields: Ext.isArray(me.storeProps.fields) ? Ext.clone(me.storeProps.fields) : [],
             autoLoad: me.storeProps.autoLoad,
             proxy: {
-                type: 'ajax',
+                type: Ext.isEmpty(me.storeProps.url) ? 'memory':'ajax',
                 url: me.storeProps.url,
                 reader: {
                     type: 'json',
-                    rootProperty: Ext.isEmpty(me.storeProps.rootProperty) ? 'list' : me.storeProps.rootProperty
+                    rootProperty: me.storeProps.rootProperty
                 }
             },
             listeners: {
                 load: function (store) {
                     me.show();
-                    this.fireEvent('storeload', [store])
+                    this.fireEvent('storeLoad', store);
                 }, scope: me
 
             }

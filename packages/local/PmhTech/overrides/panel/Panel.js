@@ -7,7 +7,6 @@ Ext.define('PmhTech.override.panel.Panel', {
             comp.fireEvent('InitMode', comp);
 
         });
-
         me.callParent(arguments);
 
 

@@ -1,8 +1,7 @@
 Ext.define('PmhTech.window.Base', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.window.Window',
     modal: true,
     width: 800,
-    height: 400,
     closable: true,
     hidden: true,
     closeAction: 'hide',
@@ -15,17 +14,21 @@ Ext.define('PmhTech.window.Base', {
     initSetting: function (mode,params,callBackFunc,callBackScope) {
         //this.show();
 
-        if(Ext.isFunction(callBackFunc)){
-            this.getController().callBackFunc =function(){
-                Ext.callback(callBackFunc,callBackScope,arguments);
+        if (Ext.isFunction(callBackFunc)) {
+            this.getController().callBackFunc = function () {
+                Ext.callback(callBackFunc, callBackScope, arguments);
             };
         }
 
         this.show();
-        if(mode){
-            Ext.callback(this.getController().initSetting, this.getController(), [mode,params]);
-        }else{
+        if (mode) {
+            Ext.callback(this.getController().initSetting, this.getController(), [mode, params]);
+        } else {
             Ext.callback(this.getController().initSetting, this.getController(), [params]);
         }
+
+
+        this.getController().mode = mode;
+        this.getController().params = params;
     }
 });

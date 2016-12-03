@@ -68,6 +68,7 @@ Ext.define('PmhTech.event.EventWireManager', {
                 var childNode = childNodes[i];
 
 
+
                 parentComp.addListener(parentEvent,function(){
 
                     var eventProps = me._getEventArgs(masterView,this);
@@ -92,6 +93,7 @@ Ext.define('PmhTech.event.EventWireManager', {
 
             var treeData = PmhTech.util.StoreUtil.convertListToTree(array,'ID','PRE_ID','');
             var rootNode = treeData[0];
+
             this._getEventWire(masterView,rootNode,rootNode.children);
 
 

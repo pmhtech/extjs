@@ -19,6 +19,7 @@ Ext.define('PmhTech.data.Store', {
         me.callParent(arguments);
 
         if(me.getProxy() && me.getProxy().type=='memory'){
+
             me.fireEvent('load',me);
         }
     }
