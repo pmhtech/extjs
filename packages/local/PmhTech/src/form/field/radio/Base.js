@@ -1,7 +1,7 @@
 Ext.define('PmhTech.form.field.radio.Base', {
-    extend: 'Ext.container.Container',
+    extend: 'Ext.form.FieldContainer',
     alias: 'widget.pmhtech-radio-base',
-    height : 50,
+    height : 24,
     initComponent: function () {
         var me = this;
 
@@ -20,7 +20,7 @@ Ext.define('PmhTech.form.field.radio.Base', {
         Ext.apply(me, {
             items: [{
                 xtype: 'fieldset',
-                title: title,
+                height : 24,
                 defaults: {
                     anchor: '100%'
                 },

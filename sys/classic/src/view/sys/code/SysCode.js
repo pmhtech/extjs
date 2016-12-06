@@ -15,8 +15,8 @@ Ext.define('SysApp.view.sys.code.SysCode', {
         title: '코드목록',
         flex: 1,
         onGridSelect: 'onSelectDetailGrid'
-    }, {
-        xtype: 'sys-code-locale-tabpanel',
+    },{
+        xtype: 'sys-code-detail-tab',
         layout : 'fit',
         flex: 3
     }]

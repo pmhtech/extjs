@@ -1,6 +1,6 @@
-Ext.define('SysApp.view.sys.code.detail.SysCodeLocaleFormController', {
+Ext.define('SysApp.view.sys.code.detail.tab.SysCodeDetailTabController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.sys-code-locale-tabpanel',
+    alias: 'controller.sys-code-detail-tab',
     onAfterRender: function (comp) {
 
         var store = SysCode['COM_000003'];
@@ -24,7 +24,7 @@ Ext.define('SysApp.view.sys.code.detail.SysCodeLocaleFormController', {
                 title = '<b>' + title + '(Default)</b>';
             }
             items.push({
-                xtype: 'sys-code-detail-form',
+                xtype: 'sys-code-detail-tab-locale',
                 LOCALE_CD : locale,
                 title: title
             });

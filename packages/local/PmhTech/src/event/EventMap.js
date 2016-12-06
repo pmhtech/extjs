@@ -3,7 +3,7 @@ Ext.define('PmhTech.event.EventMap', {
 
     statics: {
 
-        'SysApp.view.sys.code.SysCode' : function () {
+        'SysAppcc.view.sys.code.SysCode' : function () {
             var codeGroupLoad = [{
                 "EventType": "그룹코드로드",
                 "PRE_ID": "",

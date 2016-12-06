@@ -22,7 +22,7 @@ Ext.define('SysApp.view.login.JoinFormController', {
         AjaxUtil.request('UserMst', 'DEFAULT', 'POST', paramObj, this.doJoinSuccess);
     },
     doJoinSuccess : function(response){
-        debugger;
+
     },
     onBtnReset : function(){
       this.getView().getForm().reset();

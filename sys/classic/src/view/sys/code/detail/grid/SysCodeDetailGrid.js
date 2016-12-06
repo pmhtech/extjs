@@ -1,4 +1,4 @@
-Ext.define('SysApp.view.sys.code.detail.SysCodeDetailGrid',{
+Ext.define('SysApp.view.sys.code.detail.grid.SysCodeDetailGrid',{
     extend : 'PmhTech.grid.Base',
     alias : 'widget.sys-code-detail-grid',
     controller : 'sys-code-detail-grid',

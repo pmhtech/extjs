@@ -1,12 +1,19 @@
 Ext.define('PmhTech.data.Store', {
     override: 'Ext.data.Store',
-    copy: function () {
+    copy: function (isAll) {
         var me = this;
+
+
 
         var records = [];
         me.each(function(r){
             records.push(r.copy());
         });
+
+        if(isAll===false){
+            records = Ext.Array.slice(records,1);
+        }
+
         var store = Ext.create('Ext.data.Store',{
            data : records
 

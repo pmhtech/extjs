@@ -4,17 +4,17 @@ Ext.define('PmhTech.form.field.combo.Code',{
     sysCodeName : null,
     displayField : 'CODE_NM',
     valueField : 'CODE',
+    isAll : true,
     initComponent : function(){
 
         var me = this;
 
         if(me.sysCodeName){
             Ext.apply(me,{
-                store : SysCode[me.sysCodeName].copy()
+                store : SysCode[me.sysCodeName].copy(me.isAll)
             });
         }
         me.callParent(arguments);
-
 
     }
 });

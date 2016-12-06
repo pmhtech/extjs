@@ -1,8 +1,8 @@
-Ext.define('SysApp.view.sys.code.detail.SysCodeLocaleForm', {
+Ext.define('SysApp.view.sys.code.detail.tab.SysCodeDetailTab', {
 	extend: 'Ext.tab.Panel',
-	requires: ['SysApp.view.sys.code.detail.SysCodeDetailForm'],
-	alias: 'widget.sys-code-locale-tabpanel',
-	controller: 'sys-code-locale-tabpanel',
+	requires: ['SysApp.view.sys.code.detail.tab.locale.SysCodeDetailTabLocale'],
+	alias: 'widget.sys-code-detail-tab',
+	controller: 'sys-code-detail-tab',
 	items: [],
 	tabBar :{
 		items: [{
