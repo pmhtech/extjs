@@ -1,6 +1,6 @@
-Ext.define('SysApp.view.sys.code.popup.tab.SysCodeLocaleForm', {
+Ext.define('SysApp.view.sys.code.popup.tab.locale.SysCodePopupTabLocale', {
     extend: 'PmhTech.form.Panel',
-    alias: 'widget.sys-code-locale-form',
+    alias: 'widget.sys-code-popup-tab-locale',
     controller: 'sys-code-popup',
     initComponent : function(){
         var me = this;

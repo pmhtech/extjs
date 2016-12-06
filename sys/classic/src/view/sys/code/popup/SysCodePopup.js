@@ -16,26 +16,15 @@ Ext.define('SysApp.view.sys.code.popup.SysCodePopup', {
         margin : 10
     },
     items: [{
-        xtype: 'sys-code-form',
+        xtype: 'sys-code-popup-form',
         height : 100
     }, {
-        xtype: 'sys-code-ref',
+        xtype: 'sys-code-popup-ref',
         height : 200
     }, {
-
-
-        xtype: 'fieldset',
-        collapsible : true,
-
+        xtype: 'sys-code-popup-tab',
         title: '다국어설정',
-        height : 250,
-        items: [{
-            xtype: 'tabpanel',
-            itemId: 'sysCodeLocale',
-            listeners: {
-                afterrender: 'onAfterRenderLocale'
-            }
-        }]
+        height : 250
     }],
     dockedItems : [{
         xtype : 'pmh-button-toolbar',

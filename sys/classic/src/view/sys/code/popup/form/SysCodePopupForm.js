@@ -1,6 +1,6 @@
-Ext.define('SysApp.view.sys.code.popup.tab.SysCodeForm', {
+Ext.define('SysApp.view.sys.code.popup.tab.SysCodePopupForm', {
     extend: 'Ext.form.FieldSet',
-    alias: 'widget.sys-code-form',
+    alias: 'widget.sys-code-popup-form',
     controller: 'sys-code-popup',
     layout: 'fit',
     collapsible: true,

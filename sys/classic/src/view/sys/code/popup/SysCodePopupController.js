@@ -67,7 +67,7 @@ Ext.define('SysApp.view.sys.code.popup.SysCodePopupController', {
             }
             var temp= refConfig.split('-');
 
-            var REF_EDIT_YN = temp[0]=='Y' ? true : false;
+            var REF_EDIT_YN = (temp[0]=='Y') ? true : false;
             var REF_TYPE = temp[1];
             var REF_CD = temp[2];
 
@@ -83,7 +83,7 @@ Ext.define('SysApp.view.sys.code.popup.SysCodePopupController', {
 
     },
     onBtnSave : function(button){
-        var sysCodeForm = this.getView().down('sys-code-form form');
+        var sysCodeForm = this.getView().down('sys-code-popup-form form');
         var sysCodeRef = this.getView().down('grid');
 
 
@@ -115,9 +115,10 @@ Ext.define('SysApp.view.sys.code.popup.SysCodePopupController', {
             }
             sysCodeGroup['REF'+i+'_CONFIG']= REF_CONFIG;
         }
+
         PmhTech.Ajax.request({
             url: Ext.String.format('/sys/codes/{0}',sysCodeGroup.PRE_CD),
-            mode : this.mode=='INSERT'? 'POST': 'PUT',
+            method : this.mode=='INSERT'? 'POST': 'PUT',
             params : {
                 'sysCodeGroup' : Ext.encode(sysCodeGroup),
                 'sysCodeLocales' : Ext.encode(sysCodeLocales)

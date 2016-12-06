@@ -1,6 +1,6 @@
-Ext.define('SysApp.view.sys.code.popup.tab.SysCodeRef', {
+Ext.define('SysApp.view.sys.code.popup.ref.SysCodePopupRef', {
     extend: 'Ext.form.FieldSet',
-    alias: 'widget.sys-code-ref',
+    alias: 'widget.sys-code-popup-ref',
     layout: 'fit',
     collapsible: true,
     title: '세부정보 설정',
@@ -28,7 +28,7 @@ Ext.define('SysApp.view.sys.code.popup.tab.SysCodeRef', {
             {
                 text: '코드그룹', dataIndex: 'REF_CD', align: 'left', editor: {
                 xtype: 'pmh-combo',
-                store: Ext.ComponentQuery.query('sys-code-grid')[0].getStore(),
+                store: Ext.ComponentQuery.query('sys-code-group')[0].getStore(),
                 isShowCode: true,
                 displayField: 'CODE_NM',
                 valueField: 'PRE_CD'

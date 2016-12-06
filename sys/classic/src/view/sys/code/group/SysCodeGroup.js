@@ -1,7 +1,7 @@
-Ext.define('SysApp.view.sys.code.master.SysCodeGrid', {
+Ext.define('SysApp.view.sys.code.group.SysCodeGroup', {
     extend: 'PmhTech.grid.Base',
-    alias: 'widget.sys-code-grid',
-    controller: 'sys-code-grid',
+    alias: 'widget.sys-code-group',
+    controller: 'sys-code-group',
     height : '100%',
     dockedItems : [{
         xtype : 'pmh-button-toolbar',

@@ -4,6 +4,28 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 
     onSelectGrid: function (selModel, record, index) {
 
+        var locales = record.data.LANGUAGE;
+        var localeTab = this.getView().down('sys-code-locale-tabpanel');
+
+        for(var i=0;i<locales.length;i++){
+            var locale = locales[i];
+            var targetForm = localeTab.down('[LOCALE_CD='+locale.LOCALE_CD+']');
+
+            debugger;
+            for(var j=1;j<=5;j++){
+                var name = 'REF'+j;
+                var fields =targetForm.query('[name='+name+']');
+                Ext.Array.each(fields,function(field){
+                    field.setFieldLabel(locale[name]);
+                });
+
+            }
+        }
+
+
+
+
+
         var paramObj = {
             PRE_CD: record.get('PRE_CD')
         };
@@ -21,7 +43,8 @@ Ext.define('SysApp.view.sys.SysCodeController', {
         var grid = this.getView().down('sys-code-detail-grid');
         var form = this.getView().down('sys-code-detail-form');
 
-        var rec = this.getView().down('sys-code-grid').getSelectionModel().getSelection();
+        debugger;
+        var rec = this.getView().down('sys-code-group').getSelectionModel().getSelection();
 
         form.getForm().setValues(rec.data);
 

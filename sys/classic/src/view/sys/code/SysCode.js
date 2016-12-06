@@ -1,11 +1,11 @@
 Ext.define('SysApp.view.sys.code.SysCode', {
     extend: 'SysApp.view.content.HBoxDefaultView',
-
     alias: 'widget.sys-code',
+    requires : ['SysApp.view.sys.code.popup.SysCodePopup'],
     controller: 'sys-code',
     leftItems: [{
-        xtype: 'sys-code-grid',
-        reference: 'sys-code-grid',
+        xtype: 'sys-code-group',
+        reference: 'sys-code-group',
         title: '코드그룹목록 ',
         onGridSelect: 'onSelectGrid'
     }],

@@ -1,6 +1,6 @@
-Ext.define('SysApp.view.sys.code.master.SysCodeGridController', {
+Ext.define('SysApp.view.sys.code.group.SysCodeGroupController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.sys-code-grid',
+    alias: 'controller.sys-code-group',
 
     onBtnSearch: function () {
 
