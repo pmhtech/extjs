@@ -8,9 +8,9 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 		var localeTab = this.getView().down('sys-code-detail-tab');
 
 
-		var findIdx = SysCode['COM_000003'].find('CODE', 'DEFAULT');
+		var findIdx = SysCode['COM_000002'].find('CODE', 'DEFAULT');
 
-		var defaultLang = SysCode['COM_000003'].getAt(findIdx).get('REF1');
+		var defaultLang = SysCode['COM_000002'].getAt(findIdx).get('REF1');
 
 
 		for (var i = 0; i < locales.length; i++) {
@@ -92,7 +92,6 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 		var tabPanel = this.getView().down('sys-code-detail-tab');
 		var localeDatas = record.data.LANGUAGE;
 
-		debugger;
 		for (var i = 0; i < localeDatas.length; i++) {
 			var localeData = localeDatas[i];
 			var LOCALE_CD = localeData.LOCALE_CD;

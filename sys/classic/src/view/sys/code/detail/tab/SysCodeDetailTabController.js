@@ -60,24 +60,24 @@ Ext.define('SysApp.view.sys.code.detail.tab.SysCodeDetailTabController', {
 
     onAfterRender: function (comp) {
 
-        var store = SysCode['COM_000003'];
-        var localeStore = SysCode['COM_000004'];
+        var findIdx = SysCode['COM_000002'].find('CODE','DEFAULT');
+
+
+        var defaultRec = SysCode['COM_000002'].getAt(findIdx);
+        var localeStore = SysCode['COM_000003'];
         var items = [];
 
 
-        for (var i = 0; i < store.getCount(); i++) {
-            var rec = store.getAt(i);
-
+        for (var i = 0; i < localeStore.getCount(); i++) {
+            var rec = localeStore.getAt(i);
             if (rec.get('CODE') == 'ALL') {
                 continue;
             }
 
-            var locale = rec.get('REF1');
-            var findIdx = localeStore.find('CODE', locale);
+            var locale = rec.get('CODE');
+            var title = localeStore.getAt(i).get('CODE_NM');
 
-            var title = localeStore.getAt(findIdx).get('CODE_NM');
-
-            if (rec.get('CODE') == 'DEFAULT') {
+            if (defaultRec.get('REF1') == locale) {
                 title = '<b>' + title + '(Default)</b>';
             }
             items.push({
