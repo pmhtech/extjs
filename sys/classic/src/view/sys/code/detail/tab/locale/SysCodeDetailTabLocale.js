@@ -36,55 +36,45 @@ Ext.define('SysApp.view.sys.code.detail.tab.locale.SysCodeDetailTabLocale', {
 		columnWidth: 1,
 		name: 'CODE_NM'
 	}, {
-		xtype: 'textfield',
-		fieldLabel: '관리항목1',
-		name: 'REF1'
-	}, {
-		xtype: 'pmh-combo-code',
-		fieldLabel: '관리항목1',
-		disabled: true,
-		hidden: true,
-		name: 'REF1'
-	}, {
-		xtype: 'textfield',
-		fieldLabel: '관리항목2',
-		name: 'REF2'
-	}, {
-		xtype: 'pmh-combo-code',
-		fieldLabel: '관리항목2',
-		disabled: true,
-		hidden: true,
-		name: 'REF2'
-	}, {
-		xtype: 'textfield',
-		fieldLabel: '관리항목3',
-		name: 'REF3'
-	}, {
-		xtype: 'pmh-combo-code',
-		fieldLabel: '관리항목3',
-		disabled: true,
-		hidden: true,
-		name: 'REF3'
-	}, {
-		xtype: 'textfield',
-		fieldLabel: '관리항목4',
-		name: 'REF4'
-	}, {
-		xtype: 'pmh-combo-code',
-		fieldLabel: '관리항목4',
-		disabled: true,
-		hidden: true,
-		name: 'REF4'
-	}, {
-		xtype: 'textfield',
-		fieldLabel: '관리항목5',
-		name: 'REF5'
-	}, {
-		xtype: 'pmh-combo-code',
-		fieldLabel: '관리항목5',
-		disabled: true,
-		hidden: true,
-		name: 'REF5'
+		xtype: 'fieldset',
+		margin: 0,
+		padding: 0,
+		border: false,
+		layout: 'column',
+		itemId: 'refFields',
+		columnWidth: 1,
+		defaults: {
+			margin: ' 5 5 5 0',
+			columnWidth : 0.5
+		},
+		items: [{
+			xtype: 'textfield',
+			fieldLabel: '관리항목1',
+			name: 'REF1'
+		}, {
+			xtype: 'textfield',
+			fieldLabel: '관리항목2',
+			name: 'REF2'
+		}, {
+			xtype: 'textfield',
+			fieldLabel: '관리항목3',
+			name: 'REF3'
+		}, {
+			xtype: 'textfield',
+			fieldLabel: '관리항목4',
+			name: 'REF4'
+		}, {
+			xtype: 'textfield',
+			fieldLabel: '관리항목5',
+			name: 'REF5'
+		}]
+	},  {
+		xtype: 'textarea',
+		name : 'MEMO',
+		fieldLabel: '메모',
+		columnWidth: 1,
+		height: 100
+
 	}, {
 		xtype: 'pmhtech-radio-base',
 		fieldLabel: '사용유무',
@@ -99,21 +89,11 @@ Ext.define('SysApp.view.sys.code.detail.tab.locale.SysCodeDetailTabLocale', {
 			name: 'USE_YN',
 			boxLabel: '미사용'
 		}]
-	}, {
-		xtype : 'textarea',
-		fieldLabel : '메모',
-		columnWidth : 1,
-		height : 100
-
 	},{
 		xtype: 'textfield',
 		fieldLabel: '정렬순서',
 		name: 'SORT'
-	}], listeners: {
-		InitMode: 'onInitMode',
-		UpdateMode: 'onUpdateMode',
-		InsertMode: 'onInsertMode'
-	}
+	}]
 
 
 });

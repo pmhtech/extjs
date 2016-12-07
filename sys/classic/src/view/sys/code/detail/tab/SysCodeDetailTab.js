@@ -19,7 +19,10 @@ Ext.define('SysApp.view.sys.code.detail.tab.SysCodeDetailTab', {
 		}]
 	},
 	listeners: {
-		afterrender: 'onAfterRender'
+		afterrender: 'onAfterRender',
+		InitMode: 'onInitMode',
+		UpdateMode: 'onUpdateMode',
+		InsertMode: 'onInsertMode'
 	}
 
 

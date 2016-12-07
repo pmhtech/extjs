@@ -14,10 +14,6 @@ Ext.define('SysApp.view.sys.code.group.SysCodeGroupController', {
     successLoad: function (resObj) {
             var store =this.getView().getStore();
             store.loadRawData(resObj);
-
-
-
-
     },
     onBtnInsert: function () {
 
@@ -26,7 +22,6 @@ Ext.define('SysApp.view.sys.code.group.SysCodeGroupController', {
             mode : 'INSERT',
             params : params
         };
-
         PmhTech.Utils.showPopup('sys-code-popup',options);
 
     },

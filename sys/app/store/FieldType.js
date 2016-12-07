@@ -7,7 +7,7 @@ Ext.define('SysApp.store.FieldType', {
         {name: 'CODE_NM', type: 'string'}
     ], data: [
         ['10','textfield', 'Textfield'],
-        ['20','combo', 'ComboBox'],
+        ['20','pmh-combo-code', 'ComboBox'],
         ['30','datefield', 'DateField']
     ]
 });

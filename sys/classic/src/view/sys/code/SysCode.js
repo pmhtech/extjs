@@ -4,15 +4,15 @@ Ext.define('SysApp.view.sys.code.SysCode', {
     requires : ['SysApp.view.sys.code.popup.SysCodePopup'],
     controller: 'sys-code',
     leftItems: [{
-        xtype: 'sys-code-group',
-        reference: 'sys-code-group',
         title: '코드그룹목록 ',
+        xtype: 'sys-code-group',
         onGridSelect: 'onSelectGrid'
+
     }],
     rightItems: [{
         xtype: 'sys-code-detail-grid',
-        layout : 'fit',
         title: '코드목록',
+        layout : 'fit',
         flex: 1,
         onGridSelect: 'onSelectDetailGrid'
     },{
