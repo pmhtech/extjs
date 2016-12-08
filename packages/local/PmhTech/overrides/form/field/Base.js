@@ -8,6 +8,7 @@ Ext.define('PmhTech.override.form.field.Base', {
         var me = this;
         me.callParent(arguments);
         me.oriFieldLabel =me.fieldLabel;
+        me.oriValue = me.value;
         me.addListener('afterrender',function(component){
             if(component.allowBlank===false){
                 component.setAllowBlank(component.allowBlank);

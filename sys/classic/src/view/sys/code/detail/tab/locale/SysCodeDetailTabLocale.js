@@ -84,6 +84,7 @@ Ext.define('SysApp.view.sys.code.detail.tab.locale.SysCodeDetailTabLocale', {
 	}, {
 		xtype: 'pmhtech-radio-base',
 		fieldLabel: '사용유무',
+		name: 'USE_YN',
 		radioItems: [{
 			xtype: 'radio',
 			inputValue: 'Y',

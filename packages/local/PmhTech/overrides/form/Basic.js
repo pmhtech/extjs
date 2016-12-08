@@ -26,7 +26,7 @@ Ext.define('PmhTech.override.form.Basic', {
         for(var i=0;i<fields.length;i++){
             var field = fields[i];
             var fieldName = field.getName();
-            valueObject[fieldName]=field.value;
+            valueObject[fieldName]=field.oriValue;
         }
         me.setValues(valueObject);
         me.reset();
