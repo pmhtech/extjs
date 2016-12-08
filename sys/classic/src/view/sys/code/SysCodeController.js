@@ -4,6 +4,11 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 
 	onSelectGrid: function (selModel, record, index) {
 
+		this.getView().down('sys-code-detail-tab  pmh-button-add').setDisabled(false);
+		this.getView().down('sys-code-detail-tab  pmh-button-save').setDisabled(false);
+		this.getView().down('sys-code-detail-tab  pmh-button-reset').setDisabled(false);
+
+
 		var locales = record.data.LANGUAGE;
 		var localeTab = this.getView().down('sys-code-detail-tab');
 
@@ -21,7 +26,7 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 
 
 			var defaultReadOnly = locale.LOCALE_CD != defaultLang;
-			targetForm.setReadOnlyFields(defaultReadOnly,['USE_YN','SORT']);
+			targetForm.setReadOnlyFields(defaultReadOnly,['COMPANY','CODE','USE_YN','SORT']);
 
 			var fields = [];
 			for (var j = 1; j <= 5; j++) {

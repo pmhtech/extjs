@@ -32,7 +32,19 @@ Ext.define('SysApp.view.sys.code.detail.SysCodeDetailTabLocaleController', {
         form.setReadOnlyFields(true);
     },
     onInsertMode : function(form){
-        form.setReadOnlyFields(false, ['COMPANY','CODE','CODE_NM','MEMO']);
+        form.getForm().resetClearFields();
+
+
+        var findIdx = SysCode['COM_000002'].find('CODE', 'DEFAULT');
+
+        var rec = SysCode['COM_000002'].getAt(findIdx);
+
+        if(rec.get('REF1')==form.LOCALE_CD){
+
+            form.setReadOnlyFields(false, ['COMPANY','CODE']);
+        }
+
+        form.setReadOnlyFields(false, ['CODE_NM','MEMO']);
         form.setReadOnlyFields(true, ['PRE_CD' ]);
     },
     onUpdateMode : function(form){
@@ -51,7 +63,7 @@ Ext.define('SysApp.view.sys.code.detail.SysCodeDetailTabLocaleController', {
             radiogroup.setValue(newValue);
         }
     },
-    onChangeSORT: function(field,newValue,oldValue){
+    onChangeNotify: function(field,newValue,oldValue){
 
 
         var locales = this.getView().up('tabpanel').query('sys-code-detail-tab-locale');

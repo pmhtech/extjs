@@ -4,6 +4,7 @@ Ext.define('SysApp.view.sys.code.detail.tab.SysCodeDetailTab', {
 	alias: 'widget.sys-code-detail-tab',
 	controller: 'sys-code-detail-tab',
 	items: [],
+	deferredRender : false,
 	tabBar :{
 		items: [{
 			xtype : 'tbfill'

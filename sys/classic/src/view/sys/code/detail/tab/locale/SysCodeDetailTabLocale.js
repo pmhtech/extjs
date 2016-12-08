@@ -25,11 +25,17 @@ Ext.define('SysApp.view.sys.code.detail.tab.locale.SysCodeDetailTabLocale', {
 		xtype: 'pmh-combo-code',
 		fieldLabel: '법인구분',
 		store: SysCode['COM_000001'].copy(false),
-		name: 'COMPANY'
+		name: 'COMPANY',
+		listeners: {
+			change: 'onChangeNotify'
+		}
 	}, {
 		xtype: 'textfield',
 		fieldLabel: '코드',
-		name: 'CODE'
+		name: 'CODE',
+		listeners: {
+			change: 'onChangeNotify'
+		}
 	}, {
 		xtype: 'textfield',
 		fieldLabel: '코드명',
@@ -95,7 +101,7 @@ Ext.define('SysApp.view.sys.code.detail.tab.locale.SysCodeDetailTabLocale', {
 		fieldLabel: '정렬순서',
 		name: 'SORT',
 		listeners: {
-			change: 'onChangeSORT'
+			change: 'onChangeNotify'
 		}
 	}],
 	listeners: {

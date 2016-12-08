@@ -3,7 +3,7 @@ Ext.define('SysApp.view.sys.code.popup.SysCodePopupTab', {
 	alias: 'widget.sys-code-popup-tab',
 	controller: 'sys-code-popup-tab',
 	collapsible: true,
-
+	deferredRender : false,
 	items: [{
 		xtype: 'tabpanel',
 		itemId: 'sysCodeLocale',

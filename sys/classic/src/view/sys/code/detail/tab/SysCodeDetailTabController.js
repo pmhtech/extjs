@@ -4,6 +4,12 @@ Ext.define('SysApp.view.sys.code.detail.tab.SysCodeDetailTabController', {
 
     onInitMode: function (comp) {
 
+
+        this.getView().down('pmh-button-add').setDisabled(true);
+        this.getView().down('pmh-button-save').setDisabled(true);
+        this.getView().down('pmh-button-reset').setDisabled(true);
+
+
         var forms = comp.query('form');
         for( var i=0;i<forms.length;i++){
             var form = forms[i];
@@ -27,6 +33,22 @@ Ext.define('SysApp.view.sys.code.detail.tab.SysCodeDetailTabController', {
             var form = forms[i];
             form.fireEvent('UpdateMode',form);
 
+        }
+
+    },
+    onBtnAdd : function(button){
+        this.getView().up('sys-code').down('sys-code-detail-grid').getSelectionModel().deselectAll();
+        this.onInsertMode(this.getView());
+
+    }
+    ,onBtnSave : function(button){
+
+    }
+    ,onBtnReset : function(button){
+        var forms = this.getView().query('form');
+
+        for(var i=0;i<forms.length;i++){
+            forms[i].getForm().reset();
         }
 
     },
