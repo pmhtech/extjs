@@ -24,7 +24,7 @@ Ext.define('SysApp.view.sys.code.detail.tab.locale.SysCodeDetailTabLocale', {
 	}, {
 		xtype: 'pmh-combo-code',
 		fieldLabel: '법인구분',
-		sysCodeName: 'COM_000001',
+		store: SysCode['COM_000001'].copy(false),
 		name: 'COMPANY'
 	}, {
 		xtype: 'textfield',
@@ -45,7 +45,7 @@ Ext.define('SysApp.view.sys.code.detail.tab.locale.SysCodeDetailTabLocale', {
 		columnWidth: 1,
 		defaults: {
 			margin: ' 5 5 5 0',
-			columnWidth : 0.5
+			columnWidth: 0.5
 		},
 		items: [{
 			xtype: 'textfield',
@@ -68,9 +68,9 @@ Ext.define('SysApp.view.sys.code.detail.tab.locale.SysCodeDetailTabLocale', {
 			fieldLabel: '관리항목5',
 			name: 'REF5'
 		}]
-	},  {
+	}, {
 		xtype: 'textarea',
-		name : 'MEMO',
+		name: 'MEMO',
 		fieldLabel: '메모',
 		columnWidth: 1,
 		height: 100
@@ -88,12 +88,19 @@ Ext.define('SysApp.view.sys.code.detail.tab.locale.SysCodeDetailTabLocale', {
 			inputValue: 'N',
 			name: 'USE_YN',
 			boxLabel: '미사용'
-		}]
-	},{
+		}],
+		onChangeRadioGroup: 'onChangeUSE_YN'
+	}, {
 		xtype: 'textfield',
 		fieldLabel: '정렬순서',
-		name: 'SORT'
-	}]
-
-
+		name: 'SORT',
+		listeners: {
+			change: 'onChangeSORT'
+		}
+	}],
+	listeners: {
+		InitMode: 'onInitMode',
+		UpdateMode: 'onUpdateMode',
+		InsertMode: 'onInsertMode'
+	}
 });

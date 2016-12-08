@@ -7,34 +7,7 @@ Ext.define('SysApp.view.sys.code.detail.tab.SysCodeDetailTabController', {
         var forms = comp.query('form');
         for( var i=0;i<forms.length;i++){
             var form = forms[i];
-            form.getForm().reset();
-
-            form.down('#refFields').removeAll();
-            var fields =[{
-                xtype: 'textfield',
-                fieldLabel: '관리항목1',
-                name: 'REF1'
-            }, {
-                xtype: 'textfield',
-                fieldLabel: '관리항목2',
-                name: 'REF2'
-            }, {
-                xtype: 'textfield',
-                fieldLabel: '관리항목3',
-                name: 'REF3'
-            }, {
-                xtype: 'textfield',
-                fieldLabel: '관리항목4',
-                name: 'REF4'
-            }, {
-                xtype: 'textfield',
-                fieldLabel: '관리항목5',
-                name: 'REF5'
-            }];
-
-            form.down('#refFields').add(fields);
-            form.getForm().setReadOnlyFields(true);
-
+            form.fireEvent('InitMode',form);
         }
 
     },
@@ -43,8 +16,8 @@ Ext.define('SysApp.view.sys.code.detail.tab.SysCodeDetailTabController', {
         var forms = comp.query('form');
         for( var i=0;i<forms.length;i++) {
             var form = forms[i];
-            form.getForm().setReadOnlyFields(false, ['CODE','CODE_NM','SORT','MEMO']);
-            form.getForm().setReadOnlyFields(true, ['COMPANY', 'PRE_CD' ]);
+            form.fireEvent('InsertMode',form);
+
         }
     },
     onUpdateMode: function (comp) {
@@ -52,8 +25,8 @@ Ext.define('SysApp.view.sys.code.detail.tab.SysCodeDetailTabController', {
         var forms = comp.query('form');
         for( var i=0;i<forms.length;i++) {
             var form = forms[i];
-            form.getForm().setReadOnlyFields(false, ['CODE_NM','SORT','MEMO']);
-            form.getForm().setReadOnlyFields(true, ['COMPANY', 'PRE_CD','CODE']);
+            form.fireEvent('UpdateMode',form);
+
         }
 
     },

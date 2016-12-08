@@ -2,6 +2,7 @@ Ext.define('PmhTech.form.field.radio.Base', {
     extend: 'Ext.form.FieldContainer',
     alias: 'widget.pmhtech-radio-base',
     height : 24,
+    onChangeRadioGroup : Ext.emptyFn,
     initComponent: function () {
         var me = this;
 
@@ -26,6 +27,9 @@ Ext.define('PmhTech.form.field.radio.Base', {
                 },
                 items: [{
                     xtype: 'radiogroup',
+                    listeners : {
+                      change : me.onChangeRadioGroup
+                    },
                     items: me.radioItems
                 }]
             }]

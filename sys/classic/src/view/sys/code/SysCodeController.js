@@ -18,6 +18,11 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 			var targetForm = localeTab.down('[LOCALE_CD=' + locale.LOCALE_CD + ']');
 			var refFields = targetForm.down('#refFields');
 			refFields.removeAll();
+
+
+			var defaultReadOnly = locale.LOCALE_CD != defaultLang;
+			targetForm.setReadOnlyFields(defaultReadOnly,['USE_YN','SORT']);
+
 			var fields = [];
 			for (var j = 1; j <= 5; j++) {
 				var name = 'REF' + j;
@@ -30,7 +35,7 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 
 
 				var fieldLabel = Ext.isEmpty(locale[name]) ? '관리항목' + j : locale[name];
-				var readOnly = locale.LOCALE_CD != defaultLang && EDIT_YN == 'N';
+				var readOnly = defaultReadOnly && EDIT_YN == 'N';
 
 				var field = null;
 				switch (FIELD_TYPE) {
@@ -60,6 +65,14 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 						};
 						break;
 				}
+
+				if(locale.LOCALE_CD == defaultLang && EDIT_YN=='N'){
+					field.listeners={
+						change : this.onChangeREF,
+						scope : this
+					}
+				}
+
 				fields.push(field);
 			}
 			refFields.add(fields);
@@ -77,6 +90,17 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 			scope: this
 		});
 	},
+
+	onChangeREF: function(field,newValue,oldValue){
+
+		var locales = this.getView().query('sys-code-detail-tab-locale');
+
+		for(var i=0;i<locales.length;i++){
+			locales[i].down('[name='+field.name+']').setValue(newValue);
+		}
+	},
+
+
 	successLoad: function (resObj) {
 
 		var grid = this.getView().down('sys-code-detail-grid');
