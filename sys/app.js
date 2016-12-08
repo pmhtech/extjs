@@ -12,7 +12,8 @@ Ext.application({
         'SysApp.controller.menu.MenuController'
     ],
     requires: [
-        'SysApp.view.global.GlobalMain'
+        'SysApp.view.global.GlobalMain',
+        'PmhTech.util.ValidUtil'
     ],
     stores: [
         'SysApp.store.Navigation',

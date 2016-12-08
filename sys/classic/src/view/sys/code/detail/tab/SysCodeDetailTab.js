@@ -5,26 +5,10 @@ Ext.define('SysApp.view.sys.code.detail.tab.SysCodeDetailTab', {
 	controller: 'sys-code-detail-tab',
 	items: [],
 	deferredRender : false,
-	tabBar :{
-		items: [{
-			xtype : 'tbfill'
-		},{
-			xtype: 'pmh-button-add',
-			handler: 'onBtnAdd'
-		},{
-			xtype: 'pmh-button-reset',
-			handler: 'onBtnReset'
-		},{
-			xtype: 'pmh-button-save',
-			handler: 'onBtnSave'
-		}]
-	},
 	listeners: {
 		afterrender: 'onAfterRender',
 		InitMode: 'onInitMode',
 		UpdateMode: 'onUpdateMode',
 		InsertMode: 'onInsertMode'
 	}
-
-
 });

@@ -15,6 +15,7 @@ Ext.define('SysApp.view.global.content.hbox.DefaultView', {
 				xtype: 'container',
 				flex: 1,
 				height : '100%',
+				margin : 5,
 				itemId: 'leftContents',
 				layout: {
 					type: 'vbox',
@@ -25,6 +26,7 @@ Ext.define('SysApp.view.global.content.hbox.DefaultView', {
 			}, {
 				xtype: 'container',
 				flex: 1,
+				margin : '5 5 5 0',
 				height : '100%',
 				itemId: 'rightContents',
 				layout: {

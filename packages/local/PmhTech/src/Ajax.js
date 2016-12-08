@@ -6,18 +6,9 @@ Ext.define('PmhTech.Ajax', {
 		loadMessage: null,
 		request: function (options) {
 
-
-
-			PmhTech.Ajax.loadMessage=Ext.MessageBox.wait('잠시만 기다리세요..','데이터조회중', {
-				interval: 500, //bar will move fast!
-				duration: 50000,
-				increment: 15
-			});
-
 			if (options.params) {
 				//  options.jsonData = Ext.encode(options.params);
 			}
-
 
 			var me = this;
 
@@ -32,6 +23,13 @@ Ext.define('PmhTech.Ajax', {
 			}
 		},
 		_runAjax: function (options) {
+
+			PmhTech.Ajax.loadMessage=Ext.MessageBox.wait('잠시만 기다리세요..','데이터 처리중...', {
+				interval: 500, //bar will move fast!
+				duration: 50000,
+				increment: 15
+			});
+
 
 			var callBackFunc = Ext.clone(options.success);
 			options.success = function (response) {

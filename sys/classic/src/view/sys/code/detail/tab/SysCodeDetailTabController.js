@@ -1,87 +1,70 @@
 Ext.define('SysApp.view.sys.code.detail.tab.SysCodeDetailTabController', {
-    extend: 'Ext.app.ViewController',
-    alias: 'controller.sys-code-detail-tab',
+	extend: 'Ext.app.ViewController',
+	alias: 'controller.sys-code-detail-tab',
 
-    onInitMode: function (comp) {
-
-
-        this.getView().down('pmh-button-add').setDisabled(true);
-        this.getView().down('pmh-button-save').setDisabled(true);
-        this.getView().down('pmh-button-reset').setDisabled(true);
+	onInitMode: function (comp) {
 
 
-        var forms = comp.query('form');
-        for( var i=0;i<forms.length;i++){
-            var form = forms[i];
-            form.fireEvent('InitMode',form);
-        }
-
-    },
-    onInsertMode: function (comp) {
-
-        var forms = comp.query('form');
-        for( var i=0;i<forms.length;i++) {
-            var form = forms[i];
-            form.fireEvent('InsertMode',form);
-
-        }
-    },
-    onUpdateMode: function (comp) {
-
-        var forms = comp.query('form');
-        for( var i=0;i<forms.length;i++) {
-            var form = forms[i];
-            form.fireEvent('UpdateMode',form);
-
-        }
-
-    },
-    onBtnAdd : function(button){
-        this.getView().up('sys-code').down('sys-code-detail-grid').getSelectionModel().deselectAll();
-        this.onInsertMode(this.getView());
-
-    }
-    ,onBtnSave : function(button){
-
-    }
-    ,onBtnReset : function(button){
-        var forms = this.getView().query('form');
-
-        for(var i=0;i<forms.length;i++){
-            forms[i].getForm().reset();
-        }
-
-    },
-
-    onAfterRender: function (comp) {
-
-        var findIdx = SysCode['COM_000002'].find('CODE','DEFAULT');
+		this.getView().down('pmh-button-add').setDisabled(true);
+		this.getView().down('pmh-button-save').setDisabled(true);
+		this.getView().down('pmh-button-reset').setDisabled(true);
 
 
-        var defaultRec = SysCode['COM_000002'].getAt(findIdx);
-        var localeStore = SysCode['COM_000003'];
-        var items = [];
+		var forms = comp.query('form');
+		for (var i = 0; i < forms.length; i++) {
+			var form = forms[i];
+			form.fireEvent('InitMode', form);
+		}
+
+	},
+	onInsertMode: function (comp) {
+
+		var forms = comp.query('form');
+		for (var i = 0; i < forms.length; i++) {
+			var form = forms[i];
+			form.fireEvent('InsertMode', form);
+
+		}
+	},
+	onUpdateMode: function (comp) {
+
+		var forms = comp.query('form');
+		for (var i = 0; i < forms.length; i++) {
+			var form = forms[i];
+			form.fireEvent('UpdateMode', form);
+
+		}
+
+	},
+	onAfterRender: function (comp) {
+
+		var findIdx = SysCode['COM_000002'].find('CODE', 'DEFAULT');
 
 
-        for (var i = 0; i < localeStore.getCount(); i++) {
-            var rec = localeStore.getAt(i);
-            if (rec.get('CODE') == 'ALL') {
-                continue;
-            }
+		var defaultRec = SysCode['COM_000002'].getAt(findIdx);
+		var localeStore = SysCode['COM_000003'];
+		var items = [];
 
-            var locale = rec.get('CODE');
-            var title = localeStore.getAt(i).get('CODE_NM');
 
-            if (defaultRec.get('REF1') == locale) {
-                title = '<b>' + title + '(Default)</b>';
-            }
-            items.push({
-                xtype: 'sys-code-detail-tab-locale',
-                LOCALE_CD : locale,
-                title: title
-            });
-        }
-        comp.add(items);
-        comp.setActiveTab(0);
-    }
+		for (var i = 0; i < localeStore.getCount(); i++) {
+			var rec = localeStore.getAt(i);
+			if (rec.get('CODE') == 'ALL') {
+				continue;
+			}
+
+			var locale = rec.get('CODE');
+			var title = localeStore.getAt(i).get('CODE_NM');
+
+			if (defaultRec.get('REF1') == locale) {
+				title = '<b>' + title + '(Default)</b>';
+			}
+			items.push({
+				xtype: 'sys-code-detail-tab-locale',
+				LOCALE_CD: locale,
+				title: title
+			});
+		}
+		comp.add(items);
+		comp.setActiveTab(0);
+	}
 });

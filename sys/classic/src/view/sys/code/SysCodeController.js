@@ -2,11 +2,75 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 	extend: 'Ext.app.ViewController',
 	alias: 'controller.sys-code',
 
+	onBtnAdd: function (button) {
+		this.getView().down('sys-code-detail-grid').getSelectionModel().deselectAll();
+
+		var sysCodeDetailTab = this.getView().down('sys-code-detail-tab');
+
+
+		sysCodeDetailTab.getController().onInsertMode(sysCodeDetailTab);
+
+	},
+	onBtnSave: function (button) {
+
+		var detailGrid = this.getView().down('sys-code-detail-grid');
+
+		var method = detailGrid.getSelectionModel().getSelection().length ==0 ? 'POST' :'PUT';
+		var sysCodeLocale = [];
+
+		var forms = this.getView().query('sys-code-detail-tab form');
+		for (var i = 0; i < forms.length; i++) {
+			var form = forms[i];
+			if (!PmhTech.util.ValidUtil.isValidForm(form)) {
+				return false;
+			}
+			var valueObject = form.getForm().getValues();
+			sysCodeLocale.push(valueObject);
+		}
+
+		PmhTech.Ajax.request({
+			url: Ext.String.format('/sys/codes/{0}/{1}', sysCodeLocale[0].PRE_CD, sysCodeLocale[0].CODE),
+			method: method,
+			params: {
+				'sysCodeLocales': Ext.encode(sysCodeLocale)
+			},
+			confirmMsg : {
+				title : '확인',
+				message : '저장하시겠습니까?'
+			},
+			successMsg : {
+				title : '확인',
+				message : '정상처리되었습니다'
+			},
+			success: this.successSave,
+			scope: this
+		});
+
+	},
+	onBtnReset: function (button) {
+
+		var sysCodeDetailTab = this.getView().down('sys-code-detail-tab');
+		var forms = sysCodeDetailTab.query('form');
+
+		for (var i = 0; i < forms.length; i++) {
+			forms[i].getForm().reset();
+		}
+	},
+
+	successSave: function (resObj) {
+		var sysCodeGroup = this.getView().down('sys-code-group');
+		var selmodel = sysCodeGroup.getSelectionModel();
+		this.onSelectGrid(selmodel,selmodel.getSelection()[0]);
+	},
+
+
 	onSelectGrid: function (selModel, record, index) {
 
-		this.getView().down('sys-code-detail-tab  pmh-button-add').setDisabled(false);
-		this.getView().down('sys-code-detail-tab  pmh-button-save').setDisabled(false);
-		this.getView().down('sys-code-detail-tab  pmh-button-reset').setDisabled(false);
+		var sysCodeDetailTab = this.getView().down('sys-code-detail-tab');
+
+		sysCodeDetailTab.down('pmh-button-add').setDisabled(false);
+		sysCodeDetailTab.down('pmh-button-save').setDisabled(false);
+		sysCodeDetailTab.down('pmh-button-reset').setDisabled(false);
 
 
 		var locales = record.data.LANGUAGE;
@@ -26,7 +90,7 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 
 
 			var defaultReadOnly = locale.LOCALE_CD != defaultLang;
-			targetForm.setReadOnlyFields(defaultReadOnly,['COMPANY','CODE','USE_YN','SORT']);
+			targetForm.setReadOnlyFields(defaultReadOnly, ['COMPANY', 'CODE', 'USE_YN', 'SORT']);
 
 			var fields = [];
 			for (var j = 1; j <= 5; j++) {
@@ -48,7 +112,7 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 						field = {
 							xtype: 'textfield',
 							fieldLabel: fieldLabel,
-							name : name,
+							name: name,
 							readOnly: readOnly
 						};
 						break;
@@ -56,7 +120,7 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 						field = {
 							xtype: 'pmh-combo-code',
 							fieldLabel: fieldLabel,
-							name : name,
+							name: name,
 							store: SysCode[comboStore].copy(false),
 							readOnly: readOnly
 						};
@@ -65,16 +129,16 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 						field = {
 							xtype: 'datefield',
 							fieldLabel: fieldLabel,
-							name : name,
+							name: name,
 							readOnly: readOnly
 						};
 						break;
 				}
 
-				if(locale.LOCALE_CD == defaultLang && EDIT_YN=='N'){
-					field.listeners={
-						change : this.onChangeREF,
-						scope : this
+				if (locale.LOCALE_CD == defaultLang && EDIT_YN == 'N') {
+					field.listeners = {
+						change: this.onChangeREF,
+						scope: this
 					}
 				}
 
@@ -96,12 +160,12 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 		});
 	},
 
-	onChangeREF: function(field,newValue,oldValue){
+	onChangeREF: function (field, newValue, oldValue) {
 
 		var locales = this.getView().query('sys-code-detail-tab-locale');
 
-		for(var i=0;i<locales.length;i++){
-			locales[i].down('[name='+field.name+']').setValue(newValue);
+		for (var i = 0; i < locales.length; i++) {
+			locales[i].down('[name=' + field.name + ']').setValue(newValue);
 		}
 	},
 
