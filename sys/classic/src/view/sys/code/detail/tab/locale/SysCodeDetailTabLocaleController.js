@@ -1,75 +1,82 @@
 Ext.define('SysApp.view.sys.code.detail.SysCodeDetailTabLocaleController', {
-    extend: 'Ext.app.ViewController',
-    alias: 'controller.sys-code-detail-tab-locale',
+	extend: 'Ext.app.ViewController',
+	alias: 'controller.sys-code-detail-tab-locale',
 
 
-    onInitMode : function(form){
-        form.getForm().reset();
-        form.down('#refFields').removeAll();
-        var fields =[{
-            xtype: 'textfield',
-            fieldLabel: '관리항목1',
-            name: 'REF1'
-        }, {
-            xtype: 'textfield',
-            fieldLabel: '관리항목2',
-            name: 'REF2'
-        }, {
-            xtype: 'textfield',
-            fieldLabel: '관리항목3',
-            name: 'REF3'
-        }, {
-            xtype: 'textfield',
-            fieldLabel: '관리항목4',
-            name: 'REF4'
-        }, {
-            xtype: 'textfield',
-            fieldLabel: '관리항목5',
-            name: 'REF5'
-        }];
+	onInitMode: function (form) {
+		form.getForm().reset();
+		form.down('#refFields').removeAll();
+		var fields = [{
+			xtype: 'textfield',
+			fieldLabel: '관리항목1',
+			name: 'REF1'
+		}, {
+			xtype: 'textfield',
+			fieldLabel: '관리항목2',
+			name: 'REF2'
+		}, {
+			xtype: 'textfield',
+			fieldLabel: '관리항목3',
+			name: 'REF3'
+		}, {
+			xtype: 'textfield',
+			fieldLabel: '관리항목4',
+			name: 'REF4'
+		}, {
+			xtype: 'textfield',
+			fieldLabel: '관리항목5',
+			name: 'REF5'
+		}];
 
-        form.down('#refFields').add(fields);
-        form.setReadOnlyFields(true);
-    },
-    onInsertMode : function(form){
-        form.getForm().resetClearFields();
+		form.down('#refFields').add(fields);
+		form.setReadOnlyFields(true);
+	},
+	onInsertMode: function (form) {
+		form.getForm().resetClearFields();
 
-
-        var findIdx = SysCode['COM_000002'].find('CODE', 'DEFAULT');
-
-        var rec = SysCode['COM_000002'].getAt(findIdx);
-
-        if(rec.get('REF1')==form.LOCALE_CD){
-
-            form.setReadOnlyFields(false, ['COMPANY','CODE']);
-        }
-
-        form.setReadOnlyFields(false, ['CODE_NM','MEMO']);
-        form.setReadOnlyFields(true, ['PRE_CD' ]);
-    },
-    onUpdateMode : function(form){
-        form.setReadOnlyFields(false, ['CODE_NM','MEMO']);
-        form.setReadOnlyFields(true, ['COMPANY', 'PRE_CD','CODE']);
-    },
+		var PRE_CD = this.getView().up('sys-code').down('sys-code-group').getSelectionModel().getSelection()[0].data.PRE_CD;
 
 
-    onChangeUSE_YN : function(field,newValue,oldValue){
+		form.getForm().setValues({
+			PRE_CD: PRE_CD,
+			LOCALE_CD : form.LOCALE_CD,
+			USE_YN: 'Y'
+		});
+		var findIdx = SysCode['COM_000002'].find('CODE', 'DEFAULT');
+
+		var rec = SysCode['COM_000002'].getAt(findIdx);
+
+		if (rec.get('REF1') == form.LOCALE_CD) {
+
+			form.setReadOnlyFields(false, ['COMPANY', 'CODE']);
+		}
+
+		form.setReadOnlyFields(false, ['CODE_NM', 'MEMO']);
+		form.setReadOnlyFields(true, ['PRE_CD']);
+	},
+	onUpdateMode: function (form) {
+		form.setReadOnlyFields(false, ['CODE_NM', 'MEMO']);
+		form.setReadOnlyFields(true, ['COMPANY', 'PRE_CD', 'CODE']);
+	},
 
 
-        var locales = this.getView().up('tabpanel').query('sys-code-detail-tab-locale');
-
-        for(var i=0;i<locales.length;i++){
-            var radiogroup = locales[i].down('[name=USE_YN]').up();
-            radiogroup.setValue(newValue);
-        }
-    },
-    onChangeNotify: function(field,newValue,oldValue){
+	onChangeUSE_YN: function (field, newValue, oldValue) {
 
 
-        var locales = this.getView().up('tabpanel').query('sys-code-detail-tab-locale');
+		var locales = this.getView().up('tabpanel').query('sys-code-detail-tab-locale');
 
-        for(var i=0;i<locales.length;i++){
-            locales[i].down('[name='+field.name+']').setValue(newValue);
-        }
-    }
+		for (var i = 0; i < locales.length; i++) {
+			var radiogroup = locales[i].down('[name=USE_YN]').up();
+			radiogroup.setValue(newValue);
+		}
+	},
+	onChangeNotify: function (field, newValue, oldValue) {
+
+
+		var locales = this.getView().up('tabpanel').query('sys-code-detail-tab-locale');
+
+		for (var i = 0; i < locales.length; i++) {
+			locales[i].down('[name=' + field.name + ']').setValue(newValue);
+		}
+	}
 });

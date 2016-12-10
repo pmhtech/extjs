@@ -49,6 +49,10 @@ Ext.define('PmhTech.Ajax', {
 			};
 
 			options.failure = function (response) {
+				PmhTech.Ajax.loadMessage.hide();
+				var resObj = Ext.decode(response.responseText);
+				PmhTech.Msg.alert('오류',resObj.message);
+
 				console.log('server-side failure with status code ' + response.status);
 
 
