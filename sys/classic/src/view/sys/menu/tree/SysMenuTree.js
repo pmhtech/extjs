@@ -10,7 +10,8 @@ Ext.define('SysApp.view.sys.menu.grid.SysMenuTree', {
 			{
 				xtype: 'pmh-combo-code',
 				name: 'SYSTEM',
-				store: SysCode['SYS_000001'].copy(false)
+				store: SysCode['SYS_000001'].copy(false),
+				value : 'ALL'
 			}, {
 				xtype: 'pmh-button-search',
 				handler: 'onBtnSearch'

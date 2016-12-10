@@ -48,8 +48,11 @@ Ext.define('SysApp.view.sys.menu.SysMenu', {
                     frame : true,
                     flex : 1
                 }]
-
             }]
+            ,listeners : {
+                afterrender : 'onAfterRender',
+                scope: this.getController()
+            }
         });
         me.callParent(arguments);
 

@@ -5,8 +5,11 @@ Ext.define('SysApp.view.sys.menu.grid.SysMenuTreeController', {
 	onBtnSearch: function (button) {
 
 		PmhTech.Ajax.request({
-			url: '/sys/menus/SYS',
-			mode: 'GET',
+			url: '/sys/menus',
+			method: 'GET',
+			params : {
+				SYSTEM : this.getView().down('[name=SYSTEM]').getValue()
+			},
 			success: this.successLoad,
 			scope: this
 		});

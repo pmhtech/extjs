@@ -8,6 +8,7 @@ Ext.define('SysApp.view.sys.menu.code.SysMenuCode', {
 	},
 	items : [{
 		xtype : 'pmhtech-grid-base',
+		itemId : 'sysMapCodes',
 		title : '사용코드',
 		dockedItems : [{
 			xtype : 'toolbar',
@@ -17,11 +18,13 @@ Ext.define('SysApp.view.sys.menu.code.SysMenuCode', {
 				fieldLabel : '검색'
 			}]
 		}],
-		hideHeader : true,
+		hideHeaders : true,
 		flex : 1,
 		style : 'border-width : 0px 1px 0px 0px',
 		columns : [
-			{text :'기준정보', dataIndex:'PRE_CD'}
+			{text :'기준정보', dataIndex:'PRE_CD', flex : 1,renderer : function(value,metaData,record){
+				return record.get('PRE_CD')+'['+record.get('CODE_NM')+']';
+			}}
 		]
 	}, {
 		xtype : 'container',
@@ -44,6 +47,10 @@ Ext.define('SysApp.view.sys.menu.code.SysMenuCode', {
 
 	},{
 		xtype : 'pmhtech-grid-base',
+		itemId : 'sysCodeGroups',
+		storeProps : {
+			rootProperty : 'sysCodeGroups'
+		},
 		style : 'border-width : 0px 0px 0px 1px',
 		title : '미사용 코드',
 		dockedItems : [{
@@ -55,8 +62,11 @@ Ext.define('SysApp.view.sys.menu.code.SysMenuCode', {
 			}]
 		}],
 		flex : 1,
+		hideHeaders : true,
 		columns : [
-			{text :'기준정보', dataIndex:'PRE_CD'}
+			{text :'기준정보', dataIndex:'PRE_CD', flex : 1,renderer : function(value,metaData,record){
+				return '['+record.get('PRE_CD')+']&nbsp;&nbsp;&nbsp;&nbsp;'+record.get('CODE_NM')+'';
+			}}
 		]
 	}]
 });
