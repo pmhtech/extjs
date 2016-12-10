@@ -2,7 +2,7 @@ Ext.define('SysApp.view.sys.code.group.SysCodeGroupController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.sys-code-group',
 
-    onBtnSearch: function () {
+    onBtnSearch: function (button) {
 
         PmhTech.Ajax.request({
             url: '/sys/codes',
@@ -17,6 +17,7 @@ Ext.define('SysApp.view.sys.code.group.SysCodeGroupController', {
     },
     onBtnInsert: function () {
 
+        this.getView().getSelectionModel().deselectAll();
         var params = {};
         var options = {
             mode : 'INSERT',

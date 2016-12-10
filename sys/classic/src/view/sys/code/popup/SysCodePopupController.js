@@ -6,7 +6,18 @@ Ext.define('SysApp.view.sys.code.popup.SysCodePopupController', {
 
         this.mode=mode;
         var thisStore = this.getView().down('grid').getStore();
-        this.getView().down('#sysCodeForm').getForm().setValues(params);
+
+        var sysCodeForm =this.getView().down('#sysCodeForm');
+        if(mode=='INSERT'){
+            sysCodeForm.getForm().resetClearFields();
+            sysCodeForm.setReadOnlyFields(false,['PRE_CD']);
+        }else{
+            sysCodeForm.setReadOnlyFields(true,['PRE_CD']);
+            sysCodeForm.getForm().setValues(params);
+        }
+
+
+
         var datas = this.getRefData(params);
         thisStore.removeAll();
         thisStore.add(datas);
@@ -17,7 +28,14 @@ Ext.define('SysApp.view.sys.code.popup.SysCodePopupController', {
 
         for(var i=0;i<localeDatas.length;i++){
             var localeData = localeDatas[i];
-            tabpanel.down('#'+localeData.LOCALE_CD).getForm().setValues(localeData);
+
+            var localeForm = tabpanel.down('#'+localeData.LOCALE_CD);
+
+            if(mode=='INSERT'){
+                localeForm.getForm().resetClearFields();
+            }else{
+                localeForm.getForm().setValues(localeData);
+            }
         }
 
     },
@@ -136,6 +154,11 @@ Ext.define('SysApp.view.sys.code.popup.SysCodePopupController', {
 
         var me = this.getView();
         Ext.Msg.alert('확인','정상처리되었습니다.',function(btn){
+
+            var sysCodeGroup = Ext.ComponentQuery.query('sys-code-group')[0];
+
+            sysCodeGroup.getController().onBtnSearch();
+
             me.hide();
         });
     },
