@@ -3,6 +3,15 @@ Ext.define('SysApp.view.sys.SysMenuController', {
 	alias: 'controller.sys-menu',
 
 
+	onBtnAdd : function(button){
+
+	},
+	onBtnSave : function(button){
+
+	},
+	onBtnReset : function(button){
+
+	},
 	onSelectTree : function( selmodel , record , index , eOpts ) {
 
 		var forms = this.getView().query('tabpanel form');
