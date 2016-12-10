@@ -2,6 +2,41 @@ Ext.define('PmhTech.event.EventMap', {
     extend: 'Ext.Base',
 
     statics: {
+        'SysApp.view.sys.menu.SysMenu': function(){
+            var menuLoad = [
+                {
+                    "EventType": "메뉴리스트조회",
+                    "PRE_ID": "",
+                    "ID": 1,
+                    "CompName": "sys-menu-tree",
+                    "CompXType": "treepanel",
+                    "Event": "",
+                    "CustomEvent": "InitMode",
+                    "Comment": "코드그룹로드"
+                },
+                {
+                    "EventType": "다국어 메뉴탭 초기화",
+                    "PRE_ID": 1,
+                    "ID": 2,
+                    "CompName": "sys-menu-tab",
+                    "CompXType": "tabpanel",
+                    "Event": "",
+                    "CustomEvent": "InitMode",
+                    "Comment": "코드리스트 초기화"
+                },
+                {
+                    "EventType": "다국어 메뉴탭 초기화",
+                    "PRE_ID": 2,
+                    "ID": 3,
+                    "CompName": "sys-menu-code",
+                    "CompXType": "panel",
+                    "Event": "",
+                    "CustomEvent": "InitMode",
+                    "Comment": "코드상세 다국어 초기화"
+                }
+            ];
+            return [menuLoad];
+        },
 
         'SysApp.view.sys.code.SysCode' : function () {
             var codeGroupLoad = [

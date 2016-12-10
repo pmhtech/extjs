@@ -2,25 +2,8 @@ Ext.define('SysApp.view.sys.menu.grid.SysMenuCodeController', {
 	extend: 'Ext.app.ViewController',
 	alias: 'controller.sys-menu-code',
 
-	onBtnSearch: function (button) {
-
-		PmhTech.Ajax.request({
-			url: '/sys/menus/SYS',
-			mode: 'GET',
-			success: this.successLoad,
-			scope: this
-		});
-	},
-	successLoad: function (resObj) {
+	onInitMode: function (comp) {
 
 
-		var treeNode = PmhTech.Utils.convertListToTree(resObj['sysMenus'], 'MENU_ID', 'PRE_MENU_ID', "");
-		this.getView().setRootNode({
-
-			MENU_NM: 'sdfsdf',
-			text: 'sdsfdå',
-			expanded: true,
-			children: treeNode
-		});
 	}
 });

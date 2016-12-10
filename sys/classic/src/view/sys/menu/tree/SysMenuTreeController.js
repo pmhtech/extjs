@@ -25,5 +25,6 @@ Ext.define('SysApp.view.sys.menu.grid.SysMenuTreeController', {
 			expanded: true,
 			children: treeNode
 		});
+		this.getView().fireEvent('InitMode',this.getView());
 	}
 });

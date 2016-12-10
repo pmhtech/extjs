@@ -5,7 +5,7 @@ Ext.define('SysApp.view.sys.SysMenuController', {
     onAfterRender: function (comp) {
         PmhTech.Ajax.request({
             url: '/sys/codes',
-            mode: 'GET',
+            method: 'GET',
             success: this.successLoad,
             scope: this
         });
@@ -16,7 +16,32 @@ Ext.define('SysApp.view.sys.SysMenuController', {
         store.loadRawData(resObj);
     },
 
+
+
+    onInitMode : function(comp){
+
+    },
+
+
+    onInsertMode : function(comp){
+
+
+    },
+    onUpdateMode : function(comp){
+
+
+    },
     onBtnAdd: function (button) {
+
+        var grid = this.getView().down('sys-menu-tree');
+
+        var record = grid.getSelectionModel().getSelection()[0];
+        if(Ext.isEmpty(record) || record.get('MENU_LVL')==4){
+
+            PmhTech.Msg.alert('확인','상위그룹을 선택하세요');
+            return false;
+        }
+
 
     },
     onBtnSave: function (button) {
@@ -34,6 +59,18 @@ Ext.define('SysApp.view.sys.SysMenuController', {
             form.getForm().setValues(record.data);
         }
 
+
+        PmhTech.Ajax.request({
+            url: Ext.String.format('/sys/menus/{0}/{1}',record.get('SYSTEM'),record.get('MENU_ID')),
+            method: 'GET',
+            success: this.successMenuCodeLoad,
+            scope: this
+        });
+    },
+    successMenuCodeLoad : function(resObj){
+
+        var store = this.getView().down('#sysMapCodes').getStore();
+        store.loadRawData(resObj);
 
     }
 });

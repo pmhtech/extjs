@@ -4,9 +4,9 @@ Ext.define('SysApp.view.sys.menu.tab.SysMenuTab', {
 	controller: 'sys-menu-tab',
 	deferredRender : false,
 	listeners: {
-		afterrender: 'onAfterRender'
-	//	InitMode: 'onInitMode',
-	//	UpdateMode: 'onUpdateMode',
-	//	InsertMode: 'onInsertMode'
+		afterrender: 'onAfterRender',
+		InitMode: 'onInitMode',
+		UpdateMode: 'onUpdateMode',
+		InsertMode: 'onInsertMode'
 	}
 });

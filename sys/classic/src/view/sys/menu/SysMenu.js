@@ -16,6 +16,9 @@ Ext.define('SysApp.view.sys.menu.SysMenu', {
                 frame : true,
                 height: 300,
                 listeners: {
+                    InitMode : 'onInitMode',
+                    InsertMode : 'onInsertMode',
+                    UpdateMode : 'onUpdateMode',
                     select: 'onSelectTree',
                     scope: this.getController()
                 }

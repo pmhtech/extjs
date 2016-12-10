@@ -78,8 +78,8 @@ Ext.define('SysApp.view.sys.menu.tab.locale.SysMenuTabLocale', {
 		onChangeRadioGroup: 'onChangeUSE_YN'
 	}],
 	listeners: {
-	//	InitMode: 'onInitMode',
-	//	UpdateMode: 'onUpdateMode',
-	//	InsertMode: 'onInsertMode'
+		InitMode: 'onInitMode',
+		UpdateMode: 'onUpdateMode',
+		InsertMode: 'onInsertMode'
 	}
 });

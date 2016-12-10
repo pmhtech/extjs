@@ -35,12 +35,6 @@ Ext.define('PmhTech.event.EventWireManager', {
             var eventComment = eventNode.Comment;
 
             var component = masterView.down(cmpName);
-            if(component.getXTypes().search(cmpXType)==-1){
-                alert('Component의 Xtype이 잘못되었습니다');
-                console.log(component);
-                console.log(eventNode);
-                return false;
-            }
 
             if(Ext.isEmpty(cmpEvent)){
 
@@ -50,6 +44,16 @@ Ext.define('PmhTech.event.EventWireManager', {
                     arguments : [component]
                 }
             }
+
+            if(component.getXTypes().search(cmpXType)==-1){
+
+                alert('Component의 Xtype이 잘못되었습니다');
+                console.log(component.getXTypes());
+                console.log(component);
+                console.log(eventNode);
+                return false;
+            }
+
             var xtypeName = cmpXType.charAt(0).toUpperCase() + cmpXType.slice(1);
             return PmhTech.event.xtype[xtypeName][cmpEvent](component);
         },

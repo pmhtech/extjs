@@ -4,6 +4,8 @@ Ext.define('SysApp.view.sys.menu.tab.locale.SysMenuTabLocaleController', {
 
 
 	onInitMode: function (form) {
+		form.setReadOnlyFields(true);
+		form.getForm().resetClearFields();
 
 	},
 	onInsertMode: function (form) {

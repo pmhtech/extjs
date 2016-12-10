@@ -9,6 +9,9 @@ Ext.define('SysApp.view.sys.menu.code.SysMenuCode', {
 	items : [{
 		xtype : 'pmhtech-grid-base',
 		itemId : 'sysMapCodes',
+		storeProps :{
+			rootProperty : 'sysMapCodes'
+		},
 		title : '사용코드',
 		dockedItems : [{
 			xtype : 'toolbar',
@@ -68,7 +71,9 @@ Ext.define('SysApp.view.sys.menu.code.SysMenuCode', {
 				return '['+record.get('PRE_CD')+']&nbsp;&nbsp;&nbsp;&nbsp;'+record.get('CODE_NM')+'';
 			}}
 		]
-	}]
+	}],listeners : {
+		initMode : 'onInitMode'
+	}
 });
 
 
