@@ -1,7 +1,6 @@
 Ext.define('SysApp.view.sys.code.popup.ref.SysCodePopupRef', {
     extend: 'Ext.form.FieldSet',
     alias: 'widget.sys-code-popup-ref',
-    layout: 'fit',
     collapsible: true,
     title: '세부정보 설정',
     items: [{
@@ -9,7 +8,7 @@ Ext.define('SysApp.view.sys.code.popup.ref.SysCodePopupRef', {
         frame: true,
         excelMode: true,
         rowNumberer: false,
-        layout: 'fit',
+        height : 155,
         storeProps: {
             fields: ['COMPANY', 'PRE_CD', 'CODE', 'CODE_NM', 'USE_YN', 'MEMO'],
             rootProperty: 'sysCodeGroup'
@@ -26,7 +25,7 @@ Ext.define('SysApp.view.sys.code.popup.ref.SysCodePopupRef', {
             }, renderer: PmhTech.Format.comboRenderer
             },
             {
-                text: '코드그룹', dataIndex: 'REF_CD', align: 'left', editor: {
+                text: '코드그룹', dataIndex: 'REF_CD', align: 'left', flex : 1,editor: {
                 xtype: 'pmh-combo',
                 store: Ext.ComponentQuery.query('sys-code-group')[0].getStore(),
                 isShowCode: true,
@@ -57,7 +56,9 @@ Ext.define('SysApp.view.sys.code.popup.ref.SysCodePopupRef', {
                     if (record.get('REF_TYPE') != '20') {
                         record.set('REF_CD', undefined);
                     }
+                    thisStore.commitChanges();
                 }
+
 
             }
         }

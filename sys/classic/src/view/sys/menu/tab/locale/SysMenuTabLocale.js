@@ -27,9 +27,20 @@ Ext.define('SysApp.view.sys.menu.tab.locale.SysMenuTabLocale', {
 		}
 
 	},{
-		xtype: 'textfield',
+		xtype: 'treepicker',
 		fieldLabel: '상위메뉴ID',
 		name: 'PRE_MENU_ID',
+		displayField: 'MENU_NM',
+		valueField : 'MENU_ID',
+		maxPickerHeight: 200,
+		store : Ext.create('Ext.data.TreeStore',{
+			root: {
+				MENU_NM: 'All',
+				text: 'ALL',
+				id : 'root',
+				expanded: true
+			}
+		}),
 		listeners: {
 			change: 'onChangeNotify'
 		}

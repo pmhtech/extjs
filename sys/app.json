@@ -56,7 +56,8 @@
      */
     "requires": [
         "PmhTech",
-        "font-awesome"
+        "font-awesome",
+        "ext-ux"
 
     ],
 

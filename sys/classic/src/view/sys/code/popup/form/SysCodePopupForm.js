@@ -19,7 +19,12 @@ Ext.define('SysApp.view.sys.code.popup.tab.SysCodePopupForm', {
             xtype: 'textfield',
             fieldLabel: '코드그룹',
             name: 'PRE_CD'
-        }, {
+        },{
+           xtype : 'numberfield',
+            hidden : true,
+            name :'SORT',
+            value : -1
+        } ,{
             xtype: 'textfield',
             fieldLabel: '회사코드',
             readOnly: true,
@@ -34,11 +39,20 @@ Ext.define('SysApp.view.sys.code.popup.tab.SysCodePopupForm', {
             value: '0000000000',
             name: 'CODE'
         }, {
-            xtype: 'checkboxfield',
-            boxLabel: '사용유무',
-            uncheckedValue : 'N',
-            inputValue : 'Y',
-            name: 'USE_YN'
+            xtype: 'pmhtech-radio-base',
+            fieldLabel: '사용유무',
+            name: 'USE_YN',
+            radioItems: [{
+                xtype: 'radio',
+                inputValue: 'Y',
+                name: 'USE_YN',
+                boxLabel: '사용'
+            }, {
+                xtype: 'radio',
+                inputValue: 'N',
+                name: 'USE_YN',
+                boxLabel: '미사용'
+            }]
         }, {
             xtype: 'textfield',
             fieldLabel: '메모',

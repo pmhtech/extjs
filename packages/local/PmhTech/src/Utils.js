@@ -73,11 +73,12 @@ Ext.define('PmhTech.Utils', {
 
                             node.children = node.children || [];
                             node.leaf=false;
+                            node.id = node.MENU_ID;
                             node.expanded= true;
                             return node.children.push(arrayList.splice(index, 1)[0]);
                         }
                         item.leaf=true;
-
+                        item.id = item.MENU_ID;
                         return traverse(node.children, item, index);
                     });
                 }

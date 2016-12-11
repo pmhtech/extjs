@@ -43,10 +43,6 @@ Ext.define('SysApp.view.sys.code.popup.tab.locale.SysCodePopupTabLocale', {
                 name: 'REF5'
             }, {
                 xtype: 'textfield',
-                fieldLabel: '사용유무',
-                name: 'USE_YN'
-            }, {
-                xtype: 'textfield',
                 fieldLabel: '메모',
                 name: 'MEMO',
                 columnWidth: 1

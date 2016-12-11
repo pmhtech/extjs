@@ -10,7 +10,7 @@ Ext.define('SysApp.view.sys.menu.grid.SysMenuTree', {
 			{
 				xtype: 'pmh-combo-code',
 				name: 'SYSTEM',
-				store: SysCode['SYS_000001'].copy(false),
+				store: SysCode['SYS_000001'].copy(),
 				value : 'ALL'
 			}, {
 				xtype: 'pmh-button-search',
@@ -20,11 +20,14 @@ Ext.define('SysApp.view.sys.menu.grid.SysMenuTree', {
 		]
 
 	}],
-	root: {
-		MENU_NM: 'All',
-		text: 'ALL',
-		expanded: true
-	},
+	store : Ext.create('Ext.data.TreeStore',{
+		root: {
+			MENU_NM: 'All',
+			text: 'ALL',
+			id : 'root',
+			expanded: true
+		}
+	}),
 	columns: [
 		{xtype: 'treecolumn',    text: '메뉴명',    dataIndex: 'MENU_NM',   flex: 1},
 		{ text: '클래스명'    , dataIndex: 'CLASS_NM',flex: 1},

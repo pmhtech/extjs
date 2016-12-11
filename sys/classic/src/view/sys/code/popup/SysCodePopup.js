@@ -20,11 +20,11 @@ Ext.define('SysApp.view.sys.code.popup.SysCodePopup', {
         height : 100
     }, {
         xtype: 'sys-code-popup-ref',
-        height : 200
+        height : 180
     }, {
         xtype: 'sys-code-popup-tab',
         title: '다국어설정',
-        height : 250
+        height : 200
     }],
     dockedItems : [{
         xtype : 'pmh-button-toolbar',

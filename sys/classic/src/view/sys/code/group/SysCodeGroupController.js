@@ -30,6 +30,12 @@ Ext.define('SysApp.view.sys.code.group.SysCodeGroupController', {
 
 
         var record = this.getView().getSelectionModel().getSelection()[0];
+
+        if(Ext.isEmpty(record)){
+            PmhTech.Msg.alert('확인','기준정보그룹을 선택하세요');
+            return false;
+        }
+
         var options = {
             mode : 'UPDATE',
             params : record.data

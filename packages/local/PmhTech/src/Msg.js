@@ -4,7 +4,9 @@ Ext.define('PmhTech.Msg', {
 
         alert: function (title, msg, callbackFunc) {
             Ext.Msg.alert(title, msg, function (btn) {
-                callbackFunc();
+                if(Ext.isFunction(callbackFunc)){
+                    callbackFunc();
+                }
             });
         },
         confirm: function (title, msg, callbackFunc) {
