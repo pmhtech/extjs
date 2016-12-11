@@ -25,35 +25,14 @@ Ext.define('SysApp.view.sys.menu.grid.SysMenuTree', {
 		text: 'ALL',
 		expanded: true
 	},
-	columns: [{
-		xtype: 'treecolumn',
-		text: '메뉴명',
-		dataIndex: 'MENU_NM',
-		flex: 1
-	}, {
-
-		text: '클래스명',
-		dataIndex: 'CLASS_NM',
-		flex: 1
-	}, {
-
-		text: '위젯명',
-		dataIndex: 'WIDGET_NM',
-		flex: 1
-	}, {
-
-		text: '메뉴권한',
-		dataIndex: 'MENU_AUTH',
-		flex: 1
-	}, {
-		text: '클래스명',
-		dataIndex: 'SORT',
-		flex: 1
-	}, {
-		text: '사용유무',
-		dataIndex: 'USE_YN',
-		flex: 1
-	}]
+	columns: [
+		{xtype: 'treecolumn',    text: '메뉴명',    dataIndex: 'MENU_NM',   flex: 1},
+		{ text: '클래스명'    , dataIndex: 'CLASS_NM',flex: 1},
+		{ text: '위젯명'     , dataIndex: 'WIDGET_NM', flex: 1},
+		{ text: '메뉴권한'   , dataIndex: 'MENU_AUTH', flex: 1},
+		{ text: '클래스명'   , dataIndex: 'SORT', flex: 1},
+		{ text: '사용유무'   , dataIndex: 'USE_YN',flex: 1}
+	]
 });
 
 

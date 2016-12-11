@@ -7,8 +7,6 @@ Ext.application({
     name: 'SysApp',
     extend: 'Ext.app.Application',
     controllers: [
-        'SysApp.controller.AjaxUtil',
-        'SysApp.controller.ajax.UserMst',
         'SysApp.controller.menu.MenuController'
     ],
     requires: [
@@ -22,7 +20,6 @@ Ext.application({
 
     launch: function () {
         LoginController = SysApp.controller.LoginController;
-        AjaxUtil = SysApp.controller.AjaxUtil;
         SysCode = {};
         Ext.create('SysApp.view.login.LoginForm');
     }

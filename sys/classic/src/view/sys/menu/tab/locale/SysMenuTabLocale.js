@@ -18,9 +18,14 @@ Ext.define('SysApp.view.sys.menu.tab.locale.SysMenuTabLocale', {
 			change: 'onChangeNotify'
 		}
 	}, {
-		xtype: 'textfield',
+		xtype: 'pmh-combo-code',
 		fieldLabel: '메뉴권한',
-		name: 'MENU_AUTH'
+		store: SysCode['SYS_000002'].copy(),
+		name: 'MENU_AUTH',
+		listeners: {
+			change: 'onChangeNotify'
+		}
+
 	},{
 		xtype: 'textfield',
 		fieldLabel: '상위메뉴ID',
@@ -41,25 +46,34 @@ Ext.define('SysApp.view.sys.menu.tab.locale.SysMenuTabLocale', {
 		name: 'MENU_NM'
 	},  {
 		xtype: 'textfield',
-		fieldLabel: '위젯명',
-		name: 'WIDGET_NM'
+		fieldLabel: '메뉴레벨',
+		name: 'MENU_LVL',
+		listeners: {
+			change: 'onChangeNotify'
+		}
 	},{
 		xtype: 'textfield',
 		fieldLabel: '클래스명',
 		columnWidth : 1,
-		name: 'CLASS_NM'
+		name: 'CLASS_NM',
+		listeners: {
+			change: 'onChangeNotify'
+		}
 	},{
 		xtype: 'textfield',
-		fieldLabel: '메뉴레벨',
-		name: 'MENU_LVL'
-	},  {
-		xtype: 'textfield',
-		fieldLabel: '정렬',
-		name: 'SORT'
+		fieldLabel: '위젯명',
+		name: 'WIDGET_NM',
+		columnWidth : 1,
+		listeners: {
+			change: 'onChangeNotify'
+		}
 	}, {
 		xtype: 'textfield',
-		fieldLabel: '정렬',
-		name: 'MEMO'
+		fieldLabel: '정렬순서',
+		name: 'SORT',
+		listeners: {
+			change: 'onChangeNotify'
+		}
 	}, {
 		xtype: 'pmhtech-radio-base',
 		fieldLabel: '사용유무',
@@ -76,6 +90,11 @@ Ext.define('SysApp.view.sys.menu.tab.locale.SysMenuTabLocale', {
 			boxLabel: '미사용'
 		}],
 		onChangeRadioGroup: 'onChangeUSE_YN'
+	},{
+		xtype: 'textarea',
+		columnWidth : 1,
+		fieldLabel: '메모',
+		name: 'MEMO'
 	}],
 	listeners: {
 		InitMode: 'onInitMode',

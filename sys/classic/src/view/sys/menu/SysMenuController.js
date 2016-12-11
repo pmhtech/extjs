@@ -52,10 +52,26 @@ Ext.define('SysApp.view.sys.SysMenuController', {
     },
     onSelectTree: function (selmodel, record, index, eOpts) {
 
+        this.getView().down('#sysMapCodes').getStore().removeAll();
+
+        var findIdx = SysCode['COM_000002'].find('CODE', 'DEFAULT');
+
+        var defaultLang = SysCode['COM_000002'].getAt(findIdx).get('REF1');
+
+
+
+
         var forms = this.getView().query('tabpanel form');
 
         for (var i = 0; i < forms.length; i++) {
             var form = forms[i];
+
+            var defaultReadOnly = form.LOCALE_CD != defaultLang;
+
+
+            form.setReadOnlyFields(false,['MENU_NM','MEMO']);
+            form.setReadOnlyFields(defaultReadOnly, ['MENU_AUTH','WIDGET_NM','CLASS_NM','MENU_LVL','SORT', 'USE_YN']);
+
             form.getForm().setValues(record.data);
         }
 
