@@ -17,30 +17,11 @@ Ext.define('SysApp.view.sys.SysMenuController', {
     },
 
 
-
-    onInitMode : function(comp){
-
-    },
-
-
-    onInsertMode : function(comp){
-
-
-    },
-    onUpdateMode : function(comp){
-
-
-    },
     onBtnAdd: function (button) {
 
         var grid = this.getView().down('sys-menu-tree');
-
-        var record = grid.getSelectionModel().getSelection()[0];
-        if(Ext.isEmpty(record) || record.get('MENU_LVL')==4){
-
-            PmhTech.Msg.alert('확인','상위그룹을 선택하세요');
-            return false;
-        }
+        grid.getSelectionModel().deselectAll();
+        grid.fireEvent('InsertMode',grid);
 
 
     },
@@ -67,11 +48,6 @@ Ext.define('SysApp.view.sys.SysMenuController', {
             var form = forms[i];
 
             var locale = form.LOCALE_CD;
-            var defaultReadOnly = form.LOCALE_CD != defaultLang;
-
-
-            form.setReadOnlyFields(false,['MENU_NM','MEMO']);
-            form.setReadOnlyFields(defaultReadOnly, ['MENU_AUTH','WIDGET_NM','CLASS_NM','MENU_LVL','SORT', 'USE_YN']);
             form.getForm().setValues(record.data.LANGUAGE[locale]);
         }
 

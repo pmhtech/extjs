@@ -4,15 +4,30 @@ Ext.define('SysApp.view.sys.menu.tab.locale.SysMenuTabLocaleController', {
 
 
 	onInitMode: function (form) {
-		form.setReadOnlyFields(true);
-		form.getForm().resetClearFields();
+		this.onInsertMode(form);
 
 	},
 	onInsertMode: function (form) {
+		form.getForm().resetClearFields();
+		var findIdx = SysCode['COM_000002'].find('CODE', 'DEFAULT');
+		var defaultLanguage = SysCode['COM_000002'].getAt(findIdx).get('REF1');
+		var defaultReadOnly = form.LOCALE_CD != defaultLanguage;
+
+		form.setReadOnlyFields(false,['MENU_NM','MEMO']);
+		form.setReadOnlyFields(defaultReadOnly, ['SYSTEM','PRE_MENU_ID','MENU_ID','MENU_AUTH','WIDGET_NM','CLASS_NM','MENU_LVL','SORT', 'USE_YN']);
+
+
 
 	},
 	onUpdateMode: function (form) {
 
+		var findIdx = SysCode['COM_000002'].find('CODE', 'DEFAULT');
+		var defaultLanguage = SysCode['COM_000002'].getAt(findIdx).get('REF1');
+		var defaultReadOnly = form.LOCALE_CD != defaultLanguage;
+
+		form.setReadOnlyFields(true,['SYSTEM','PRE_MENU_ID','MENU_ID']);
+		form.setReadOnlyFields(false,['MENU_NM','MEMO']);
+		form.setReadOnlyFields(defaultReadOnly, ['MENU_AUTH','WIDGET_NM','CLASS_NM','MENU_LVL','SORT', 'USE_YN']);
 	},
 
 

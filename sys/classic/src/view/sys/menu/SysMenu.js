@@ -16,9 +16,6 @@ Ext.define('SysApp.view.sys.menu.SysMenu', {
                 frame : true,
                 height: 300,
                 listeners: {
-                    InitMode : 'onInitMode',
-                    InsertMode : 'onInsertMode',
-                    UpdateMode : 'onUpdateMode',
                     select: 'onSelectTree',
                     scope: this.getController()
                 }
@@ -43,8 +40,6 @@ Ext.define('SysApp.view.sys.menu.SysMenu', {
                     frame: true,
                     flex : 1,
                     layout: 'fit'
-
-
                 },{
                     xtype: 'sys-menu-code',
                     margin : '0 0 0 15',
