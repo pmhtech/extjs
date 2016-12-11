@@ -22,20 +22,19 @@ Ext.define('SysApp.view.sys.code.popup.SysCodePopupController', {
         thisStore.removeAll();
         thisStore.add(datas);
 
-        var localeDatas =  params.LANGUAGE;
 
-        var tabpanel = this.getView().down('tabpanel');
 
-        for(var i=0;i<localeDatas.length;i++){
-            var localeData = localeDatas[i];
-
-            var localeForm = tabpanel.down('#'+localeData.LOCALE_CD);
+        var forms = this.getView().query('tabpanel form');
+        for(var i=0;i<forms.length;i++){
+            var form = forms[i];
+            var LOCALE_CD = form.LOCALE_CD;
 
             if(mode=='INSERT'){
-                localeForm.getForm().resetClearFields();
+                form.getForm().resetClearFields();
             }else{
-                localeForm.getForm().setValues(localeData);
+                form.getForm().setValues(params.LANGUAGE[LOCALE_CD]);
             }
+
         }
 
     },

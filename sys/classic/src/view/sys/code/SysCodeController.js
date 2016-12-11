@@ -73,8 +73,8 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 		sysCodeDetailTab.down('pmh-button-reset').setDisabled(false);
 
 
-		var locales = record.data.LANGUAGE;
-		var localeTab = this.getView().down('sys-code-detail-tab');
+
+		var localeForms = this.getView().query('sys-code-detail-tab form');
 
 
 		var findIdx = SysCode['COM_000002'].find('CODE', 'DEFAULT');
@@ -82,15 +82,15 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 		var defaultLang = SysCode['COM_000002'].getAt(findIdx).get('REF1');
 
 
-		for (var i = 0; i < locales.length; i++) {
-			var locale = locales[i];
-			var targetForm = localeTab.down('[LOCALE_CD=' + locale.LOCALE_CD + ']');
-			var refFields = targetForm.down('#refFields');
+		for (var i = 0; i < localeForms.length; i++) {
+			var localeForm = localeForms[i];
+			var LOCALE_CD = localeForm.LOCALE_CD;
+			var refFields = localeForm.down('#refFields');
 			refFields.removeAll();
+			var locale = record.data.LANGUAGE[LOCALE_CD];
 
-
-			var defaultReadOnly = locale.LOCALE_CD != defaultLang;
-			targetForm.setReadOnlyFields(defaultReadOnly, ['COMPANY', 'CODE', 'USE_YN', 'SORT']);
+			var defaultReadOnly = LOCALE_CD != defaultLang;
+			localeForm.setReadOnlyFields(defaultReadOnly, ['COMPANY', 'CODE', 'USE_YN', 'SORT']);
 
 			var fields = [];
 			for (var j = 1; j <= 5; j++) {
@@ -135,7 +135,7 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 						break;
 				}
 
-				if (locale.LOCALE_CD == defaultLang && EDIT_YN == 'N') {
+				if (LOCALE_CD == defaultLang && EDIT_YN == 'N') {
 					field.listeners = {
 						change: this.onChangeREF,
 						scope: this
@@ -182,13 +182,14 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 	},
 	onSelectDetailGrid: function (grid, record, index) {
 
-		var tabPanel = this.getView().down('sys-code-detail-tab');
-		var localeDatas = record.data.LANGUAGE;
+		var localeForms = this.getView().query('sys-code-detail-tab form');
+		var localeData = record.data.LANGUAGE;
 
-		for (var i = 0; i < localeDatas.length; i++) {
-			var localeData = localeDatas[i];
-			var LOCALE_CD = localeData.LOCALE_CD;
-			tabPanel.down('[LOCALE_CD=' + LOCALE_CD + ']').getForm().setValues(localeData);
+		for (var i = 0; i < localeForms.length; i++) {
+			var localeForm = localeForms[i];
+			var LOCALE_CD = localeForm.LOCALE_CD;
+
+			localeForm.getForm().setValues(localeData[LOCALE_CD]);
 		}
 	}
 });

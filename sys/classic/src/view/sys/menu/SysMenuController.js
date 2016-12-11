@@ -66,13 +66,13 @@ Ext.define('SysApp.view.sys.SysMenuController', {
         for (var i = 0; i < forms.length; i++) {
             var form = forms[i];
 
+            var locale = form.LOCALE_CD;
             var defaultReadOnly = form.LOCALE_CD != defaultLang;
 
 
             form.setReadOnlyFields(false,['MENU_NM','MEMO']);
             form.setReadOnlyFields(defaultReadOnly, ['MENU_AUTH','WIDGET_NM','CLASS_NM','MENU_LVL','SORT', 'USE_YN']);
-
-            form.getForm().setValues(record.data);
+            form.getForm().setValues(record.data.LANGUAGE[locale]);
         }
 
 
