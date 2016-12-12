@@ -8,27 +8,21 @@ Ext.define('SysApp.view.sys.menu.code.SysMenuCode', {
 	},
 	items : [{
 		xtype : 'pmhtech-grid-base',
-		itemId : 'sysMapCodes',
+		itemId : 'sysMenuCode',
 		storeProps :{
-			rootProperty : 'sysMapCodes'
+			rootProperty : 'sysMenuCodes'
 		},
 		title : '사용코드',
-		dockedItems : [{
-			xtype : 'toolbar',
-			dock : 'top',
-			items : [{
-				xtype : 'textfield',
-				fieldLabel : '검색'
-			}]
-		}],
-		hideHeaders : true,
 		flex : 1,
 		style : 'border-width : 0px 1px 0px 0px',
+		selModel : {
+			type : 'rowmodel',
+			mode : 'SIMPLE'
+		},
 		columns : [
-			{text :'기준정보', dataIndex:'PRE_CD', flex : 1,renderer : function(value,metaData,record){
-				return record.get('PRE_CD')+'['+record.get('CODE_NM')+']';
-			}}
-		]
+			{text :'코드그룹명', dataIndex:'PRE_CD', flex : 1},
+			{text :'코드명', dataIndex:'CODE_NM', flex : 1}
+		],onGridLoad : 'onGridLoad'
 	}, {
 		xtype : 'container',
 		width : 40,
@@ -40,40 +34,33 @@ Ext.define('SysApp.view.sys.menu.code.SysMenuCode', {
 			{
 				xtype : 'button',
 				margin : '0 0 10 0',
-				text : '>>'
+				text : '>>',
+				handler : 'onBtnRemoveCodes'
 			},{
 				xtype : 'button',
-
-				text : '<<'
+				text : '<<',
+				handler : 'onBtnAddCodes'
 			}
 		]
 
 	},{
 		xtype : 'pmhtech-grid-base',
-		itemId : 'sysCodeGroups',
+		itemId : 'sysCodeGroup',
 		storeProps : {
 			rootProperty : 'sysCodeGroups'
 		},
 		style : 'border-width : 0px 0px 0px 1px',
 		title : '미사용 코드',
-		dockedItems : [{
-			xtype : 'toolbar',
-			dock : 'top',
-			items : [{
-				xtype : 'textfield',
-				fieldLabel : '검색'
-			}]
-		}],
 		flex : 1,
-		hideHeaders : true,
+		selModel : {
+			type : 'rowmodel',
+			mode : 'SIMPLE'
+		},
 		columns : [
-			{text :'기준정보', dataIndex:'PRE_CD', flex : 1,renderer : function(value,metaData,record){
-				return '['+record.get('PRE_CD')+']&nbsp;&nbsp;&nbsp;&nbsp;'+record.get('CODE_NM')+'';
-			}}
+			{text :'코드그룹명', dataIndex:'PRE_CD', flex : 1},
+			{text :'코드명', dataIndex:'CODE_NM', flex : 1}
 		]
-	}],listeners : {
-		initMode : 'onInitMode'
-	}
+	}]
 });
 
 

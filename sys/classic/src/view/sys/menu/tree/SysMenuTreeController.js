@@ -2,6 +2,10 @@ Ext.define('SysApp.view.sys.menu.grid.SysMenuTreeController', {
 	extend: 'Ext.app.ViewController',
 	alias: 'controller.sys-menu-tree',
 
+	onAfterRender : function(comp){
+		this.onBtnSearch();
+	},
+
 	onBtnSearch: function (button) {
 
 		PmhTech.Ajax.request({

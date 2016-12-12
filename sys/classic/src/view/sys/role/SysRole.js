@@ -1,7 +1,7 @@
-Ext.define('SysApp.view.sys.menu.SysMenu', {
+Ext.define('SysApp.view.sys.role.SysRole', {
     extend: 'SysApp.view.content.DefaultView',
-    alias: 'widget.sys-menu',
-    controller: 'sys-menu',
+    alias: 'widget.sys-role',
+    controller: 'sys-role',
     layout: {
         type: 'vbox',
         align: 'stretch'
@@ -49,8 +49,6 @@ Ext.define('SysApp.view.sys.menu.SysMenu', {
             }]
             ,listeners : {
                 afterrender : 'onAfterRender',
-                InitMode : 'onInitMode',
-                InsertMode : 'onInsertMode',
                 scope: this.getController()
             }
         });

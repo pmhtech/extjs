@@ -35,7 +35,9 @@ Ext.define('SysApp.view.sys.menu.grid.SysMenuTree', {
 		{ text: '메뉴권한'   , dataIndex: 'MENU_AUTH', flex: 1},
 		{ text: '클래스명'   , dataIndex: 'SORT', flex: 1},
 		{ text: '사용유무'   , dataIndex: 'USE_YN',flex: 1}
-	]
+	],listeners : {
+		afterrender : 'onAfterRender'
+	}
 });
 
 

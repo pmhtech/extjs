@@ -49,5 +49,18 @@ Ext.define('SysApp.view.sys.menu.tab.locale.SysMenuTabLocaleController', {
 		for (var i = 0; i < locales.length; i++) {
 			locales[i].down('[name=' + field.name + ']').setValue(newValue);
 		}
+	},
+	onCollapsePicker : function(field){
+		var rootNode =field.getStore().getRoot();
+
+		var record = rootNode.findChild(field.valueField,field.getValue(),true);
+
+
+		if(Ext.isEmpty(record) ||record.isLeaf()){
+			PmhTech.Msg.alert('확인','상위메뉴만 선택해야만 합니다.',function(){
+
+				field.reset();
+			});
+		}
 	}
 });
