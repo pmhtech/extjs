@@ -19,6 +19,10 @@ Ext.define('SysApp.view.sys.SysMenuController', {
         var store = comp.down('#sysCodeGroup').getStore();
         store.loadRawData(store.dataSnapShot);
         comp.down('#sysMenuCode').getStore().removeAll();
+
+        var sysMenuTab = comp.down('sys-menu-tab');
+        sysMenuTab.fireEvent('InsertMode',sysMenuTab);
+
     },
 
 
