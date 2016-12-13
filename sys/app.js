@@ -19,6 +19,8 @@ Ext.application({
     ],
 
     launch: function () {
+    	
+    	
         LoginController = SysApp.controller.LoginController;
         SysCode = {};
         Ext.create('SysApp.view.login.LoginForm');
