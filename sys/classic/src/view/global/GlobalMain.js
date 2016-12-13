@@ -13,7 +13,7 @@ Ext.define('SysApp.view.global.GlobalMain', {
                 type : 'hbox',
                 align : 'stretch'
             },
-            height: 22
+            height: 50
         },
         {
             xtype: 'global-west',

@@ -29,6 +29,18 @@ Ext.define('SysApp.view.login.LoginFormController', {
 
 		});
 
+		var findIdx = SysCode['COM_000002'].find('CODE','DEFAULT');
+		var defaultLang = SysCode['COM_000002'].getAt(findIdx).get('REF1');
+
+		var findIdx = SysCode['COM_000003'].find('CODE',defaultLang);
+
+		SysCode['COM_000003'].getAt(findIdx).set('SORT',0);
+		SysCode['COM_000003'].sort('SORT','ASC');
+
+
+
+
+
 
 		Ext.create('SysApp.view.global.GlobalMain', {
 			renderTo: Ext.getBody(),

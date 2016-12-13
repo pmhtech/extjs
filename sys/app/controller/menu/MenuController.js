@@ -8,16 +8,16 @@ Ext.define('SysApp.controller.menu.MenuController', {
     },
     refs: [{
         ref: 'centerTabPanel',
-        selector: 'global-center #mainTab'
+        selector: 'global-center #menu-tabpanel'
     }, {
         ref: 'globalNorth',
-        selector: 'global-north'
+        selector: 'global-north #menuButtons'
     }, {
         ref: 'globalWest',
         selector: 'global-west'
     },{
         ref:'globalMain',
-        selector:'global-main'
+        selector:'global-_main'
     }],
     init: function () {
         this.control({
@@ -25,15 +25,22 @@ Ext.define('SysApp.controller.menu.MenuController', {
                 afterrender: this.createMainMenu
             },
             'centerTabPanel': {
-                tabchange: this.onGlobalCenterTabChange
+                tabchange: this.onGlobalCenterTabChange,
+                beforetabchange : this.onGlobalCenterBeforeTabChange
             }
         });
 
 
     },
+
+    onGlobalCenterBeforeTabChange : function(comp,newcard,oldcard){
+
+    },
+
     onGlobalCenterTabChange: function (component, newcard, oldcard) {
 
         var node = newcard.menuNode;
+
 
         var globalNorth = this.getGlobalNorth();
         var masterId = this.getParentMenuByDepth(node, 1, "");
@@ -41,6 +48,14 @@ Ext.define('SysApp.controller.menu.MenuController', {
 
 
         var globalWest = this.getGlobalWest();
+
+        var accordions =globalWest.query('treepanel[collapsed=true]');
+
+
+        for(var i=0;i<accordions.length;i++){
+
+            accordions[i].getSelectionModel().deselectAll();
+        }
 
         if (globalWest.activeMenu != masterId) {
             var menuBtn = globalNorth.down('#' + masterId);
@@ -50,9 +65,14 @@ Ext.define('SysApp.controller.menu.MenuController', {
         var subTree = globalWest.down('#' + subMenuID);
 
 
-        subTree.expand();
-        var findIdx = subTree.getStore().find('MENU_ID', node.get('MENU_ID'));
+        var subGroupID = this.getParentMenuByDepth(node, 3, "");
 
+
+
+        subTree.expand();
+        var groupNode = subTree.getRootNode().findChild('MENU_ID',subGroupID,true);
+        subTree.expandNode(groupNode);
+        var findIdx = subTree.getStore().find('MENU_ID', node.get('MENU_ID'));
 
         if (findIdx != -1) {
             subTree.getSelectionModel().select(findIdx);
@@ -77,6 +97,7 @@ Ext.define('SysApp.controller.menu.MenuController', {
                 xtype: 'button',
                 text: node['MENU_NM'],
                 node: Ext.clone(node),
+                iconCls : node['ICON_CLASS'],
                 globalNorth: globalNorth,
                 itemId: node['MENU_ID'],
                 globalWest: this.getGlobalWest(),
@@ -104,10 +125,9 @@ Ext.define('SysApp.controller.menu.MenuController', {
             var treeStore = Ext.create('Ext.data.TreeStore', {
                 fields: [
                     {name: 'MENU_ID', type: 'string'},
+                    {name : 'iconCls', convert : function(v,rec){ return rec.get('ICON_CLASS')}},
                     {name: 'expanded', type: 'boolean', defaultValue: true},
-                    {name: 'leaf',  type: 'boolean', convert:function(v,record){
-                        return Ext.isEmpty(record.get('WIDGET_NM')) ? false : true;
-                    }}
+                    {name: 'leaf', type: 'boolean', defaultValue: false}
 
                 ], root: {
                     text: 'ALL',
@@ -155,8 +175,11 @@ Ext.define('SysApp.controller.menu.MenuController', {
     },
     handleRoute: function (id) {
 
+
+        var me = this;
         var navigation = Ext.StoreMgr.lookup('Navigation');
         if (navigation.getCount() <= 0 || Ext.isEmpty(id)) {
+
             return false;
         }
         var rootNode = navigation.getRoot();
@@ -167,19 +190,42 @@ Ext.define('SysApp.controller.menu.MenuController', {
         var viewContent = centerTabPanel.down('#centerPage_' + id);
 
 
-        var widgetName = node.get('WIDGET_NM');
+        var clazzName = node.get('CLASS_NM');
         var title = node.get('MENU_NM');
 
-        console.log('메뉴명 : '+title, '         클래스명 : '+widgetName);
-        if (!viewContent) {
-            viewContent =  {
-                xtype : widgetName,
-                title: title,
-                itemId: 'centerPage_' + id,
-                menuNode: node
-            };
-            //centerTabPanel.add(viewContent);
+
+        console.log('메뉴명 : '+title, '         클래스명 : '+clazzName);
+
+
+        if(clazzName){
+            if (!viewContent) {
+                viewContent = Ext.create(clazzName, {
+                    title: title,
+                    itemId: 'centerPage_' + id,
+                    menuNode: node,
+                    listeners : {
+                        close : function(thisPanel){
+                            var openTabCount= centerTabPanel.items.items.length;
+                            if(openTabCount==1){
+                                var globalWest = me.getGlobalWest();
+
+                                globalWest.down('panel[collapsed=false]').getSelectionModel().deselectAll();
+                                thisPanel.getController().redirectTo('');
+                            }
+                        }
+                    }
+                });
+                centerTabPanel.add(viewContent);
+            }
+            centerTabPanel.setActiveTab(viewContent);
+        }else{
+
+            var beforeTab = centerTabPanel.getActiveTab();
+            if(beforeTab){
+                centerTabPanel.getActiveTab(beforeTab);
+            }
+
+
         }
-        centerTabPanel.setActiveTab(viewContent);
     }
 });
