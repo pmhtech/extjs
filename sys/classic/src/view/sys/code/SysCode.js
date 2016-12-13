@@ -1,7 +1,7 @@
 Ext.define('SysApp.view.sys.code.SysCode', {
     extend: 'SysApp.view.content.HBoxDefaultView',
     alias: 'widget.sys-code',
-    requires : ['SysApp.view.sys.code.popup.SysCodePopup'],
+    requires : ['SysApp.view.sys.code.syscode.popup.SysCodePopup'],
     controller: 'sys-code',
 
     initComponent : function(){
