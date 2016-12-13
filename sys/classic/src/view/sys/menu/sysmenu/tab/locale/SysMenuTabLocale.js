@@ -93,13 +93,6 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocale', {
 					change: 'onChangeNotify'
 				}
 			}, {
-				xtype: 'textfield',
-				fieldLabel: '정렬순서',
-				name: 'SORT',
-				listeners: {
-					change: 'onChangeNotify'
-				}
-			}, {
 				xtype: 'pmhtech-radio-base',
 				fieldLabel: '사용유무',
 				name: 'USE_YN',
@@ -115,6 +108,13 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocale', {
 					boxLabel: '미사용'
 				}],
 				onChangeRadioGroup: 'onChangeUSE_YN'
+			}, {
+				xtype: 'textfield',
+				fieldLabel: '정렬순서',
+				name: 'SORT',
+				listeners: {
+					change: 'onChangeNotify'
+				}
 			},{
 				xtype: 'textarea',
 				columnWidth : 1,
