@@ -2,3 +2,8 @@
     color: #000;
     background-color: #e0e0e0;
 }
+
+
+.row-checked {
+    background-color: #ff8a98 !important;
+}
