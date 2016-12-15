@@ -7,6 +7,10 @@ Ext.define('SysApp.view.sys.role.sysrole.center.SysRoleTree', {
 		ptype: 'pmh-treefilter'
 		, collapseOnClear: false
 		, allowParentFolders: true
+	},{
+		ptype : 'pmh-treechecker',
+		dataIndex : 'isChecked'
+
 	}],
 	store: Ext.create('Ext.data.TreeStore', {
 		fields: [
@@ -51,10 +55,7 @@ Ext.define('SysApp.view.sys.role.sysrole.center.SysRoleTree', {
 	}],
 	columns: [
 		{
-			xtype: 'checkcolumn', text: '사용', dataIndex: 'isChecked', width: 40,
-			listeners: {
-				checkchange: 'onCheckChange'
-			}
+			xtype: 'checkcolumn', text: '사용', dataIndex: 'isChecked', width: 40
 
 		},
 		{xtype: 'treecolumn', text: '메뉴명', dataIndex: 'MENU_NM', flex: 1},

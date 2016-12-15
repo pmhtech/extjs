@@ -24,47 +24,5 @@ Ext.define('SysApp.view.sys.role.sysrole.center.SysRoleTreeController', {
             return compareMENU_NM && compareMENU_AUTH && compareUSE_YN;
         };
         this.getView().filterBy(filterFunc);
-    },
-    onCheckChange :  function(checkcolumn,rowIndex,checked){
-
-        var node = this.getView().getStore().getAt(rowIndex);
-
-
-        if (node.get('leaf') !== true) {
-            function changeCheckbox(node, checked) {
-                node.eachChild(function (n) {
-                    n.set('isChecked', checked);
-                    changeCheckbox(n, checked);
-                });
-            }
-            changeCheckbox(node, checked);
-        }
-
-        function changeUncheckebox(n, chk) {
-            if (n.parentNode) {
-                n.set('isChecked',false);
-                changeUncheckebox(n.parentNode, false);
-            }
-        }
-
-        if(!checked){
-            changeUncheckebox(node, checked);
-        }else {
-
-            function childNodeAllCheck(n, chk) {
-
-                var parentNode = n.parentNode;
-
-                if (parentNode) {
-                    var findNode = parentNode.findChild('isChecked', false);
-
-                    if (!findNode) {
-                        parentNode.set('isChecked', true);
-                        childNodeAllCheck(parentNode, chk);
-                    }
-                }
-            }
-            childNodeAllCheck(node, checked);
-        }
     }
 });
