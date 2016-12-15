@@ -1,7 +1,7 @@
 Ext.define('SysApp.view.sys.role.sysrole.center.SysRoleTree', {
 	extend: 'Ext.tree.Panel',
-	alias: 'widget.sys-role-tree',
-	controller: 'sys-role-tree',
+	alias: 'widget.sys-role-page',
+	controller: 'sys-role-page',
 	rootVisible: false,
 	plugins: [{
 		ptype: 'pmh-treefilter'
@@ -69,6 +69,7 @@ Ext.define('SysApp.view.sys.role.sysrole.center.SysRoleTree', {
 		}
 	],
 	viewConfig: {
+		markDirty :false,
 		getRowClass: function (record, rowIndex, rowParams, store) {
 			return record.get("isChecked") ? "row-checked" : "";
 		}

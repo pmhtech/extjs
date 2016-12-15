@@ -11,23 +11,6 @@ Ext.define('SysApp.view.sys.role.SysRole', {
 
 		Ext.apply(me,{
 			items : [{
-				xtype : 'toolbar',
-				region : 'north',
-				title : '검색조건',
-				height : 60,
-				items : [ {
-					xtype: 'pmh-combo-code',
-					name: 'SYSTEM',
-					store: SysCode['SYS_000001'].copy(),
-					value : 'ALL'
-				}, {xtype : 'tbspacer',
-					width : 20
-				},{
-					xtype: 'pmh-button-search',
-					handler: 'onBtnSearch',
-					scope: me.getController()
-				}]
-			},{
 				xtype : 'container',
 				region : 'west',
 				flex : 1,
@@ -37,6 +20,22 @@ Ext.define('SysApp.view.sys.role.SysRole', {
 				},items :[{
 					xtype : 'sys-role-grid',
 					title : '권한 상세',
+					dockedItems : [{
+						xtype : 'toolbar',
+						dock : 'top',
+						items : [ {
+							xtype: 'pmh-combo-code',
+							name: 'SYSTEM',
+							store: SysCode['SYS_000001'].copy(),
+							value : 'ALL'
+						}, {xtype : 'tbspacer',
+							width : 20
+						},{
+							xtype: 'pmh-button-search',
+							handler: 'onBtnSearch',
+							scope: me.getController()
+						}]
+					}],
 					flex : 1,
 					onGridSelect : 'onSysRoleGridSelect'
 				},{
@@ -61,7 +60,7 @@ Ext.define('SysApp.view.sys.role.SysRole', {
 					flex : 1
 				}]
 			},{
-				xtype : 'sys-role-tree',
+				xtype : 'sys-role-page',
 				collapsible : true,
 				collapseDirection : 'left',
 				title : '데이터 목록',

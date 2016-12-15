@@ -1,6 +1,6 @@
 Ext.define('SysApp.view.sys.role.sysrole.center.SysRoleTreeController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.sys-role-tree',
+    alias: 'controller.sys-role-page',
 
     onChangeFilter : function(field){
 

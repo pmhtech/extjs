@@ -18,7 +18,7 @@ Ext.define('SysApp.view.sys.role.SysRoleController', {
 
 
 		var treeNode = PmhTech.Utils.convertListToTree(resObj['sysMenus'], 'MENU_ID', 'PRE_MENU_ID', "");
-		var treeStore = this.getView().down('sys-role-tree').getStore();
+		var treeStore = this.getView().down('sys-role-page').getStore();
 		treeStore.snapshot = Ext.clone(treeNode);
 		treeStore.setRoot({
 			MENU_NM: 'ALL',
@@ -46,7 +46,7 @@ Ext.define('SysApp.view.sys.role.SysRoleController', {
 	onSysRoleGridSelect : function(selmodel,record,index){
 
 		var forms = this.getView().query('sys-role-locale');
-		this.getView().down('sys-role-tree').getStore().rejectChanges();
+		this.getView().down('sys-role-page').getStore().rejectChanges();
 
 		var localeData = record.data.LANGUAGE;
 		for(var i=0;i<forms.length;i++){
@@ -62,7 +62,7 @@ Ext.define('SysApp.view.sys.role.SysRoleController', {
 		})
 	},
 	onLoadSysRolePage : function(resObj){
-		var rootNode = this.getView().down('sys-role-tree').getStore().getRoot();
+		var rootNode = this.getView().down('sys-role-page').getStore().getRoot();
 
 
 		var sysRolePages = resObj.sysRolePages;
@@ -81,7 +81,7 @@ Ext.define('SysApp.view.sys.role.SysRoleController', {
 	getChecked: function (sysRole) {
 
 
-		var thisStore = this.getView().down('sys-role-tree').getStore();
+		var thisStore = this.getView().down('sys-role-page').getStore();
 		var selection = [];
 		thisStore.getRootNode().cascade({
 			after: function (n) {
