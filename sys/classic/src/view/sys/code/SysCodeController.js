@@ -3,9 +3,9 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 	alias: 'controller.sys-code',
 
 	onBtnAdd: function (button) {
-		this.getView().down('sys-code-detail-grid').getSelectionModel().deselectAll();
+		this.getView().down('sys-code-grid').getSelectionModel().deselectAll();
 
-		var sysCodeDetailTab = this.getView().down('sys-code-detail-tab');
+		var sysCodeDetailTab = this.getView().down('sys-code-tab');
 
 
 		sysCodeDetailTab.getController().onInsertMode(sysCodeDetailTab);
@@ -13,12 +13,12 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 	},
 	onBtnSave: function (button) {
 
-		var detailGrid = this.getView().down('sys-code-detail-grid');
+		var detailGrid = this.getView().down('sys-code-grid');
 
 		var method = detailGrid.getSelectionModel().getSelection().length ==0 ? 'POST' :'PUT';
 		var sysCodeLocale = [];
 
-		var forms = this.getView().query('sys-code-detail-tab form');
+		var forms = this.getView().query('sys-code-tab form');
 		for (var i = 0; i < forms.length; i++) {
 			var form = forms[i];
 			if (!PmhTech.util.ValidUtil.isValidForm(form)) {
@@ -49,7 +49,7 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 	},
 	onBtnReset: function (button) {
 
-		var sysCodeDetailTab = this.getView().down('sys-code-detail-tab');
+		var sysCodeDetailTab = this.getView().down('sys-code-tab');
 		var forms = sysCodeDetailTab.query('form');
 
 		for (var i = 0; i < forms.length; i++) {
@@ -58,7 +58,7 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 	},
 
 	successSave: function (resObj) {
-		var sysCodeGroup = this.getView().down('sys-code-group');
+		var sysCodeGroup = this.getView().down('sys-code-group-grid');
 		var selmodel = sysCodeGroup.getSelectionModel();
 		this.onSelectGrid(selmodel,selmodel.getSelection()[0]);
 	},
@@ -66,7 +66,7 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 
 	onSelectGrid: function (selModel, record, index) {
 
-		var sysCodeDetailTab = this.getView().down('sys-code-detail-tab');
+		var sysCodeDetailTab = this.getView().down('sys-code-tab');
 
 		sysCodeDetailTab.down('pmh-button-add').setDisabled(false);
 		sysCodeDetailTab.down('pmh-button-save').setDisabled(false);
@@ -74,7 +74,7 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 
 
 
-		var localeForms = this.getView().query('sys-code-detail-tab form');
+		var localeForms = this.getView().query('sys-code-tab form');
 
 
 		var findIdx = SysCode['COM_000002'].find('CODE', 'DEFAULT');
@@ -162,7 +162,7 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 
 	onChangeREF: function (field, newValue, oldValue) {
 
-		var locales = this.getView().query('sys-code-detail-tab-locale');
+		var locales = this.getView().query('sys-code-locale-form');
 
 		for (var i = 0; i < locales.length; i++) {
 			locales[i].down('[name=' + field.name + ']').setValue(newValue);
@@ -172,17 +172,17 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 
 	successLoad: function (resObj) {
 
-		var grid = this.getView().down('sys-code-detail-grid');
-		var form = this.getView().down('sys-code-detail-tab-locale');
+		var grid = this.getView().down('sys-code-grid');
+		var form = this.getView().down('sys-code-locale-form');
 
-		var rec = this.getView().down('sys-code-group').getSelectionModel().getSelection();
+		var rec = this.getView().down('sys-code-group-grid').getSelectionModel().getSelection();
 		form.getForm().setValues(rec.data);
 
 		grid.getStore().loadRawData(resObj);
 	},
 	onSelectDetailGrid: function (grid, record, index) {
 
-		var localeForms = this.getView().query('sys-code-detail-tab form');
+		var localeForms = this.getView().query('sys-code-tab form');
 		var localeData = record.data.LANGUAGE;
 
 		for (var i = 0; i < localeForms.length; i++) {

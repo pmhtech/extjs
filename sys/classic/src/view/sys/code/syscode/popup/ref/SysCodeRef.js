@@ -27,7 +27,7 @@ Ext.define('SysApp.view.sys.code.syscode.popup.ref.SysCodePopupRef', {
             {
                 text: '코드그룹', dataIndex: 'REF_CD', align: 'left', flex : 1,editor: {
                 xtype: 'pmh-combo',
-                store: Ext.ComponentQuery.query('sys-code-group')[0].getStore(),
+                store: Ext.ComponentQuery.query('sys-code-group-grid')[0].getStore(),
                 isShowCode: true,
                 displayField: 'CODE_NM',
                 valueField: 'PRE_CD'

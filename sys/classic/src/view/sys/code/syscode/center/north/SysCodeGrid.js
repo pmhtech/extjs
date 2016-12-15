@@ -1,7 +1,8 @@
-Ext.define('SysApp.view.sys.code.syscode.detail.grid.SysCodeDetailGrid',{
+
+Ext.define('SysApp.view.sys.code.syscode.center.north.SysCodeGrid',{
     extend : 'PmhTech.grid.Base',
-    alias : 'widget.sys-code-detail-grid',
-    controller : 'sys-code-detail-grid',
+    alias : 'widget.sys-code-grid',
+    controller : 'sys-code-grid',
     storeProps : {
         fields : ['COMPANY','PRE_CD','CODE','CODE_NM','REF1','REF2','REF3','REF4','REF5','USE_YN','MEMO'],
         rootProperty : 'sysCodes'

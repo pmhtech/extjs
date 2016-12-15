@@ -10,18 +10,18 @@ Ext.define('SysApp.view.sys.code.SysCode', {
         Ext.apply(me,{
             leftItems: [{
                 title: '코드그룹목록 ',
-                xtype: 'sys-code-group',
+                xtype: 'sys-code-group-grid',
                 onGridSelect: 'onSelectGrid'
 
             }],
             rightItems: [{
-                xtype: 'sys-code-detail-grid',
+                xtype: 'sys-code-grid',
                 title: '코드목록',
                 layout : 'fit',
                 flex: 1,
                 onGridSelect: 'onSelectDetailGrid'
             },{
-                xtype: 'sys-code-detail-tab',
+                xtype: 'sys-code-tab',
                 frame : true,
                 tabBar :{
                     items: [{

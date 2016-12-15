@@ -1,6 +1,6 @@
-Ext.define('SysApp.view.sys.code.syscode.group.SysCodeGroupController', {
+Ext.define('SysApp.view.sys.code.syscode.west.SysCodeGroupGridController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.sys-code-group',
+    alias: 'controller.sys-code-group-grid',
 
     onBtnSearch: function (button) {
 
@@ -12,8 +12,8 @@ Ext.define('SysApp.view.sys.code.syscode.group.SysCodeGroupController', {
         });
     },
     successLoad: function (resObj) {
-            var store =this.getView().getStore();
-            store.loadRawData(resObj);
+        var store =this.getView().getStore();
+        store.loadRawData(resObj);
     },
     onBtnInsert: function () {
 
@@ -42,4 +42,5 @@ Ext.define('SysApp.view.sys.code.syscode.group.SysCodeGroupController', {
         };
         PmhTech.Utils.showPopup('sys-code-popup',options);
     }
+    
 });

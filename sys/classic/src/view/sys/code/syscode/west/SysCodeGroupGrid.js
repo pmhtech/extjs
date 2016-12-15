@@ -1,7 +1,7 @@
-Ext.define('SysApp.view.sys.code.syscode.group.SysCodeGroup', {
+Ext.define('SysApp.view.sys.code.syscode.west.SysCodeGroupGrid',{
     extend: 'PmhTech.grid.Base',
-    alias: 'widget.sys-code-group',
-    controller: 'sys-code-group',
+    alias: 'widget.sys-code-group-grid',
+    controller: 'sys-code-group-grid',
     height : '100%',
     dockedItems : [{
         xtype : 'pmh-button-toolbar',
@@ -33,7 +33,3 @@ Ext.define('SysApp.view.sys.code.syscode.group.SysCodeGroup', {
         {text: '사용유무', dataIndex: 'USE_YN', align: 'center'}
     ]
 });
-
-
-
-

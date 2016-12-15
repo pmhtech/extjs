@@ -154,7 +154,7 @@ Ext.define('SysApp.view.sys.code.syscode.popup.SysCodePopupController', {
         var me = this.getView();
         Ext.Msg.alert('확인','정상처리되었습니다.',function(btn){
 
-            var sysCodeGroup = Ext.ComponentQuery.query('sys-code-group')[0];
+            var sysCodeGroup = Ext.ComponentQuery.query('sys-code-group-grid')[0];
 
             sysCodeGroup.getController().onBtnSearch();
 
