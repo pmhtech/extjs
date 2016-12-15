@@ -6,8 +6,8 @@ Ext.define('SysApp.view.sys.role.SysRoleController', {
 		PmhTech.Ajax.request({
 			url: '/sys/menus',
 			method: 'GET',
-			params : {
-				SYSTEM : 'ALL'
+			params: {
+				SYSTEM: 'ALL'
 			},
 			success: this.successMenuLoad,
 			scope: this
@@ -19,28 +19,21 @@ Ext.define('SysApp.view.sys.role.SysRoleController', {
 
 		var treeNode = PmhTech.Utils.convertListToTree(resObj['sysMenus'], 'MENU_ID', 'PRE_MENU_ID', "");
 		var treeStore = this.getView().down('sys-role-tree').getStore();
-		debugger;
 		treeStore.snapshot = Ext.clone(treeNode);
 		treeStore.setRoot({
 			MENU_NM: 'ALL',
 			text: 'ALL',
-			id : 'root',
+			id: 'root',
 			expanded: true,
 			children: treeNode
 		});
 	},
 
-
 	onBtnSearch: function (button) {
 
-		var form = this.getView().down('#sys-role-search-form');
-
-		var valueObject = form.getForm().getValues();
-
 		PmhTech.Ajax.request({
-			url: 'sys/roles',
+			url: '/sys/roles',
 			method: 'GET',
-			params: valueObject,
 			success: this.successLoad,
 			scope: this
 		});
@@ -50,71 +43,110 @@ Ext.define('SysApp.view.sys.role.SysRoleController', {
 		this.getView().down('sys-role-grid').getStore().loadRawData(resObj);
 	},
 
-	onBtnAdd : function(button){
+	onSysRoleGridSelect : function(selmodel,record,index){
+
+		var forms = this.getView().query('sys-role-locale');
+		this.getView().down('sys-role-tree').getStore().rejectChanges();
+
+		var localeData = record.data.LANGUAGE;
+		for(var i=0;i<forms.length;i++){
+			var form = forms[i];
+			form.getForm().setValues(localeData[form.LOCALE_CD]);
+		}
+
+		PmhTech.Ajax.request({
+			url : Ext.String.format('/sys/roles/{0}/{1}',record.get('SYSTEM'),record.get('ROLE_ID')),
+			method : 'GET',
+			success : this.onLoadSysRolePage,
+			scope : this
+		})
+	},
+	onLoadSysRolePage : function(resObj){
+		var rootNode = this.getView().down('sys-role-tree').getStore().getRoot();
+
+
+		var sysRolePages = resObj.sysRolePages;
+
+		for(var i=0;i<sysRolePages.length;i++){
+			var data= sysRolePages[i];
+			var node = rootNode.findChild('MENU_ID', data.MENU_ID, true);
+			node.set('isChecked',!Ext.isEmpty(node));
+		}
+	},
+
+	onBtnAdd: function (button) {
 
 	},
 
-	getChecked: function () {
+	getChecked: function (sysRole) {
+
 
 		var thisStore = this.getView().down('sys-role-tree').getStore();
 		var selection = [];
-		thisStore.getRootNode().cascadeBy(function (n) {
-			if (n.data['isChecked'] === true) {
-				selection.push(n);
+		thisStore.getRootNode().cascade({
+			after: function (n) {
+				if (!Ext.isEmpty(n.data['MENU_ID']) && n.data['isChecked'] === true) {
+					selection.push({
+						SYSTEM: sysRole.SYSTEM,
+						ROLE_ID: sysRole.ROLE_ID,
+						MENU_ID: n.data.MENU_ID
+					});
+				}
 			}
 		});
 		return selection;
 	},
-	onBtnSave : function(button){
+	onBtnSave: function (button) {
 
 
 		var forms = this.getView().query('tabpanel form');
 
-		var sysRoleLocales=[];
+		var sysRoleLocales = [];
 
-		for(var i=0;i<forms.length;i++){
+		for (var i = 0; i < forms.length; i++) {
 			var form = forms[i];
 			var valueObject = form.getForm().getValues();
 			sysRoleLocales.push(valueObject);
 		}
-		var sysRole= sysRoleLocales[0];
-
+		var sysRole = sysRoleLocales[0];
+		var sysRolePages = this.getChecked(sysRole);
 
 		var method = Ext.isEmpty(sysRole.ROLE_ID) ? 'POST' : 'PUT';
-		var url ={
-			'POST' :Ext.String.format('/sys/roles/{0}',sysRole.SYSTEM),
-			'PUT' :Ext.String.format('/sys/roles/{0}/{1}',sysRole.SYSTEM,sysRole.ROLE_ID)
+		var url = {
+			'POST': Ext.String.format('/sys/roles/{0}', sysRole.SYSTEM),
+			'PUT': Ext.String.format('/sys/roles/{0}/{1}', sysRole.SYSTEM, sysRole.ROLE_ID)
 		};
 
-		var sysRolePages = this.getChecked();
-
 		PmhTech.Ajax.request({
-			url : url[method],
-			method : method,
-			params : {
-				sysRole : Ext.encode(sysRole),
-				sysRoleLocales : Ext.encode(sysRoleLocales),
-				sysRolePages : Ext.encode(sysRolePages)
+			url: url[method],
+			method: method,
+			params: {
+				sysRole: Ext.encode(sysRole),
+				sysRoleLocales: Ext.encode(sysRoleLocales),
+				sysRolePages: Ext.encode(sysRolePages)
 			},
-			confirmMsg : {
-				title : '확인',
-				message : '저장하시겠습니까?'
+			confirmMsg: {
+				title: '확인',
+				message: '저장하시겠습니까?'
 			},
-			success : this.onSaveCallback,
-			successMsg : {
-				title :'확인',
-				message :'정상처리되었습니다'
-			},scope : this
+			success: this.onSaveCallback,
+			successMsg: {
+				title: '확인',
+				message: '정상처리되었습니다'
+			}, scope: this
 		});
 
 	},
-	onSaveCallback : function(resObj){
-
-
-		alert(111);
+	onSaveCallback: function (resObj) {
+		this.onBtnSave();
 	},
-	onBtnReset : function(button){
+	onBtnReset: function (button) {
 
+		var forms = this.getView().query('sys-role-locale');
 
+		for(var i=0;i<forms.length;i++){
+			var form = forms[i];
+			form.getForm().reset();
+		}
 	}
 });

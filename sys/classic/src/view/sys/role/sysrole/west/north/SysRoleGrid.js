@@ -4,7 +4,7 @@ Ext.define('SysApp.view.sys.role.sysrole.west.north.SysRoleGrid', {
 	controller: 'sys-role-grid',
 	storeProps: {
 		fields: ['COMPANY', 'PRE_CD', 'CODE', 'CODE_NM', 'REF1', 'REF2', 'REF3', 'REF4', 'REF5', 'USE_YN', 'MEMO'],
-		rootProperty: 'sysCodes'
+		rootProperty: 'sysRoles'
 	},
 	columns: [
 		{
@@ -14,8 +14,8 @@ Ext.define('SysApp.view.sys.role.sysrole.west.north.SysRoleGrid', {
 			renderer: PmhTech.Format.comboRenderer
 		},
 		{text: 'Role ID', dataIndex: 'ROLE_ID'},
-		{text: 'Role 명', dataIndex: 'CODE_NM'},
-		{text: '사용유무', dataIndex: 'CODE'},
+		{text: 'Role 명', dataIndex: 'ROLE_NM'},
+		{text: '사용유무', dataIndex: 'USE_YN'},
 		{text: '정렬순서', dataIndex: 'SORT'}
 	]
 });

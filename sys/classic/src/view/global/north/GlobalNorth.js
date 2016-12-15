@@ -35,30 +35,7 @@ Ext.define('Samjong.view.global.north.GlobalNorth', {
 			margin : '0 5 5 5'
 		},
 		flex : 1,
-		items : [{
-			xtype : 'textfield',
-			//stroe : Ext.create('Ext.data.Store'),
-			emptyText : 'SEL'
-
-		},{
-			xtype : 'textfield',
-			stroe : Ext.create('Ext.data.Store'),
-			emptyText : 'ENTITY'
-
-		},{
-			xtype : 'splitbutton',
-			iconCls : 'x-fa fa-pencil',
-			text : 'My Menu',
-			emptyText : 'ENTITY'
-
-		},{
-			xtype : 'button',
-			iconCls : 'x-fa fa-power-off',
-			text : 'Exit',
-			handler: function(){
-				document.location.href = '/';
-			}
-		}]
+		items : []
 	}]
 
 });

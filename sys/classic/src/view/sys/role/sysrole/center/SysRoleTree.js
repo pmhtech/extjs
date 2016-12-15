@@ -10,15 +10,7 @@ Ext.define('SysApp.view.sys.role.sysrole.center.SysRoleTree', {
 	}],
 	store: Ext.create('Ext.data.TreeStore', {
 		fields: [
-			{
-				name: 'isChecked', type: 'boolean', defaultValue: false,
-				convert: function (v, rec) {
-					/*rec.get('USE_YN')=='Y' ? rec.data.isChecked= true : rec.data.isChecked= false;
-
-					 return rec.data.isChecked;*/
-					return v;
-				}
-			}
+			{	name: 'isChecked', type: 'boolean', defaultValue: false }
 		],
 		root: {
 			MENU_NM: 'All',
@@ -77,7 +69,6 @@ Ext.define('SysApp.view.sys.role.sysrole.center.SysRoleTree', {
 	],
 	viewConfig: {
 		getRowClass: function (record, rowIndex, rowParams, store) {
-			debugger;
 			return record.get("isChecked") ? "row-checked" : "";
 		}
 	}

@@ -37,7 +37,8 @@ Ext.define('SysApp.view.sys.role.SysRole', {
 				},items :[{
 					xtype : 'sys-role-grid',
 					title : '권한 상세',
-					flex : 1
+					flex : 1,
+					onGridSelect : 'onSysRoleGridSelect'
 				},{
 					xtype : 'sys-role-tab',
 					tabBar :{
