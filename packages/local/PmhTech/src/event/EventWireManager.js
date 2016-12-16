@@ -95,7 +95,7 @@ Ext.define('PmhTech.event.EventWireManager', {
         initEvent : function(masterView,array){
 
 
-            var treeData = PmhTech.util.StoreUtil.convertListToTree(array,'ID','PRE_ID','');
+            var treeData = PmhTech.Utils.convertListToTree(array,'ID','PRE_ID','');
             var rootNode = treeData[0];
 
             this._getEventWire(masterView,rootNode,rootNode.children);

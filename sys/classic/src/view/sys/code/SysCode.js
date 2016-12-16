@@ -53,9 +53,7 @@ Ext.define('SysApp.view.sys.code.SysCode', {
 					}
 				}]
 			}]
-
 		});
-
 		me.callParent(arguments);
 
 

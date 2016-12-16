@@ -1,6 +1,9 @@
 Ext.define('Samjong.override.form.Panel', {
     override: 'Ext.form.Panel',
 	trackResetOnLoad : true,
+	plugins : [{
+		ptype : 'pmh-form-validator'
+	}],
 	setReadOnlyFields : function(readOnly,fields){
 		var me = this;
 
