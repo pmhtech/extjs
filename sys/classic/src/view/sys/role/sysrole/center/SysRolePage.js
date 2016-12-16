@@ -9,8 +9,8 @@ Ext.define('SysApp.view.sys.role.sysrole.center.SysRoleTree', {
 		, allowParentFolders: true
 	},{
 		ptype : 'pmh-treechecker',
-		dataIndex : 'isChecked'
-
+		dataIndex : 'isChecked',
+		includeParent : true
 	}],
 	store: Ext.create('Ext.data.TreeStore', {
 		fields: [
@@ -73,5 +73,7 @@ Ext.define('SysApp.view.sys.role.sysrole.center.SysRoleTree', {
 		getRowClass: function (record, rowIndex, rowParams, store) {
 			return record.get("isChecked") ? "row-checked" : "";
 		}
+	},listeners : {
+		InitMode :'onInitMode'
 	}
 });

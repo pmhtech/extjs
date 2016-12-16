@@ -19,7 +19,6 @@ Ext.define('SysApp.view.sys.role.SysRoleController', {
 
 		var treeNode = PmhTech.Utils.convertListToTree(resObj['sysMenus'], 'MENU_ID', 'PRE_MENU_ID', "");
 		var treeStore = this.getView().down('sys-role-page').getStore();
-		treeStore.snapshot = Ext.clone(treeNode);
 		treeStore.setRoot({
 			MENU_NM: 'ALL',
 			text: 'ALL',
@@ -75,6 +74,11 @@ Ext.define('SysApp.view.sys.role.SysRoleController', {
 	},
 
 	onBtnAdd: function (button) {
+		var tab =this.getView().down('sys-role-tab');
+
+		this.getView().down('sys-role-grid').getSelectionModel().deselectAll();
+		tab.fireEvent('InitMode',tab);
+
 
 	},
 
@@ -138,7 +142,7 @@ Ext.define('SysApp.view.sys.role.SysRoleController', {
 
 	},
 	onSaveCallback: function (resObj) {
-		this.onBtnSave();
+		this.onBtnSearch();
 	},
 	onBtnReset: function (button) {
 

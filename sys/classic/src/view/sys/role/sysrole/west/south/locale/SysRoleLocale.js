@@ -76,12 +76,14 @@ Ext.define('SysApp.view.sys.role.sysrole.west.south.locale.SysRoleLocale', {
 				fieldLabel : '메모',
 				columnWidth : 1,
 				name : 'MEMO'
-			}]
-
+			}],listeners : {
+				InitMode : 'onInitMode',
+				InsertMode : 'onInsertMode',
+				UpdateMode : 'onUpdateMode',
+				scope : me.getController()
+			}
 
 		});
 		me.callParent(arguments);
-
-
 	}
 });
