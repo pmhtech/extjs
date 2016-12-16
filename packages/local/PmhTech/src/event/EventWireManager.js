@@ -1,3 +1,6 @@
+/*
+*
+* */
 Ext.define('PmhTech.event.EventWireManager', {
     extend: 'Ext.Base',
 

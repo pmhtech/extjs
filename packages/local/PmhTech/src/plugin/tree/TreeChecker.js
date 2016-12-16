@@ -1,75 +1,110 @@
+/**
+ *
+ * TreePanel에서 Checkbox 자동체크를 하는 플러그인
+ *
+ * @example
+ *     Ext.create('Ext.tree.Panel,{
+ * 		plugins: [{
+ *			ptype : 'pmh-treechecker',
+ *			dataIndex : 'isChecked'
+ *
+ *		}],
+ *		store: Ext.create('Ext.data.TreeStore', {
+ * 			fields: [
+ * 				{	name: 'isChecked', type: 'boolean', defaultValue: false }
+ * 			],
+ *			root: {
+ *				MENU_NM: 'All',
+ *				text: 'ALL',
+ *				id: 'root',
+ *				expanded: true
+ *		}
+ *		}
+ *	   });
+ *
+ *
+ *
+ * */
 Ext.define('PmhTech.plugin.TreeChecker', {
 	extend: 'Ext.AbstractPlugin',
 	alias: 'plugin.pmh-treechecker',
 
 
-	//dataIndex : 'isChecked', // CheckColumn 으로 사용시 해당 CheckColumn DataIndex 내장된경우 false
-	dataIndex : 'checked',
-	includeParent : true, //ChildeNode선택시 parentNode선택유무
+	/***
+	 * @cfg {String} dataIndex
+	 * CheckColumn의 dataIndex를 지정 , 미지정 또는 checked일경우는 Tree의 기본 checked 필드 사
+	 */
+	dataIndex: 'checked',
+	/***
+	 * @cfg {Boolean} includeParent
+	 * true일경우 childNode가 전부 선택된경우만 상위노드들 선택
+	 * false일경우 childNode가 하나라도 선택되면 상위노드 전체선택
+	 */
+	includeParent: true,
 	init: function (tree) {
 		var me = this;
 		me.tree = tree;
-		if(me.dataIndex=='checked'){
-			tree.addListener('checkchange',this.onCheckChange,this);
+		if (me.dataIndex == 'checked') {
+			tree.addListener('checkchange', this.onCheckChange, this);
 
-		}else{
+		} else {
 			var columns = tree.getColumns();
 			var column = null;
-			for(var i=0;i<columns.length;i++){
+			for (var i = 0; i < columns.length; i++) {
 
-				if(columns[i].dataIndex == me.dataIndex){
+				if (columns[i].dataIndex == me.dataIndex) {
 					column = columns[i];
-					column.addListener('checkchange',this.onCheckColumnChange,this);
+					column.addListener('checkchange', this.onCheckColumnChange, this);
 					break;
 				}
 			}
 		}
 	},
-	onCheckColumnChange :  function(checkcolumn,rowIndex,checked){
+	onCheckColumnChange: function (checkcolumn, rowIndex, checked) {
 
 		var node = this.tree.getStore().getAt(rowIndex);
-		this.onCheckChange(node,checked);
+		this.onCheckChange(node, checked);
 
 	},
-	onCheckChange :function(node,checked){
+	onCheckChange: function (node, checked) {
 
 		var includeParent = this.includeParent;
 
 		if (node.get('leaf') !== true) {
 			this.changeCheckbox(node, checked);
 		}
-		if(!checked){
-			if(!includeParent){
+		if (!checked) {
+			if (!includeParent) {
 				this.changeUncheckebox(node, checked);
-			}else{
-				this.childNodeAllUnCheck(node,checked);
+			} else {
+				this.childNodeAllUnCheck(node, checked);
 			}
-		}else {
+		} else {
 			this.childNodeAllCheck(node, checked);
 
-			if(includeParent){
-				this.parentNodeAllCheck(node,checked);
+			if (includeParent) {
+				this.parentNodeAllCheck(node, checked);
 			}
 		}
 	},
 
 
-	parentNodeAllCheck : function(node,checked){
+	parentNodeAllCheck: function (node, checked) {
 		var me = this;
 		var parentNode = node.parentNode;
 
-		if(parentNode){
-			parentNode.set(me.dataIndex,checked);
-			this.parentNodeAllCheck(parentNode,checked);
+		if (parentNode) {
+			parentNode.set(me.dataIndex, checked);
+			this.parentNodeAllCheck(parentNode, checked);
 		}
 	},
-	childNodeAllUnCheck : function(node, chk) {
-		var me =this;
+	childNodeAllUnCheck: function (node, chk) {
+		var me = this;
 
 		if (node) {
-			var parentNode =node.parentNode;
-			if(parentNode){
-				var findNode = parentNode.findChild(me.dataIndex, true,true);
+			var parentNode = node.parentNode;
+			if (parentNode) {
+				var findNode = parentNode.findChild(me.dataIndex, true, true);
 
 				if (Ext.isEmpty(findNode) && parentNode) {
 					parentNode.set(me.dataIndex, false);
@@ -80,13 +115,13 @@ Ext.define('PmhTech.plugin.TreeChecker', {
 		}
 	},
 
-	childNodeAllCheck : function(node, chk) {
+	childNodeAllCheck: function (node, chk) {
 
 		var me = this;
 
 		if (node) {
 			var parentNode = node.parentNode;
-			if(parentNode) {
+			if (parentNode) {
 				var findNode = parentNode.findChild(me.dataIndex, false);
 
 				if (!findNode) {
@@ -96,15 +131,15 @@ Ext.define('PmhTech.plugin.TreeChecker', {
 			}
 		}
 	},
-	changeUncheckebox : function(node, chk) {
+	changeUncheckebox: function (node, chk) {
 
-		var me =this;
+		var me = this;
 		if (node.parentNode) {
-			node.set(me.dataIndex,false);
+			node.set(me.dataIndex, false);
 			this.changeUncheckebox(node.parentNode, false);
 		}
 	},
-	changeCheckbox : function(node, checked) {
+	changeCheckbox: function (node, checked) {
 		var me = this;
 
 		node.eachChild(function (n) {
@@ -112,8 +147,6 @@ Ext.define('PmhTech.plugin.TreeChecker', {
 			me.changeCheckbox(n, checked);
 		});
 	}
-
-
 
 
 });
