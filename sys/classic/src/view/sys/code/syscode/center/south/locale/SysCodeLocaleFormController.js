@@ -3,7 +3,9 @@ Ext.define('SysApp.view.sys.code.syscode.center.south.locale.SysCodeLocaleFormCo
     alias: 'controller.sys-code-locale-form',
 
 
-    onInitMode: function (form) {
+    onInitMode: function () {
+
+        var form = this.getView();
         form.getForm().reset();
         form.down('#refFields').removeAll();
         var fields = [{
@@ -31,7 +33,8 @@ Ext.define('SysApp.view.sys.code.syscode.center.south.locale.SysCodeLocaleFormCo
         form.down('#refFields').add(fields);
         form.setReadOnlyFields(true);
     },
-    onInsertMode: function (form) {
+    onInsertMode: function () {
+        var form = this.getView();
         form.getForm().resetClearFields();
 
         var PRE_CD = this.getView().up('sys-code').down('sys-code-group-grid').getSelectionModel().getSelection()[0].data.PRE_CD;
@@ -54,7 +57,9 @@ Ext.define('SysApp.view.sys.code.syscode.center.south.locale.SysCodeLocaleFormCo
         form.setReadOnlyFields(false, ['CODE_NM', 'MEMO']);
         form.setReadOnlyFields(true, ['PRE_CD']);
     },
-    onUpdateMode: function (form) {
+    onUpdateMode: function () {
+        var form = this.getView();
+
         form.setReadOnlyFields(false, ['CODE_NM', 'MEMO']);
         form.setReadOnlyFields(true, ['COMPANY', 'PRE_CD', 'CODE']);
     },

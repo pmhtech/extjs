@@ -2,7 +2,7 @@ Ext.define('SysApp.view.sys.code.syscode.center.south.SysCodeTabController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.sys-code-tab',
 
-    onInitMode: function (comp) {
+    onInitMode: function () {
 
 
         this.getView().down('pmh-button-add').setDisabled(true);
@@ -10,28 +10,29 @@ Ext.define('SysApp.view.sys.code.syscode.center.south.SysCodeTabController', {
         this.getView().down('pmh-button-reset').setDisabled(true);
 
 
-        var forms = comp.query('form');
+        var forms = this.getView().query('form');
         for (var i = 0; i < forms.length; i++) {
             var form = forms[i];
-            form.fireEvent('InitMode', form);
+            form.fireEventArgs('InitMode',arguments);
         }
 
     },
     onInsertMode: function (comp) {
 
-        var forms = comp.query('form');
+        var forms = this.getView().query('form');
         for (var i = 0; i < forms.length; i++) {
             var form = forms[i];
-            form.fireEvent('InsertMode', form);
+            form.fireEventArgs('InsertMode',arguments);
 
         }
     },
-    onUpdateMode: function (comp) {
+    onUpdateMode: function () {
 
-        var forms = comp.query('form');
+
+        var forms = this.getView().query('form');
         for (var i = 0; i < forms.length; i++) {
             var form = forms[i];
-            form.fireEvent('UpdateMode', form);
+            form.fireEventArgs('UpdateMode',arguments);
 
         }
 
