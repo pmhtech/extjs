@@ -3,12 +3,18 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 	alias: 'controller.sys-code',
 
 	onBtnAdd: function (button) {
-		this.getView().down('sys-code-grid').getSelectionModel().deselectAll();
+
+
+		var me = this.getView();
+
+
+		me.down('sys-code-grid').getSelectionModel().deselectAll();
+		var selmodel = me.down('sys-code-group-grid').getSelectionModel();
+		var record = selmodel.getSelection()[0];
 
 		var sysCodeDetailTab = this.getView().down('sys-code-tab');
 
-
-		sysCodeDetailTab.getController().onInsertMode(sysCodeDetailTab);
+		sysCodeDetailTab.fireEventArgs('InsertMode',[selmodel,record]);
 
 	},
 	onBtnSave: function (button) {
@@ -66,7 +72,7 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 
 	onSelectGrid: function (selModel, record, index) {
 
-		var sysCodeDetailTab = this.getView().down('sys-code-tab');
+		/*var sysCodeDetailTab = this.getView().down('sys-code-tab');
 
 		sysCodeDetailTab.down('pmh-button-add').setDisabled(false);
 		sysCodeDetailTab.down('pmh-button-save').setDisabled(false);
@@ -145,7 +151,7 @@ Ext.define('SysApp.view.sys.SysCodeController', {
 				fields.push(field);
 			}
 			refFields.add(fields);
-		}
+		}*/
 
 		var paramObj = {
 			PRE_CD: record.get('PRE_CD')

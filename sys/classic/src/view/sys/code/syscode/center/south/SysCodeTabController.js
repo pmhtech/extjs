@@ -4,22 +4,33 @@ Ext.define('SysApp.view.sys.code.syscode.center.south.SysCodeTabController', {
 
     onInitMode: function () {
 
-
-        this.getView().down('pmh-button-add').setDisabled(true);
-        this.getView().down('pmh-button-save').setDisabled(true);
-        this.getView().down('pmh-button-reset').setDisabled(true);
+        var me = this.getView();
 
 
-        var forms = this.getView().query('form');
+        me.down('pmh-button-add').setDisabled(true);
+        me.down('pmh-button-save').setDisabled(true);
+        me.down('pmh-button-reset').setDisabled(true);
+
+
+        var forms = me.query('form');
         for (var i = 0; i < forms.length; i++) {
             var form = forms[i];
             form.fireEventArgs('InitMode',arguments);
         }
 
     },
-    onInsertMode: function (comp) {
+    onInsertMode: function (selmodel,record,index) {
 
-        var forms = this.getView().query('form');
+        var me = this.getView();
+
+
+        me.down('pmh-button-add').setDisabled(false);
+        me.down('pmh-button-save').setDisabled(false);
+        me.down('pmh-button-reset').setDisabled(false);
+
+
+
+        var forms = me.query('form');
         for (var i = 0; i < forms.length; i++) {
             var form = forms[i];
             form.fireEventArgs('InsertMode',arguments);
@@ -41,11 +52,11 @@ Ext.define('SysApp.view.sys.code.syscode.center.south.SysCodeTabController', {
 
         var findIdx = SysCode['COM_000002'].find('CODE', 'DEFAULT');
 
-
-        var defaultRec = SysCode['COM_000002'].getAt(findIdx);
         var localeStore = SysCode['COM_000003'];
         var items = [];
 
+
+        var defaultLanguage = PmhTech.Utils.getDefaultLanguage();
 
         for (var i = 0; i < localeStore.getCount(); i++) {
             var rec = localeStore.getAt(i);
@@ -56,7 +67,7 @@ Ext.define('SysApp.view.sys.code.syscode.center.south.SysCodeTabController', {
             var locale = rec.get('CODE');
             var title = localeStore.getAt(i).get('CODE_NM');
 
-            if (defaultRec.get('REF1') == locale) {
+            if (defaultLanguage == locale) {
                 title = '<b>' + title + '(Default)</b>';
             }
             items.push({

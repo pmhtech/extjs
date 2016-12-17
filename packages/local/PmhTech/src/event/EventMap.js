@@ -128,23 +128,28 @@ Ext.define('PmhTech.event.EventMap', {
                 }
             ];
 
-            var codeLoad = [{
-                "EventType": "코드목록로드",
-                "PRE_ID": "",
-                "ID": 1,
-                "CompName": "sys-code-grid",
-                "Event": "storeLoad",
-                "CustomEvent": "",
-                "Comment": "코드목록로드(store)"
-            }, {
-                "EventType": "코드목록로드",
-                "PRE_ID": 1,
-                "ID": 2,
-                "CompName": "sys-code-tab",
-                "Event": "",
-                "CustomEvent": "insertMode",
-                "Comment": "코드리스트 초기화"
-            }];
+            var codeGroupSelect = [
+                {
+                    "EventType": "그룹코드선택",
+                    "PRE_ID": "",
+                    "ID": 1,
+                    "CompName": "sys-code-group-grid",
+                    "Event": "select",
+                    "CustomEvent": "",
+                    "Comment": "코드그룹선택 (selmodel,record,index)"
+                },
+                {
+                    "EventType": "그룹코드선택",
+                    "PRE_ID": 1,
+                    "ID": 2,
+                    "CompName": "sys-code-tab",
+                    "Event": "",
+                    "CustomEvent": "InsertMode",
+                    "Comment": "코드상세 다국어 초기화"
+                }
+            ];
+
+
 
             var codeSelect = [{
                 "EventType": "코드목록선택",
@@ -164,7 +169,7 @@ Ext.define('PmhTech.event.EventMap', {
                 "Comment": "폼 수정모드"
             }];
 
-            return [codeGroupLoad,codeLoad,codeSelect];
+            return [codeGroupLoad,codeGroupSelect,codeSelect];
         },
         'SysApp.view.sys.role.SysRole' : function () {
             var sysroleLoad = [
