@@ -1,6 +1,6 @@
 Ext.define('PmhTech.grid.Base', {
     extend: 'Ext.grid.Panel',
-    alias: 'widget.pmhtech-grid-base',
+    alias: ['widget.pmhtech-grid-base','widget.pmh-grid-base'],
     storeProps: {
         url: null,
         fields: [],
@@ -75,6 +75,9 @@ Ext.define('PmhTech.grid.Base', {
     configStore: function () {
 
         var me = this;
+        if(me.store){
+            return me.store;
+        }
 
         return Ext.create('Ext.data.Store', {
             fields: Ext.isArray(me.storeProps.fields) ? Ext.clone(me.storeProps.fields) : [],

@@ -230,6 +230,74 @@ Ext.define('PmhTech.event.EventMap', {
 
 
             return [sysroleLoad,sysroleSelect];
+        },
+        'SysApp.view.sys.role.auth.SysRoleAuth' : function () {
+            var sysroleLoad = [
+                {
+                    "EventType": "그룹코드로드",
+                    "PRE_ID": "",
+                    "ID": 1,
+                    "CompName": "sys-role-auth-grid",
+                    "CompXType": "grid",
+                    "Event": "storeLoad",
+                    "CustomEvent": "",
+                    "Comment": "코드그룹로드"
+                },
+                {
+                    "EventType": "그룹코드로드",
+                    "PRE_ID": 1,
+                    "ID": 2,
+                    "CompName": "sys-role-auth-adjust",
+                    "CompXType": "panel",
+                    "Event": "",
+                    "CustomEvent": "InitMode",
+                    "Comment": "코드리스트 초기화"
+                },
+                {
+                    "EventType": "그룹코드로드",
+                    "PRE_ID": 2,
+                    "ID": 3,
+                    "CompName": "sys-role-auth-preview",
+                    "CompXType": "grid",
+                    "Event": "",
+                    "CustomEvent": "InitMode",
+                    "Comment": "코드상세 다국어 초기화"
+                }
+            ];
+
+
+            var sysroleSelect = [{
+                "EventType": "코드목록로드",
+                "PRE_ID": "",
+                "ID": 1,
+                "CompName": "sys-role-auth-grid",
+                "CompXType": "grid",
+                "Event": "select",
+                "CustomEvent": "",
+                "Comment": "코드선택"
+            }, {
+                "EventType": "코드목록로드",
+                "PRE_ID": 1,
+                "ID": 2,
+                "CompName": "sys-role-auth-adjust",
+                "CompXType": "panel",
+                "Event": "",
+                "CustomEvent": "UpdateMode",
+                "Comment": "코드리스트 초기화"
+            },{
+                "EventType": "코드목록로드",
+                "PRE_ID": 2,
+                "ID": 3,
+                "CompName": "sys-role-auth-preview",
+                "CompXType": "grid",
+                "Event": "",
+                "CustomEvent": "UpdateMode",
+                "Comment": "코드리스트 초기화"
+            }];
+
+
+            return [sysroleLoad,sysroleSelect];
         }
+
     }
 });

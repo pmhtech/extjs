@@ -11,6 +11,22 @@ Ext.define('SysApp.view.sys.menu.SysMenu', {
 
         var me = this;
         Ext.apply(me, {
+            dockedItems: [{
+                xtype: 'toolbar',
+                dock: 'top',
+                items: [{
+                        xtype: 'pmh-combo-code',
+                        fieldLabel : '시스템 구분',
+                        name: 'SYSTEM',
+                        store: SysCode['SYS_000001'].copy(),
+                        value : 'ALL'
+                    }, {
+                        xtype: 'pmh-button-search',
+                        handler: 'onBtnSearch'
+                    }
+
+                ]
+            }],
             items: [{
                 xtype: 'sys-menu-tree',
                 frame : true,

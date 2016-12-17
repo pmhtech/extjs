@@ -8,7 +8,7 @@ Ext.define('SysApp.view.sys.role.sysrole.west.north.SysRoleGrid', {
 	},
 	columns: [
 		{
-			text: '회사코드',
+			text: '시스템 코드',
 			dataIndex: 'SYSTEM',
 			editor: {xtype: 'pmh-combo-code', store: SysCode['SYS_000001']},
 			renderer: PmhTech.Format.comboRenderer
