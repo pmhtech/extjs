@@ -10,9 +10,23 @@ Ext.define('PmhTech.event.EventWireManager', {
 			var cmpXType = eventNode.CompXType;
 			var eventName = eventNode.Event;
 
-			/*if (!eventName) {
-				eventName = eventNode.CustomEvent;
-			}*/
+			var component = masterView.down(cmpName);
+			if (component.getXTypes().search(cmpXType) == -1) {
+				alert('Component의 Xtype이 잘못되었습니다');
+				console.log(component);
+				return false;
+			}
+			return {
+				component: component,
+				eventName: eventName,
+				customEventName : eventNode.CustomEvent
+			}
+		},
+		_getChildComponent: function (masterView, eventNode) {
+
+			var cmpName = eventNode.CompName;
+			var cmpXType = eventNode.CompXType;
+			var eventName = eventNode.Event;
 
 			var component = masterView.down(cmpName);
 			if (component.getXTypes().search(cmpXType) == -1) {
@@ -41,7 +55,9 @@ Ext.define('PmhTech.event.EventWireManager', {
 			var me = this;
 			var masterEventProps = this._getComponent(masterView, parentNode);
 			var parentComp = masterEventProps.component;
-			var parentEvent = masterEventProps.eventName;
+			var parentEvent = masterEventProps.eventName || masterEventProps.customEventName;
+
+
 
 
 			for (var i = 0; i < childNodes.length; i++) {
@@ -49,7 +65,7 @@ Ext.define('PmhTech.event.EventWireManager', {
 
 				parentComp.addListener(parentEvent, function () {
 					console.log(this.Comment);
-					var eventProps = me._getComponent(masterView, this);
+					var eventProps = me._getChildComponent(masterView, this);
 					var component = eventProps.component;
 					var customEventName = eventProps.customEventName;
 					var eventName = eventProps.eventName;
@@ -81,7 +97,6 @@ Ext.define('PmhTech.event.EventWireManager', {
 
 		},
 		initEvent: function (masterView, array) {
-
 
 			var treeData = PmhTech.Utils.convertListToTree(array, 'ID', 'PRE_ID', '');
 			var rootNode = treeData[0];

@@ -104,7 +104,6 @@ Ext.define('PmhTech.event.EventMap', {
                     "PRE_ID": "",
                     "ID": 1,
                     "CompName": "sys-code-group-grid",
-                    "CompXType": "grid",
                     "Event": "storeLoad",
                     "CustomEvent": "",
                     "Comment": "코드그룹로드 (store)"
@@ -114,7 +113,6 @@ Ext.define('PmhTech.event.EventMap', {
                     "PRE_ID": 1,
                     "ID": 2,
                     "CompName": "sys-code-grid",
-                    "CompXType": "grid",
                     "Event": "",
                     "CustomEvent": "InitMode",
                     "Comment": "코드리스트 초기화"
@@ -124,7 +122,6 @@ Ext.define('PmhTech.event.EventMap', {
                     "PRE_ID": 2,
                     "ID": 3,
                     "CompName": "sys-code-tab",
-                    "CompXType": "tabpanel",
                     "Event": "",
                     "CustomEvent": "InitMode",
                     "Comment": "코드상세 다국어 초기화"
@@ -136,7 +133,6 @@ Ext.define('PmhTech.event.EventMap', {
                 "PRE_ID": "",
                 "ID": 1,
                 "CompName": "sys-code-grid",
-                "CompXType": "grid",
                 "Event": "storeLoad",
                 "CustomEvent": "",
                 "Comment": "코드목록로드(store)"
@@ -145,7 +141,6 @@ Ext.define('PmhTech.event.EventMap', {
                 "PRE_ID": 1,
                 "ID": 2,
                 "CompName": "sys-code-tab",
-                "CompXType": "tabpanel",
                 "Event": "",
                 "CustomEvent": "insertMode",
                 "Comment": "코드리스트 초기화"
@@ -156,18 +151,16 @@ Ext.define('PmhTech.event.EventMap', {
                 "PRE_ID": "",
                 "ID": 1,
                 "CompName": "sys-code-grid",
-                "CompXType": "grid",
                 "Event": "select",
                 "CustomEvent": "",
-                "Comment": "코드목록선택"
+                "Comment": "코드목록선택(selmodel,record,index)"
             }, {
                 "EventType": "코드목록선택",
                 "PRE_ID": 1,
                 "ID": 2,
                 "CompName": "sys-code-tab",
-                "CompXType": "tabpanel",
                 "Event": "",
-                "CustomEvent": "updateMode(selmodel,record,index)",
+                "CustomEvent": "updateMode",
                 "Comment": "폼 수정모드"
             }];
 
