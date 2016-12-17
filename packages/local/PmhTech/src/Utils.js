@@ -3,7 +3,6 @@
 Ext.define('PmhTech.Utils', {
     extend: 'Ext.Base',
     statics: {
-
         showPopup: function (widgetName, options) {
             var popup = Ext.ComponentQuery.query(widgetName)[0];
 
@@ -97,6 +96,14 @@ Ext.define('PmhTech.Utils', {
             }
 
             return rootNodes;
+        },
+        getDefaultLanguage : function(){
+
+            var findIdx = SysCode['COM_000002'].find('CODE', 'DEFAULT');
+            var defaultRec = SysCode['COM_000002'].getAt(findIdx);
+
+
+            return defaultRec.get('REF1');
         }
 
     }
