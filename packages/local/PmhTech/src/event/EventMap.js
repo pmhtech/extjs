@@ -107,7 +107,7 @@ Ext.define('PmhTech.event.EventMap', {
                     "CompXType": "grid",
                     "Event": "storeLoad",
                     "CustomEvent": "",
-                    "Comment": "코드그룹로드"
+                    "Comment": "코드그룹로드 (store)"
                 },
                 {
                     "EventType": "그룹코드로드",
@@ -139,7 +139,7 @@ Ext.define('PmhTech.event.EventMap', {
                 "CompXType": "grid",
                 "Event": "storeLoad",
                 "CustomEvent": "",
-                "Comment": "코드목록로드"
+                "Comment": "코드목록로드(store)"
             }, {
                 "EventType": "코드목록로드",
                 "PRE_ID": 1,
@@ -167,7 +167,7 @@ Ext.define('PmhTech.event.EventMap', {
                 "CompName": "sys-code-tab",
                 "CompXType": "tabpanel",
                 "Event": "",
-                "CustomEvent": "updateMode",
+                "CustomEvent": "updateMode(selmodel,record,index)",
                 "Comment": "폼 수정모드"
             }];
 
