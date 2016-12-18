@@ -3,6 +3,8 @@ Ext.define('Samjong.override.form.Panel', {
 	trackResetOnLoad : true,
 	plugins : [{
 		ptype : 'pmh-form-validator'
+	},{
+		ptype : 'pmh-form-dirtychecker'
 	}],
 	setReadOnlyFields : function(readOnly,fields){
 		var me = this;

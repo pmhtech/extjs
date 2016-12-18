@@ -3,7 +3,7 @@ Ext.define('SysApp.view.sys.role.sysrole.center.SysRoleTreeController', {
     alias: 'controller.sys-role-page',
 
     onInitMode : function(comp){
-        
+
         this.getView().getStore().rejectChanges();
     },
     onChangeFilter : function(field){
