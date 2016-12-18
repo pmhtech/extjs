@@ -47,5 +47,32 @@ Ext.define('SysApp.view.sys.role.auth.sysroleauth.south.SysRoleAuthPreviewContro
             children: Ext.clone(me.snapshot)
         });
 
+        this.onChangeFilter();
+    }, onChangeFilter : function(field){
+
+        var me = this.getView();
+        var MENU_NM = me.down('[name=MENU_NM]').getValue();
+        var MENU_AUTH = me.down('[name=MENU_AUTH]').getValue();
+        var USE_YN = me.down('[name=USE_YN]').getValue();
+        var ACTIVE_YN = me.down('[name=ACTIVE_YN]').getValue();
+
+
+
+        filterFunc = function(node){
+
+            var isEmptyMENU_NM = Ext.isEmpty(node.get('MENU_NM')) ? true : false;
+            var isEmptyMENU_AUTH = MENU_AUTH =='ALL' ? true: false;
+            var isEmptyUSE_YN = USE_YN =='ALL' ? true: false;
+            var isEmptyACTIVE_YN = ACTIVE_YN =='ALL' ? true: false;
+
+
+            var compareMENU_NM = isEmptyMENU_NM ? true : node.get('MENU_NM').search(MENU_NM)!=-1;
+            var compareMENU_AUTH = isEmptyMENU_AUTH ? true : node.get('MENU_AUTH') == MENU_AUTH;
+            var compareUSE_YN = isEmptyUSE_YN ? true : node.get('USE_YN')==USE_YN;
+            var compareACTIVE_YN = isEmptyACTIVE_YN ? true : node.get('ACTIVE_YN')==ACTIVE_YN;
+            console.log(node.get('ACTIVE_YN'));
+            return compareMENU_NM && compareMENU_AUTH && compareUSE_YN && compareACTIVE_YN  &&node.isLeaf();
+        };
+        this.getView().filterBy(filterFunc);
     }
 });

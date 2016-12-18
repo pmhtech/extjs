@@ -127,7 +127,9 @@ Ext.define('SysApp.view.sys.role.auth.sysroleauth.center.SysRoleAuthAdjustContro
     onLoadSysRoleAuthPreview : function(resObj){
 
         var result = resObj.sysRolePage;
-        var rootNode = this.getView().up('sys-role-auth').down('sys-role-auth-preview').getStore().getRoot();
+
+        var sysRoleAuthPreview =this.getView().up('sys-role-auth').down('sys-role-auth-preview');
+        var rootNode = sysRoleAuthPreview.getStore().getRoot();
 
 
 
@@ -147,6 +149,8 @@ Ext.define('SysApp.view.sys.role.auth.sysroleauth.center.SysRoleAuthAdjustContro
                 }
             }
         });
+
+        sysRoleAuthPreview.getController().onChangeFilter();
 
     }
 });

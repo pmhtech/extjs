@@ -49,6 +49,15 @@ Ext.define('SysApp.view.sys.role.auth.sysroleauth.south.SysRoleAuthPreview',{
             listeners: {
                 change: 'onChangeFilter'
             }
+        }, {
+            xtype: 'pmh-combo-code',
+            store: SysCode['COM_000011'].copy(),
+            fieldLabel: '활성화유무',
+            name: 'ACTIVE_YN',
+            value: 'ALL',
+            listeners: {
+                change: 'onChangeFilter'
+            }
         }]
     }],
     columns: [

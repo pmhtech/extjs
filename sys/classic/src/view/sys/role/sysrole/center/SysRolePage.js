@@ -25,6 +25,11 @@ Ext.define('SysApp.view.sys.role.sysrole.center.SysRoleTree', {
 	}),
 	dockedItems: [{
 		xtype: 'toolbar',
+		defaults : {
+			labelWidth : 50,
+			width : 140,
+			margin : '0 30 0 0'
+		},
 		dock: 'top',
 		items: [{
 			xtype: 'textfield',
