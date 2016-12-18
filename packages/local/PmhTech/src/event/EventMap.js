@@ -5,11 +5,10 @@ Ext.define('PmhTech.event.EventMap', {
         'SysApp.view.sys.menu.SysMenu': function(){
             var menuLoad = [
                 {
-                    "EventType": "메뉴리스트조회",
+                    "EventType": "메뉴리스트 초기화",
                     "PRE_ID": "",
                     "ID": 1,
                     "CompName": "sys-menu-tree",
-                    "CompXType": "treepanel",
                     "Event": "",
                     "CustomEvent": "InitMode",
                     "Comment": "코드그룹로드"
@@ -19,7 +18,6 @@ Ext.define('PmhTech.event.EventMap', {
                     "PRE_ID": 1,
                     "ID": 2,
                     "CompName": "sys-menu-tab",
-                    "CompXType": "tabpanel",
                     "Event": "",
                     "CustomEvent": "InitMode",
                     "Comment": "코드리스트 초기화"
@@ -29,58 +27,25 @@ Ext.define('PmhTech.event.EventMap', {
                     "PRE_ID": 2,
                     "ID": 3,
                     "CompName": "sys-menu-code",
-                    "CompXType": "panel",
                     "Event": "",
                     "CustomEvent": "InitMode",
                     "Comment": "코드상세 다국어 초기화"
                 }
             ];
 
-            var menuInsert =[{
-                    "EventType": "메뉴리스트 추가",
-                    "PRE_ID": "",
-                    "ID": 1,
-                    "CompName": "sys-menu-tree",
-                    "CompXType": "treepanel",
-                    "Event": "",
-                    "CustomEvent": "InsertMode",
-                    "Comment": "코드그룹로드"
-                },
-                {
-                    "EventType": "다국어 메뉴탭 초기화",
-                    "PRE_ID": 1,
-                    "ID": 2,
-                    "CompName": "sys-menu-tab",
-                    "CompXType": "tabpanel",
-                    "Event": "",
-                    "CustomEvent": "InsertMode",
-                    "Comment": "코드리스트 초기화"
-                },
-                {
-                    "EventType": "다국어 메뉴탭 초기화",
-                    "PRE_ID": 2,
-                    "ID": 3,
-                    "CompName": "sys-menu-code",
-                    "CompXType": "panel",
-                    "Event": "",
-                    "CustomEvent": "InsertMode",
-                    "Comment": "코드상세 다국어 초기화"
-                }];
             var menuUpdate =[{
                     "EventType": "메뉴리스트 추가",
                     "PRE_ID": "",
                     "ID": 1,
                     "CompName": "sys-menu-tree",
-                    "CompXType": "treepanel",
                     "Event": "select",
-                    "Comment": "코드그룹로드"
+                    "Comment": "코드그룹로드(selmodel,record,index)"
                 },
                 {
                     "EventType": "다국어 메뉴탭 초기화",
                     "PRE_ID": 1,
                     "ID": 2,
                     "CompName": "sys-menu-tab",
-                    "CompXType": "tabpanel",
                     "Event": "",
                     "CustomEvent": "UpdateMode",
                     "Comment": "코드리스트 초기화"
@@ -90,12 +55,11 @@ Ext.define('PmhTech.event.EventMap', {
                     "PRE_ID": 2,
                     "ID": 3,
                     "CompName": "sys-menu-code",
-                    "CompXType": "panel",
                     "Event": "",
                     "CustomEvent": "UpdateMode",
                     "Comment": "코드상세 다국어 초기화"
                 }];
-            return [menuLoad,menuInsert,menuUpdate];
+            return [menuLoad,menuUpdate];
         },
         'SysApp.view.sys.code.SysCode' : function () {
             var codeGroupLoad = [
@@ -282,19 +246,31 @@ Ext.define('PmhTech.event.EventMap', {
                 "Event": "",
                 "CustomEvent": "UpdateMode",
                 "Comment": "코드리스트 초기화"
-            },{
+            }];
+
+            var sdf = [{
                 "EventType": "코드목록로드",
-                "PRE_ID": 2,
-                "ID": 3,
-                "CompName": "sys-role-auth-preview",
-                "CompXType": "grid",
-                "Event": "",
-                "CustomEvent": "UpdateMode",
+                "PRE_ID": "",
+                "ID": 1,
+                "CompName": "#sysRoleAuth",
+
+
+                "Event": "storeLoad",
+                "CustomEvent": "",
+                "Comment": "코드선택"
+            }, {
+                "EventType": "코드목록로드",
+                "PRE_ID": 1,
+                "ID": 2,
+                "CompName": "#sysRoleAuth",
+                "CompXType": "panel",
+                "Event": "storeAdd",
+                "CustomEvent": "",
                 "Comment": "코드리스트 초기화"
             }];
 
 
-            return [sysroleLoad,sysroleSelect];
+            return [sysroleLoad,sysroleSelect,sdf];
         }
 
     }

@@ -12,6 +12,8 @@ Ext.define('PmhTech.grid.Base', {
     onGridLoad: Ext.emptyFn,
     onGridSelect: Ext.emptyFn,
     onGridAfterRender: Ext.emptyFn,
+    onGridAdd: Ext.emptyFn,
+    onGridRemove: Ext.emptyFn,
     usePagingToolbar: true,
     dragTarget: null,
     dropTarget: null,
@@ -67,6 +69,8 @@ Ext.define('PmhTech.grid.Base', {
             listeners: {
                 select: me.onGridSelect,
                 storeLoad: me.onGridLoad,
+                storeAdd: me.onGridAdd,
+                storeRemove: me.onGridRemove,
                 afterrender: me.onGridAfterRender
             }
         });
@@ -93,8 +97,17 @@ Ext.define('PmhTech.grid.Base', {
             listeners: {
                 load: function (store) {
                     me.show();
-                    this.fireEvent('storeLoad', store);
-                }, scope: me
+                    this.fireEventArgs('storeLoad', arguments);
+                },
+                add: function (store) {
+
+                    this.fireEventArgs('storeAdd', arguments);
+                },
+                remove: function (store) {
+
+                    this.fireEventArgs('storeRemove', arguments);
+                },
+                scope: me
 
             }
         });

@@ -22,9 +22,11 @@ Ext.define('KPMG.toolbar.ButtonToolbar', {
             var tempObj={};
             if(Ext.isString(buttonType)) {
 
+
                 Ext.apply(tempObj,{
                     xtype: 'pmh-button-' + buttonType,
-                    handler: 'onBtn' + buttonType.charAt(0).toUpperCase() + buttonType.slice(1)
+                    handler: 'onBtn' + buttonType.charAt(0).toUpperCase() + buttonType.slice(1),
+                    scope : me.scope
                 });
 
             }else{
@@ -35,7 +37,9 @@ Ext.define('KPMG.toolbar.ButtonToolbar', {
 
                 if(!tempObj.handler){
                     tempObj.handler= 'onBtn' + buttonType.btnType.charAt(0).toUpperCase() + buttonType.btnType.slice(1);
+                    tempObj.scope = me.scope
                 }
+
             }
             items.push(tempObj);
         }

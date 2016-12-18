@@ -7,15 +7,9 @@ Ext.define('PmhTech.event.EventWireManager', {
 		_getComponent: function (masterView, eventNode) {
 
 			var cmpName = eventNode.CompName;
-			var cmpXType = eventNode.CompXType;
 			var eventName = eventNode.Event;
 
 			var component = masterView.down(cmpName);
-			if (component.getXTypes().search(cmpXType) == -1) {
-				alert('Component의 Xtype이 잘못되었습니다');
-				console.log(component);
-				return false;
-			}
 			return {
 				component: component,
 				eventName: eventName,
@@ -25,15 +19,9 @@ Ext.define('PmhTech.event.EventWireManager', {
 		_getChildComponent: function (masterView, eventNode) {
 
 			var cmpName = eventNode.CompName;
-			var cmpXType = eventNode.CompXType;
 			var eventName = eventNode.Event;
 
 			var component = masterView.down(cmpName);
-			if (component.getXTypes().search(cmpXType) == -1) {
-				alert('Component의 Xtype이 잘못되었습니다');
-				console.log(component);
-				return false;
-			}
 			return {
 				component: component,
 				eventName: eventName,
