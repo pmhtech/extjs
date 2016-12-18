@@ -11,6 +11,15 @@ Ext.define('SysApp.view.sys.SysMenuController', {
             scope: this
         });
     },
+    onInitMode: function (comp) {
+        var store = comp.down('#sysCodeGroup').getStore();
+        store.loadRawData(store.dataSnapShot);
+        comp.down('#sysMenuCode').getStore().removeAll();
+
+        var sysMenuTab = comp.down('sys-menu-tab');
+        sysMenuTab.fireEventArgs('InsertMode',arguments);
+    },
+
 
     onBtnSearch: function (button) {
 
@@ -61,21 +70,6 @@ Ext.define('SysApp.view.sys.SysMenuController', {
 
         //this.getView().fireEvent('InitMode',this.getView());
     },
-
-
-    onInitMode: function (comp) {
-        this.onInsertMode(comp);
-    },
-    onInsertMode : function(comp){
-        var store = comp.down('#sysCodeGroup').getStore();
-        store.loadRawData(store.dataSnapShot);
-        comp.down('#sysMenuCode').getStore().removeAll();
-
-        var sysMenuTab = comp.down('sys-menu-tab');
-        sysMenuTab.fireEvent('InsertMode',sysMenuTab);
-
-    },
-
 
     successLoad: function (resObj) {
         var store = this.getView().down('#sysCodeGroup').getStore();

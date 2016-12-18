@@ -66,7 +66,6 @@ Ext.define('SysApp.view.sys.menu.SysMenu', {
             ,listeners : {
                 afterrender : 'onAfterRender',
                 InitMode : 'onInitMode',
-                InsertMode : 'onInsertMode',
                 scope: this.getController()
             }
         });

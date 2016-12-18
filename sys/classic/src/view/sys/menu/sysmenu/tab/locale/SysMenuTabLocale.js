@@ -124,7 +124,6 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocale', {
 			listeners: {
 				InitMode: 'onInitMode',
 				UpdateMode: 'onUpdateMode',
-				InsertMode: 'onInsertMode',
 				scope : this.getController()
 			}
 

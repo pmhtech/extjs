@@ -3,11 +3,10 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocaleController',
 	alias: 'controller.sys-menu-tab-locale',
 
 
-	onInitMode: function (form) {
-		this.onInsertMode(form);
+	onInitMode: function () {
 
-	},
-	onInsertMode: function (form) {
+		var form = this.getView();
+
 		form.getForm().resetClearFields();
 		var findIdx = SysCode['COM_000002'].find('CODE', 'DEFAULT');
 		var defaultLanguage = SysCode['COM_000002'].getAt(findIdx).get('REF1');
@@ -16,13 +15,14 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocaleController',
 		form.setReadOnlyFields(false,['MENU_NM','MEMO']);
 		form.setReadOnlyFields(defaultReadOnly, ['SYSTEM','PRE_MENU_ID','MENU_ID','MENU_AUTH','WIDGET_NM','CLASS_NM','MENU_LVL','SORT', 'USE_YN']);
 
-
-
 	},
-	onUpdateMode: function (form) {
 
-		var findIdx = SysCode['COM_000002'].find('CODE', 'DEFAULT');
-		var defaultLanguage = SysCode['COM_000002'].getAt(findIdx).get('REF1');
+	onUpdateMode: function (selModel,record,index) {
+
+		var defaultLanguage = PmhTech.Utils.getDefaultLanguage();
+
+
+		var form = this.getView();
 		var defaultReadOnly = form.LOCALE_CD != defaultLanguage;
 
 		form.setReadOnlyFields(true,['SYSTEM','PRE_MENU_ID','MENU_ID']);

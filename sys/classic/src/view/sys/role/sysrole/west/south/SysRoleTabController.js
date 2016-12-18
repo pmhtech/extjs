@@ -1,27 +1,33 @@
 Ext.define('SysApp.view.sys.role.sysrole.west.south.SysRoleTabController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.sys-role-tab',
-    onInitMode: function (comp) {
+    onInitMode: function () {
 
-        var forms = comp.query('form');
+        var me = this.getView();
+        var forms = me.query('form');
+
         for (var i = 0; i < forms.length; i++) {
             var form = forms[i];
             form.fireEvent('InitMode', form);
         }
 
     },
-    onInsertMode: function (comp) {
+    onInsertMode: function () {
 
-        var forms = comp.query('form');
+        var me = this.getView();
+        var forms = me.query('form');
+
         for (var i = 0; i < forms.length; i++) {
             var form = forms[i];
             form.fireEvent('InsertMode', form);
 
         }
     },
-    onUpdateMode: function (comp) {
+    onUpdateMode: function () {
 
-        var forms = comp.query('form');
+        var me = this.getView();
+        var forms = me.query('form');
+
         for (var i = 0; i < forms.length; i++) {
             var form = forms[i];
             form.fireEvent('UpdateMode', form);

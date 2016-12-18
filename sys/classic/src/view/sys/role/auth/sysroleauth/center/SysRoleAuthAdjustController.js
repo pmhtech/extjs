@@ -2,6 +2,22 @@ Ext.define('SysApp.view.sys.role.auth.sysroleauth.center.SysRoleAuthAdjustContro
     extend: 'Ext.app.ViewController',
     alias: 'controller.sys-role-auth-adjust',
 
+    onAfterRender : function(comp){
+        PmhTech.Ajax.request({
+            url :'/sys/roles',
+            method : 'GET',
+            success : this.onLoadSysRole,
+            scope : this
+        });
+    },
+    onLoadSysRole : function(resObj){
+        var me = this.getView();
+        me.down('#sysRoleGrid').snapshot = resObj;
+        me.down('#sysRoleGrid').getStore().loadRawData(resObj);
+    },
+
+
+
     onInitMode : function(){
 
         var me = this.getView();
@@ -20,7 +36,15 @@ Ext.define('SysApp.view.sys.role.auth.sysroleauth.center.SysRoleAuthAdjustContro
 
     },
 
+    onUpdateMode: function(selmodel,record,index){
+        var me = this.getView();
+        var buttons = me.query('button');
 
+        for(var i=0; i<buttons.length;i++) {
+            buttons[i].setDisabled(false);
+        }
+
+    },
     onBtnRemoveCodes : function(button){
 
         var me = this.getView();
@@ -29,12 +53,6 @@ Ext.define('SysApp.view.sys.role.auth.sysroleauth.center.SysRoleAuthAdjustContro
 
 
         this.setSysMenuCode(sourceGrid,targetGrid);
-
-    },
-    onBtnReset : function(){
-
-    },
-    onBtnSave : function(){
 
     },
     onBtnAddCodes : function(button){
@@ -73,6 +91,62 @@ Ext.define('SysApp.view.sys.role.auth.sysroleauth.center.SysRoleAuthAdjustContro
         }
         targetStore.remove(delRecords);
         targetStore.sort('ROLE_ID', 'ASC');
+    },onGridChange : function(){
+
+        var targetStore = this.getView().down('#sysRoleAuth').getStore();
+        var sysRoles = [];
+        for(var i=0;i<targetStore.getCount();i++){
+            var rec= targetStore.getAt(i);
+            sysRoles.push({
+               SYSTEM : rec.get('SYSTEM'),
+               ROLE_ID: rec.get('ROLE_ID')
+            });
+        }
+
+
+         var sysRoleAuthPreview = this.getView().up('sys-role-auth').down('sys-role-auth-preview');
+            sysRoleAuthPreview.fireEvent('InitMode');
+
+
+        if(sysRoles.length==0){
+            return false;
+        }
+
+
+        PmhTech.Ajax.request({
+            url :'/sys/roles/auth/preview',
+            method : 'GET',
+            params : {
+                sysRoles : Ext.encode(sysRoles)
+            },
+            success : this.onLoadSysRoleAuthPreview,
+            scope : this
+        });
+
+    },
+    onLoadSysRoleAuthPreview : function(resObj){
+
+        var result = resObj.sysRolePage;
+        var rootNode = this.getView().up('sys-role-auth').down('sys-role-auth-preview').getStore().getRoot();
+
+
+
+
+
+
+        rootNode.cascade({
+            after: function (n) {
+                if (!Ext.isEmpty(n.data['MENU_ID'])) {
+                    for(var i=0;i<result.length;i++){
+                        var MENU_ID =result[i].MENU_ID;
+                        if(n.data.MENU_ID==MENU_ID){
+                            n.set('ACTIVE_YN','Y');
+                            break;
+                        }
+                    }
+                }
+            }
+        });
 
     }
 });

@@ -2,15 +2,6 @@ Ext.define('SysApp.view.sys.role.auth.sysroleauth.center.SysRoleAuthAdjust', {
 	extend: 'Ext.panel.Panel',
 	alias: 'widget.sys-role-auth-adjust',
 	controller: 'sys-role-auth-adjust',
-
-	dockedItems: [{
-		xtype: 'pmh-button-toolbar',
-		dock: 'top',
-		buttonAlign: 'right',
-		btnItems: ['reset','save'],
-		height: 40
-	}],
-
 	layout: {
 		type: 'hbox',
 		align: 'stretch'
@@ -18,9 +9,16 @@ Ext.define('SysApp.view.sys.role.auth.sysroleauth.center.SysRoleAuthAdjust', {
 	items: [{
 		xtype: 'sys-role-grid',
 		title: '정의된 권한',
+		storeProps : {
+			rootProperty : 'sysRoleAuths'
+		},
 		itemId: 'sysRoleAuth',
 		flex: 1,
-		onGridLoad : 'onGridLoad'
+		listeners : {
+			storeLoad :'onGridLoad',
+			storeRemove : 'onGridChange',
+			storeAdd :'onGridChange'
+		}
 	}, {
 		xtype: 'container',
 		width: 40,
@@ -45,6 +43,8 @@ Ext.define('SysApp.view.sys.role.auth.sysroleauth.center.SysRoleAuthAdjust', {
 		flex: 1
 	}],
 	listeners : {
-		InitMode : 'onInitMode'
+		afterrender : 'onAfterRender',
+		InitMode : 'onInitMode',
+		updateMode : 'onUpdateMode'
 	}
 });

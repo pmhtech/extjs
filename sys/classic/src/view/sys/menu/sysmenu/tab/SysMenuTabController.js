@@ -4,38 +4,27 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.SysMenuTabController', {
 
 	onInitMode: function (comp) {
 
-		var forms = comp.query('form');
+		var forms = this.getView().query('form');
 		for (var i = 0; i < forms.length; i++) {
 			var form = forms[i];
-			form.fireEvent('InitMode', form);
+			form.fireEventArgs('InitMode', arguments);
 		}
 
 	},
-	onInsertMode: function (comp) {
+	onUpdateMode: function (selmodel,record,index) {
 
-		var forms = comp.query('form');
+		var forms = this.getView().query('form');
 		for (var i = 0; i < forms.length; i++) {
 			var form = forms[i];
-			form.fireEvent('InsertMode', form);
-
-		}
-	},
-	onUpdateMode: function (comp) {
-
-		var forms = comp.query('form');
-		for (var i = 0; i < forms.length; i++) {
-			var form = forms[i];
-			form.fireEvent('UpdateMode', form);
+			form.fireEvent('UpdateMode', arguments);
 
 		}
 
 	},
 	onAfterRender: function (comp) {
 
-		var findIdx = SysCode['COM_000002'].find('CODE', 'DEFAULT');
+		var defaultLanguage = PmhTech.Utils.getDefaultLanguage();
 
-
-		var defaultRec = SysCode['COM_000002'].getAt(findIdx);
 		var localeStore = SysCode['COM_000003'];
 		var items = [];
 
@@ -49,7 +38,7 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.SysMenuTabController', {
 			var locale = rec.get('CODE');
 			var title = localeStore.getAt(i).get('CODE_NM');
 
-			if (defaultRec.get('REF1') == locale) {
+			if (defaultLanguage == locale) {
 				title = '<b>' + title + '(Default)</b>';
 			}
 			items.push({
