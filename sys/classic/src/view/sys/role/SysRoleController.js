@@ -1,7 +1,63 @@
 Ext.define('SysApp.view.sys.role.SysRoleController', {
 	extend: 'Ext.app.ViewController',
 	alias: 'controller.sys-role',
+	getEventWireDatas : function(){
+		var sysroleLoad = [
+			{
+				"EventType": "그룹코드로드",
+				"PRE_ID": "",
+				"ID": 1,
+				"CompName": "sys-role-grid",
+				"CompXType": "grid",
+				"Event": "storeLoad",
+				"CustomEvent": "",
+				"Comment": "코드그룹로드"
+			},
+			{
+				"EventType": "그룹코드로드",
+				"PRE_ID": 1,
+				"ID": 2,
+				"CompName": "sys-role-tab",
+				"CompXType": "tabpanel",
+				"Event": "",
+				"CustomEvent": "InitMode",
+				"Comment": "코드리스트 초기화"
+			},
+			{
+				"EventType": "그룹코드로드",
+				"PRE_ID": 2,
+				"ID": 3,
+				"CompName": "sys-role-page",
+				"CompXType": "grid",
+				"Event": "",
+				"CustomEvent": "InitMode",
+				"Comment": "코드상세 다국어 초기화"
+			}
+		];
 
+
+		var sysroleSelect = [{
+			"EventType": "코드목록로드",
+			"PRE_ID": "",
+			"ID": 1,
+			"CompName": "sys-role-grid",
+			"CompXType": "grid",
+			"Event": "select",
+			"CustomEvent": "",
+			"Comment": "코드선택"
+		}, {
+			"EventType": "코드목록로드",
+			"PRE_ID": 1,
+			"ID": 2,
+			"CompName": "sys-role-tab",
+			"CompXType": "tabpanel",
+			"Event": "",
+			"CustomEvent": "UpdateMode",
+			"Comment": "코드리스트 초기화"
+		}];
+		return [sysroleLoad,sysroleSelect];
+
+	},
 	onAfterRender: function (comp) {
 		PmhTech.Ajax.request({
 			url: '/sys/menus',

@@ -73,5 +73,6 @@ Ext.define('SysApp.view.sys.role.SysRole', {
 
 		});
 		me.callParent(arguments);
-	}
+	},
+
 });

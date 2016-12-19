@@ -1,7 +1,81 @@
 Ext.define('SysApp.view.sys.SysCodeController', {
 	extend: 'Ext.app.ViewController',
 	alias: 'controller.sys-code',
+	getEventWireDatas : function(){
+		var codeGroupLoad = [
+			{
+				"EventType": "그룹코드로드",
+				"PRE_ID": "",
+				"ID": 1,
+				"CompName": "sys-code-group-grid",
+				"Event": "storeLoad",
+				"CustomEvent": "",
+				"Comment": "코드그룹로드 (store)"
+			},
+			{
+				"EventType": "그룹코드로드",
+				"PRE_ID": 1,
+				"ID": 2,
+				"CompName": "sys-code-grid",
+				"Event": "",
+				"CustomEvent": "InitMode",
+				"Comment": "코드리스트 초기화"
+			},
+			{
+				"EventType": "그룹코드로드",
+				"PRE_ID": 2,
+				"ID": 3,
+				"CompName": "sys-code-tab",
+				"Event": "",
+				"CustomEvent": "InitMode",
+				"Comment": "코드상세 다국어 초기화"
+			}
+		];
 
+		var codeGroupSelect = [
+			{
+				"EventType": "그룹코드선택",
+				"PRE_ID": "",
+				"ID": 1,
+				"CompName": "sys-code-group-grid",
+				"Event": "select",
+				"CustomEvent": "",
+				"Comment": "코드그룹선택 (selmodel,record,index)"
+			},
+			{
+				"EventType": "그룹코드선택",
+				"PRE_ID": 1,
+				"ID": 2,
+				"CompName": "sys-code-tab",
+				"Event": "",
+				"CustomEvent": "InsertMode",
+				"Comment": "코드상세 다국어 초기화"
+			}
+		];
+
+
+
+		var codeSelect = [{
+			"EventType": "코드목록선택",
+			"PRE_ID": "",
+			"ID": 1,
+			"CompName": "sys-code-grid",
+			"Event": "select",
+			"CustomEvent": "",
+			"Comment": "코드목록선택(selmodel,record,index)"
+		}, {
+			"EventType": "코드목록선택",
+			"PRE_ID": 1,
+			"ID": 2,
+			"CompName": "sys-code-tab",
+			"Event": "",
+			"CustomEvent": "updateMode",
+			"Comment": "폼 수정모드"
+		}];
+
+		return [codeGroupLoad,codeGroupSelect,codeSelect];
+
+	},
 	onBtnAdd: function (button) {
 
 

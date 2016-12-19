@@ -9,7 +9,10 @@ Ext.define('SysApp.view.global.center.GlobalCenter', {
             bodyPadding: 0,
             scrollable: true,
             closable: true,
-            border: false
+            border: false,
+            plugins : [
+
+            ]
         }
     }]
 });

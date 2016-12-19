@@ -2,6 +2,65 @@ Ext.define('SysApp.view.sys.SysMenuController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.sys-menu',
 
+    getEventWireDatas: function(){
+        var menuLoad = [
+            {
+                "EventType": "메뉴리스트 초기화",
+                "PRE_ID": "",
+                "ID": 1,
+                "CompName": "sys-menu-tree",
+                "Event": "",
+                "CustomEvent": "InitMode",
+                "Comment": "코드그룹로드"
+            },
+            {
+                "EventType": "다국어 메뉴탭 초기화",
+                "PRE_ID": 1,
+                "ID": 2,
+                "CompName": "sys-menu-tab",
+                "Event": "",
+                "CustomEvent": "InitMode",
+                "Comment": "코드리스트 초기화"
+            },
+            {
+                "EventType": "다국어 메뉴탭 초기화",
+                "PRE_ID": 2,
+                "ID": 3,
+                "CompName": "sys-menu-code",
+                "Event": "",
+                "CustomEvent": "InitMode",
+                "Comment": "코드상세 다국어 초기화"
+            }
+        ];
+
+        var menuUpdate =[{
+            "EventType": "메뉴리스트 추가",
+            "PRE_ID": "",
+            "ID": 1,
+            "CompName": "sys-menu-tree",
+            "Event": "select",
+            "Comment": "코드그룹로드(selmodel,record,index)"
+        },
+            {
+                "EventType": "다국어 메뉴탭 초기화",
+                "PRE_ID": 1,
+                "ID": 2,
+                "CompName": "sys-menu-tab",
+                "Event": "",
+                "CustomEvent": "UpdateMode",
+                "Comment": "코드리스트 초기화"
+            },
+            {
+                "EventType": "다국어 메뉴탭 초기화",
+                "PRE_ID": 2,
+                "ID": 3,
+                "CompName": "sys-menu-code",
+                "Event": "",
+                "CustomEvent": "UpdateMode",
+                "Comment": "코드상세 다국어 초기화"
+            }];
+        return [menuLoad,menuUpdate];
+    },
     onAfterRender: function (comp) {
         this.onBtnSearch();
         PmhTech.Ajax.request({

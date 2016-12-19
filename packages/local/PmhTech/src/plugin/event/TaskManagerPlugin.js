@@ -51,7 +51,7 @@
 
 
  */
-Ext.define('PmhTech.event.TaskManager', {
+Ext.define('PmhTech.plugin.event.TaskManagerManager', {
 
     statics: {
 

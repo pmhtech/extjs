@@ -2,6 +2,85 @@ Ext.define('SysApp.view.sys.role.auth.SysRoleAuthController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.sys-role-auth',
 
+    getEventWireDatas: function () {
+        var sysroleLoad = [
+            {
+                "EventType": "그룹코드로드",
+                "PRE_ID": "",
+                "ID": 1,
+                "CompName": "sys-role-auth-grid",
+                "CompXType": "grid",
+                "Event": "storeLoad",
+                "CustomEvent": "",
+                "Comment": "코드그룹로드"
+            },
+            {
+                "EventType": "그룹코드로드",
+                "PRE_ID": 1,
+                "ID": 2,
+                "CompName": "sys-role-auth-adjust",
+                "CompXType": "panel",
+                "Event": "",
+                "CustomEvent": "InitMode",
+                "Comment": "코드리스트 초기화"
+            },
+            {
+                "EventType": "그룹코드로드",
+                "PRE_ID": 2,
+                "ID": 3,
+                "CompName": "sys-role-auth-preview",
+                "CompXType": "grid",
+                "Event": "",
+                "CustomEvent": "InitMode",
+                "Comment": "코드상세 다국어 초기화"
+            }
+        ];
+
+
+        var sysroleSelect = [{
+            "EventType": "코드목록로드",
+            "PRE_ID": "",
+            "ID": 1,
+            "CompName": "sys-role-auth-grid",
+            "CompXType": "grid",
+            "Event": "select",
+            "CustomEvent": "",
+            "Comment": "코드선택"
+        }, {
+            "EventType": "코드목록로드",
+            "PRE_ID": 1,
+            "ID": 2,
+            "CompName": "sys-role-auth-adjust",
+            "CompXType": "panel",
+            "Event": "",
+            "CustomEvent": "UpdateMode",
+            "Comment": "코드리스트 초기화"
+        }];
+
+        var sdf = [{
+            "EventType": "코드목록로드",
+            "PRE_ID": "",
+            "ID": 1,
+            "CompName": "#sysRoleAuth",
+
+
+            "Event": "storeLoad",
+            "CustomEvent": "",
+            "Comment": "코드선택"
+        }, {
+            "EventType": "코드목록로드",
+            "PRE_ID": 1,
+            "ID": 2,
+            "CompName": "#sysRoleAuth",
+            "CompXType": "panel",
+            "Event": "storeAdd",
+            "CustomEvent": "",
+            "Comment": "코드리스트 초기화"
+        }];
+
+
+        return [sysroleLoad,sysroleSelect,sdf];
+    },
     onGridSelect: function (selmodel, record, index) {
         PmhTech.Ajax.request({
             url: Ext.String.format('/sys/roles/auth/{0}', record.get('CODE')),
