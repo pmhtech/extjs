@@ -1,7 +1,7 @@
 /*
 *
 *
-*/Ext.define('PmhTech.plugin.valid.form.FormDirtyCheckerPlugin', {
+*/Ext.define('PmhTech.plugin.valid.form.DirtyCheckerPlugin', {
 	extend: 'Ext.AbstractPlugin',
 	alias: 'plugin.pmh-form-dirtychecker',
 	init: function (form) {
@@ -9,7 +9,7 @@
 		me.form = form;
 		me.form.trackResetOnLoad = true;
 		me.basicForm = form.getForm();
-		me.basicForm.isValidForm = Ext.Function.bind(me.forceReset, me);
+		me.basicForm.forceReset = Ext.Function.bind(me.forceReset, me);
 		me.basicForm.getOriginalValues = Ext.Function.bind(me.getOriginalValues, me);
 	},
 	/**
@@ -19,29 +19,6 @@
 	 * @return {boolean} 오류 발생시 false 없으면 true
 	 *
 	 */
-	isValidForm: function() {
-
-
-		var basicForm = this.basicForm;
-
-		if(basicForm.isValid()){
-			return true;
-		}
-		var arrField = basicForm.getFields().items;
-
-		var returnObj = this.getFieldsErrorMessage(arrField);
-
-
-		if(Ext.isEmpty(returnObj)){
-			return true;
-		}
-		Ext.Msg.alert('오류',returnObj.errorMessage,function(){
-			returnObj.errorField.focus();
-		});
-
-		return false;
-
-	},
 	/**
 	 * @public
 	 * Form Validation

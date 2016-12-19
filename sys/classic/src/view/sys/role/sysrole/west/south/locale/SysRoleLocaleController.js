@@ -8,7 +8,7 @@ Ext.define('SysApp.view.sys.role.sysrole.west.south.locale.SysRoleLocaleControll
     onInsertMode : function(comp){
         var form = comp;
 
-        form.getForm().resetClearFields();
+        form.getForm().forceReset();
         var findIdx = SysCode['COM_000002'].find('CODE', 'DEFAULT');
         var defaultLanguage = SysCode['COM_000002'].getAt(findIdx).get('REF1');
         var defaultReadOnly = form.LOCALE_CD != defaultLanguage;

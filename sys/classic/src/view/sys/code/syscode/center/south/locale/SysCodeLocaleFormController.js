@@ -108,7 +108,7 @@ Ext.define('SysApp.view.sys.code.syscode.center.south.locale.SysCodeLocaleFormCo
 
         var PRE_CD = record.get('PRE_CD');
 
-        form.getForm().resetClearFields();
+        form.getForm().forceReset();
         form.getForm().setValues({
             PRE_CD: PRE_CD,
             LOCALE_CD : form.LOCALE_CD,

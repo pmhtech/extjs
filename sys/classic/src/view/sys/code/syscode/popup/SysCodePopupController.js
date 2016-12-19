@@ -9,7 +9,7 @@ Ext.define('SysApp.view.sys.code.syscode.popup.SysCodePopupController', {
 
         var sysCodeForm =this.getView().down('#sysCodeForm');
         if(mode=='INSERT'){
-            sysCodeForm.getForm().resetClearFields();
+            sysCodeForm.getForm().forceReset();
             sysCodeForm.setReadOnlyFields(false,['PRE_CD']);
         }else{
             sysCodeForm.setReadOnlyFields(true,['PRE_CD']);
@@ -30,7 +30,7 @@ Ext.define('SysApp.view.sys.code.syscode.popup.SysCodePopupController', {
             var LOCALE_CD = form.LOCALE_CD;
 
             if(mode=='INSERT'){
-                form.getForm().resetClearFields();
+                form.getForm().forceReset();
             }else{
                 form.getForm().setValues(params.LANGUAGE[LOCALE_CD]);
             }
