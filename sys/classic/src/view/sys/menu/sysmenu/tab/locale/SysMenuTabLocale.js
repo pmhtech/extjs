@@ -55,7 +55,6 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocale', {
 					}
 				}),
 				listeners: {
-					change: 'onChangeNotify',
 					collapse : 'onCollapsePicker'
 				}
 			}, {
@@ -70,10 +69,11 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocale', {
 				fieldLabel: '메뉴명',
 				name: 'MENU_NM'
 			},  {
-				xtype: 'textfield',
+				xtype: 'numberfield',
 				fieldLabel: '메뉴레벨',
 				name: 'MENU_LVL',
 				listeners: {
+					blur: 'onBlurMENU_LVL',
 					change: 'onChangeNotify'
 				}
 			},{
