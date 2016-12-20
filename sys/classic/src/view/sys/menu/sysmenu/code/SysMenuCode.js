@@ -60,7 +60,10 @@ Ext.define('SysApp.view.sys.menu.sysmenu.code.SysMenuCode', {
 			{text :'코드그룹명', dataIndex:'PRE_CD', flex : 1},
 			{text :'코드명', dataIndex:'CODE_NM', flex : 1}
 		]
-	}]
+	}],listeners : {
+		afterrender : 'onAfterRender',
+		InitMode : 'onIntMode'
+	}
 });
 
 

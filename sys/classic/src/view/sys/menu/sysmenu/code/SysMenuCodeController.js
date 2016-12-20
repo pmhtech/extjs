@@ -2,6 +2,26 @@ Ext.define('SysApp.view.sys.menu.sysmenu.code.SysMenuCodeController', {
 	extend: 'Ext.app.ViewController',
 	alias: 'controller.sys-menu-code',
 
+	onAfterRender : function(comp){
+		PmhTech.Ajax.request({
+			url: '/sys/codes',
+			method: 'GET',
+			success: this.onLoadSysCodeGroup,
+			scope: this
+		});
+	},
+	onLoadSysCodeGroup: function (resObj) {
+		var store = this.getView().down('#sysCodeGroup').getStore();
+		store.dataSnapShot = Ext.clone(resObj);
+		store.loadRawData(resObj);
+
+	},
+	onIntMode : function(){
+		var store = this.getView().down('#sysCodeGroup').getStore();
+		store.loadRawData(Ext.clone(store.dataSnapShot));
+		this.getView().down('#sysMenuCode').getStore().removeAll();
+
+	},
 	onBtnRemoveCodes : function(button){
 
 		var me = this.getView();

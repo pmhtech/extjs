@@ -1,5 +1,5 @@
-Ext.define('PmhTech.plugin.valid.form.ValidPlugin', {
-	extend: 'PmhTech.plugin.valid.AbstractValidPlugin',
+Ext.define('PmhTech.plugin.form.FormValidator', {
+	extend: 'PmhTech.plugin.AbstractValidator',
 	alias: 'plugin.pmh-form-validator',
 	init: function (form) {
 		var me = this;

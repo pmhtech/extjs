@@ -1,4 +1,4 @@
-Ext.define('PmhTech.plugin.valid.form.ReadOnlyPlugin', {
+Ext.define('PmhTech.plugin.form.ReadOnlyPlugin', {
 	extend: 'Ext.AbstractPlugin',
 	alias: 'plugin.pmh-form-readonly',
 	init: function (form) {

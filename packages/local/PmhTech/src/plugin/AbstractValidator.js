@@ -1,4 +1,4 @@
-Ext.define('PmhTech.plugin.valid.AbstractValidPlugin', {
+Ext.define('PmhTech.plugin.AbstractValidator', {
 	extend: 'Ext.AbstractPlugin',
 	/**
 	 * @private

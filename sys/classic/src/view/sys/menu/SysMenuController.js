@@ -5,16 +5,16 @@ Ext.define('SysApp.view.sys.SysMenuController', {
     getEventWireDatas: function(){
         var menuLoad = [
             {
-                "EventType": "메뉴리스트 초기화",
+                "EventType": "메뉴리스트 입력모드",
                 "PRE_ID": "",
                 "ID": 1,
                 "CompName": "sys-menu-tree",
-                "Event": "",
-                "CustomEvent": "InitMode",
+                "Event": "storeLoad",
+                "CustomEvent": "",
                 "Comment": "코드그룹로드"
             },
             {
-                "EventType": "다국어 메뉴탭 초기화",
+                "EventType": "메뉴리스트 입력모드",
                 "PRE_ID": 1,
                 "ID": 2,
                 "CompName": "sys-menu-tab",
@@ -23,7 +23,7 @@ Ext.define('SysApp.view.sys.SysMenuController', {
                 "Comment": "코드리스트 초기화"
             },
             {
-                "EventType": "다국어 메뉴탭 초기화",
+                "EventType": "메뉴리스트 입력모드",
                 "PRE_ID": 2,
                 "ID": 3,
                 "CompName": "sys-menu-code",
@@ -63,20 +63,12 @@ Ext.define('SysApp.view.sys.SysMenuController', {
     },
     onAfterRender: function (comp) {
         this.onBtnSearch();
-        PmhTech.Ajax.request({
-            url: '/sys/codes',
-            method: 'GET',
-            success: this.successLoad,
-            scope: this
-        });
     },
     onInitMode: function (comp) {
         var store = comp.down('#sysCodeGroup').getStore();
         store.loadRawData(store.dataSnapShot);
         comp.down('#sysMenuCode').getStore().removeAll();
 
-        var sysMenuTab = comp.down('sys-menu-tab');
-        sysMenuTab.fireEventArgs('InsertMode',arguments);
     },
 
 
@@ -98,9 +90,6 @@ Ext.define('SysApp.view.sys.SysMenuController', {
         var treeNode = PmhTech.Utils.convertListToTree(resObj['sysMenus'], 'MENU_ID', 'PRE_MENU_ID', "");
         var copyTreeNode = Ext.clone(treeNode);
         var treeStore = this.getView().down('sys-menu-tree').getStore();
-
-
-
         treeStore.setRoot({
             MENU_NM: 'ALL',
             text: 'ALL',
@@ -127,22 +116,18 @@ Ext.define('SysApp.view.sys.SysMenuController', {
             );
         }
 
-        //this.getView().fireEvent('InitMode',this.getView());
+        treeStore.fireEvent('storeLoad',treeStore);
     },
 
-    successLoad: function (resObj) {
-        var store = this.getView().down('#sysCodeGroup').getStore();
-        store.dataSnapShot = Ext.clone(resObj);
-        store.loadRawData(resObj);
 
-    },
 
 
     onBtnAdd: function (button) {
 
         var grid = this.getView().down('sys-menu-tree');
         grid.getSelectionModel().deselectAll();
-        this.getView().fireEvent('InsertMode',this.getView());
+
+        this.getView().down('sys-menu-tab').fireEvent('InitMode');
 
 
     },

@@ -1,7 +1,7 @@
 /*
 *
 *
-*/Ext.define('PmhTech.plugin.valid.form.DirtyCheckerPlugin', {
+*/Ext.define('PmhTech.plugin.form.DirtyCheckerPlugin', {
 	extend: 'Ext.AbstractPlugin',
 	alias: 'plugin.pmh-form-dirtychecker',
 	init: function (form) {

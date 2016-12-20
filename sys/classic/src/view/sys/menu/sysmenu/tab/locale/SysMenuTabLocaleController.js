@@ -8,8 +8,7 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocaleController',
 		var form = this.getView();
 
 		form.getForm().forceReset();
-		var findIdx = SysCode['COM_000002'].find('CODE', 'DEFAULT');
-		var defaultLanguage = SysCode['COM_000002'].getAt(findIdx).get('REF1');
+		var defaultLanguage = PmhTech.Utils.getDefaultLanguage();
 		var defaultReadOnly = form.LOCALE_CD != defaultLanguage;
 
 		form.setReadOnlyFields(false,['MENU_NM','MEMO']);
