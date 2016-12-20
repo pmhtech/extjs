@@ -91,9 +91,9 @@ Ext.define('SysApp.view.sys.SysMenuController', {
         var copyTreeNode = Ext.clone(treeNode);
         var treeStore = this.getView().down('sys-menu-tree').getStore();
         treeStore.setRoot({
-            MENU_NM: 'ALL',
-            text: 'ALL',
-            id : 'root',
+            MENU_NM: '',
+            text: '',
+            id : '',
             expanded: true,
             children: treeNode
         });

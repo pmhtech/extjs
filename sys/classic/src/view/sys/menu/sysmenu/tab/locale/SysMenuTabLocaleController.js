@@ -10,9 +10,9 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocaleController',
 		form.getForm().forceReset();
 		var defaultLanguage = PmhTech.Utils.getDefaultLanguage();
 		var defaultReadOnly = form.LOCALE_CD != defaultLanguage;
-
+		form.setReadOnlyFields(true,['MENU_LVL']);
 		form.setReadOnlyFields(false,['MENU_NM','MEMO']);
-		form.setReadOnlyFields(defaultReadOnly, ['SYSTEM','PRE_MENU_ID','MENU_ID','MENU_AUTH','WIDGET_NM','CLASS_NM','MENU_LVL','SORT', 'USE_YN']);
+		form.setReadOnlyFields(defaultReadOnly, ['SYSTEM','PRE_MENU_ID','MENU_ID','MENU_AUTH','WIDGET_NM','CLASS_NM','SORT', 'USE_YN']);
 
 	},
 
@@ -24,9 +24,9 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocaleController',
 		var form = this.getView();
 		var defaultReadOnly = form.LOCALE_CD != defaultLanguage;
 
-		form.setReadOnlyFields(true,['SYSTEM','PRE_MENU_ID','MENU_ID']);
+		form.setReadOnlyFields(true,['SYSTEM','PRE_MENU_ID','MENU_ID','MENU_LVL']);
 		form.setReadOnlyFields(false,['MENU_NM','MEMO']);
-		form.setReadOnlyFields(defaultReadOnly, ['MENU_AUTH','WIDGET_NM','CLASS_NM','MENU_LVL','SORT', 'USE_YN']);
+		form.setReadOnlyFields(defaultReadOnly, ['MENU_AUTH','WIDGET_NM','CLASS_NM','SORT', 'USE_YN']);
 	},
 
 
@@ -45,31 +45,39 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocaleController',
 
 		var locales = this.getView().up('tabpanel').query('sys-menu-tab-locale');
 
-		if(field.name=='PRE_MENU_ID'){
-			debugger;
-		}
-
 		for (var i = 0; i < locales.length; i++) {
-			locales[i].down('[name=' + field.name + ']').setValue(newValue);
+			var target =locales[i].down('[name=' + field.name + ']');
+			target.setValue(newValue);
+			if(field.name=='MENU_LVL'){
+
+				this.onChangeMENU_LVL(field);
+			}
 		}
 
 
 	},
-	onBlurMENU_LVL : function(field){
+	onChangeMENU_LVL : function(field){
 
+		var grid = this.getView().up('sys-menu').down('sys-menu-tree');
+
+		if(grid.getSelectionModel().getSelection().length!=0){
+			return;
+		}
 		var PRE_MENU_ID =this.getView().down('[name=PRE_MENU_ID]');
 		var rootNode =PRE_MENU_ID.getStore().getRoot();
 		var record = rootNode.findChild(PRE_MENU_ID.valueField,PRE_MENU_ID.getValue(),true);
-
+		if(record==null){
+			return;
+		}
 
 		var menuIds = [];
 		var MENU_LVL = field.getValue();
 
 
 		var slicer ={
-			'2' : 5,
-			'3' : 7,
-			'4' : 9
+			'2' : 4,
+			'3' : 6,
+			'4' : 8
 		};
 		var suffix = {
 			'2' :'0000',
@@ -104,13 +112,26 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocaleController',
 		var rootNode =field.getStore().getRoot();
 
 		var record = rootNode.findChild(field.valueField,field.getValue(),true);
-
-		if(record.get('MENU_LVL')+1 >=2){
-
-			var MENU_LVL = this.getView().down('[name=MENU_LVL]');
-			MENU_LVL.setValue(record.get('MENU_LVL')+1);
-			MENU_LVL.fireEvent('blur',MENU_LVL);
+		if(record==null){
+			return;
 		}
+		var MENU_LVL = this.getView().down('[name=MENU_LVL]');
+
+		var locales = this.getView().up('tabpanel').query('sys-menu-tab-locale');
+		for (var i = 0; i < locales.length; i++) {
+			locales[i].down('[name=PRE_MENU_ID]').setValue(field.getValue());
+
+		}
+		var lvl = record.get('MENU_LVL')+1;
+
+		if(lvl==3 || lvl==4){
+			MENU_LVL.setReadOnly(false);
+		}else{
+			MENU_LVL.setReadOnly(true);
+		}
+
+
+		MENU_LVL.setValue(record.get('MENU_LVL')+1);
 
 		if(Ext.isEmpty(record) ||record.isLeaf()){
 			PmhTech.Msg.alert('확인','상위메뉴만 선택해야만 합니다.',function(){
@@ -118,5 +139,8 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocaleController',
 				field.reset();
 			});
 		}
+
+
+
 	}
 });

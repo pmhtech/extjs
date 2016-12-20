@@ -45,12 +45,13 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocale', {
 				displayField: 'MENU_NM',
 				valueField : 'MENU_ID',
 				maxPickerHeight: 400,
+				minPickerHeight: 400,
 				minPickerWidth : 400,
 				store : Ext.create('Ext.data.TreeStore',{
 					root: {
-						MENU_NM: 'All',
-						text: 'ALL',
-						id : 'root',
+						MENU_NM: '',
+						text: '',
+						id : '',
 						expanded: true
 					}
 				}),
@@ -73,7 +74,6 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocale', {
 				fieldLabel: '메뉴레벨',
 				name: 'MENU_LVL',
 				listeners: {
-					blur: 'onBlurMENU_LVL',
 					change: 'onChangeNotify'
 				}
 			},{

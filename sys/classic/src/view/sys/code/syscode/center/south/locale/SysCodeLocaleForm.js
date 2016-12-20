@@ -99,7 +99,7 @@ Ext.define('SysApp.view.sys.code.syscode.center.south.locale.SysCodeLocaleForm',
         }],
         onChangeRadioGroup: 'onChangeUSE_YN'
     }, {
-        xtype: 'textfield',
+        xtype: 'numericfield',
         fieldLabel: '정렬순서',
         name: 'SORT',
         listeners: {
