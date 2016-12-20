@@ -37,7 +37,9 @@ Ext.define('SysApp.view.sys.role.SysRole', {
 						}]
 					}],
 					flex : 1,
-					onGridSelect : 'onSysRoleGridSelect'
+					listeners : {
+						select : 'onSysRoleGridSelect'
+					}
 				},{
 					xtype : 'sys-role-tab',
 					tabBar :{

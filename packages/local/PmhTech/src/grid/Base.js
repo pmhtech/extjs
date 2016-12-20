@@ -9,11 +9,6 @@ Ext.define('PmhTech.grid.Base', {
     excelMode: false,
     frame: true,
     isGlobal: false,
-    onGridLoad: Ext.emptyFn,
-    onGridSelect: Ext.emptyFn,
-    onGridAfterRender: Ext.emptyFn,
-    onGridAdd: Ext.emptyFn,
-    onGridRemove: Ext.emptyFn,
     usePagingToolbar: true,
     dragTarget: null,
     dropTarget: null,
@@ -41,10 +36,6 @@ Ext.define('PmhTech.grid.Base', {
             ptype: 'bufferedrenderer'
         }];
 
-        if (me.excelMode == true) {
-            plugins.push({ptype: 'cellediting'});
-        }
-
         Ext.apply(me, {
             columns: columns,
             store: me.configStore(),
@@ -67,11 +58,11 @@ Ext.define('PmhTech.grid.Base', {
                 }
             },
             listeners: {
-                select: me.onGridSelect,
-                storeLoad: me.onGridLoad,
-                storeAdd: me.onGridAdd,
-                storeRemove: me.onGridRemove,
-                afterrender: me.onGridAfterRender
+                select: Ext.emptyFn,
+                storeLoad: Ext.emptyFn,
+                storeAdd: Ext.emptyFn,
+                storeRemove: Ext.emptyFn,
+                afterrender: Ext.emptyFn
             }
         });
         me.callParent(arguments);

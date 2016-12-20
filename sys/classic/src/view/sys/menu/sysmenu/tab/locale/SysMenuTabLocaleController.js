@@ -97,13 +97,16 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocaleController',
 		}
 
 		var maxMenuId = Ext.Array.max(menuIds);
-
+		var target = this.getView().down('[name=MENU_ID]');
+		if(isNaN(maxMenuId)){
+			target.reset();
+		}
 		var prefix =record.get('MENU_ID').substr(0,slicer[MENU_LVL]);
 		var nextVal = Ext.String.leftPad(parseInt(maxMenuId)+1,2,'0');
 		var MENU_ID = prefix+nextVal+suffix[MENU_LVL];
 
 		console.log(MENU_ID);
-		var target = this.getView().down('[name=MENU_ID]');
+
 		target.setValue(MENU_ID);
 
 
@@ -122,6 +125,14 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocaleController',
 			locales[i].down('[name=PRE_MENU_ID]').setValue(field.getValue());
 
 		}
+
+		if(Ext.isEmpty(record) ||record.isLeaf()){
+			PmhTech.Msg.alert('확인','상위메뉴만 선택해야만 합니다.',function(){
+
+				field.reset();
+			});
+		}
+
 		var lvl = record.get('MENU_LVL')+1;
 
 		if(lvl==3 || lvl==4){
@@ -132,13 +143,6 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocaleController',
 
 
 		MENU_LVL.setValue(record.get('MENU_LVL')+1);
-
-		if(Ext.isEmpty(record) ||record.isLeaf()){
-			PmhTech.Msg.alert('확인','상위메뉴만 선택해야만 합니다.',function(){
-
-				field.reset();
-			});
-		}
 
 
 

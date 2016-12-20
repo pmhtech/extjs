@@ -14,7 +14,9 @@ Ext.define('SysApp.view.sys.code.SysCode', {
 				xtype: 'sys-code-group-grid',
 				region: 'west',
 				flex: 1,
-				onGridSelect: 'onSelectGrid'
+				listeners : {
+					select : 'onSelectGrid'
+				}
 			}, {
 				xtype: 'container',
 				region: 'center',
@@ -28,7 +30,9 @@ Ext.define('SysApp.view.sys.code.SysCode', {
 					title: '코드목록',
 					layout: 'fit',
 					height : 250,
-					onGridSelect: 'onSelectDetailGrid'
+					listeners : {
+						select : 'onSelectDetailGrid'
+					}
 				}, {
 					xtype: 'sys-code-tab',
 					flex: 1,

@@ -22,7 +22,9 @@ Ext.define('SysApp.view.sys.menu.sysmenu.code.SysMenuCode', {
 		columns : [
 			{text :'코드그룹명', dataIndex:'PRE_CD', flex : 1},
 			{text :'코드명', dataIndex:'CODE_NM', flex : 1}
-		],onGridLoad : 'onGridLoad'
+		],listeners : {
+			storeLoad : 'onGridLoad'
+		}
 	}, {
 		xtype : 'container',
 		width : 40,

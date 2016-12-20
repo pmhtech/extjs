@@ -10,8 +10,10 @@ Ext.define('SysApp.view.sys.role.auth.SysRoleAuth', {
 			items: [{
 				xtype : 'sys-role-auth-grid',
 				height : 250,
-				onGridSelect : 'onGridSelect',
-				region : 'north'
+				region : 'north',
+				listeners : {
+					select : 'onGridSelect'
+				}
 			}, {
 				xtype: 'sys-role-auth-adjust',
 				title: '권한설정',
