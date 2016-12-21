@@ -53,7 +53,8 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocale', {
 						MENU_ID : SysCode['COM_000005'].getAt(findIdx).get('REF2'),
 						MENU_NM : SysCode['COM_000005'].getAt(findIdx).get('REF3'),
 						id : 'ALL',
-						expanded: true
+						expanded: true,
+						children : []
 					}
 				}),
 				listeners: {

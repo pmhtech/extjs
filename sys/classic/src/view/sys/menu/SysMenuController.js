@@ -101,29 +101,20 @@ Ext.define('SysApp.view.sys.SysMenuController', {
     refreshTreePicker : function(treeNode){
         var fields = this.getView().query('[name=PRE_MENU_ID]');
 
-
         for(var i=0;i<fields.length;i++){
             var field = fields[i];
             var findIdx =SysCode['COM_000005'].find('CODE','ALL_GROUP');
-            field.getStore().removeAll(false);
-            var tempStore =  Ext.create('Ext.data.TreeStore',{
-                model : 'SysApp.model.SysMenu',
-                root : {
-                    MENU_ID : SysCode['COM_000005'].getAt(findIdx).get('REF2'),
-                    MENU_NM : SysCode['COM_000005'].getAt(findIdx).get('REF3'),
-                    id : 'ALL',
-                    expanded: true,
-                    children: Ext.clone(treeNode)
-                }
+            var fieldStore =field.getStore();
+            fieldStore.setRoot({
+                MENU_ID : SysCode['COM_000005'].getAt(findIdx).get('REF2'),
+                MENU_NM : SysCode['COM_000005'].getAt(findIdx).get('REF3'),
+                id : 'ALL',
+                expanded: true,
+                children: Ext.clone(treeNode)
+
             });
-            field.setStore(tempStore);
         }
-
     },
-
-
-
-
     onBtnAdd: function (button) {
 
         var grid = this.getView().down('sys-menu-tree');

@@ -13,12 +13,6 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocaleController',
 		form.setReadOnlyFields(true,['MENU_LVL']);
 		form.setReadOnlyFields(false,['MENU_NM','MEMO']);
 		form.setReadOnlyFields(defaultReadOnly, ['SYSTEM','PRE_MENU_ID','MENU_ID','MENU_AUTH','WIDGET_NM','CLASS_NM','SORT', 'USE_YN']);
-
-		//var PRE_MENU_ID = form.down('[name=PRE_MENU_ID]');
-
-
-
-
 	},
 
 	onUpdateMode: function (selModel,record,index) {
