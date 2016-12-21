@@ -123,7 +123,7 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocaleController',
 		var MENU_LVL = this.getView().down('[name=MENU_LVL]');
 		var MENU_ID = this.getView().down('[name=MENU_ID]');
 		MENU_ID.reset();
-
+		MENU_LVL.reset();
 		var locales = this.getView().up('tabpanel').query('sys-menu-tab-locale');
 		for (var i = 0; i < locales.length; i++) {
 			locales[i].down('[name=PRE_MENU_ID]').setValue(field.getValue());
@@ -140,9 +140,12 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocaleController',
 		var lvl = record.get('MENU_LVL')+1;
 
 		if(lvl==3 || lvl==4){
-
+			MENU_LVL.setMinValue(3);
+			MENU_LVL.setMaxValue(4);
 			MENU_LVL.setReadOnly(false);
 		}else{
+			MENU_LVL.setMinValue(lvl);
+			MENU_LVL.setMaxValue(lvl);
 
 			MENU_LVL.setReadOnly(true);
 		}

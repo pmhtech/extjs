@@ -106,9 +106,9 @@ Ext.define('SysApp.view.sys.SysMenuController', {
             var findIdx =SysCode['COM_000005'].find('CODE','ALL_GROUP');
             var fieldStore =field.getStore();
             fieldStore.setRoot({
-                MENU_ID : SysCode['COM_000005'].getAt(findIdx).get('REF2'),
+                MENU_ID : 'ALL',
                 MENU_NM : SysCode['COM_000005'].getAt(findIdx).get('REF3'),
-                id : 'ALL',
+                id : '',
                 expanded: true,
                 children: Ext.clone(treeNode)
 
