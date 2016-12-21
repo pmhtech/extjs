@@ -14,6 +14,11 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocaleController',
 		form.setReadOnlyFields(false,['MENU_NM','MEMO']);
 		form.setReadOnlyFields(defaultReadOnly, ['SYSTEM','PRE_MENU_ID','MENU_ID','MENU_AUTH','WIDGET_NM','CLASS_NM','SORT', 'USE_YN']);
 
+		//var PRE_MENU_ID = form.down('[name=PRE_MENU_ID]');
+
+
+
+
 	},
 
 	onUpdateMode: function (selModel,record,index) {
@@ -101,6 +106,10 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocaleController',
 		if(isNaN(maxMenuId)){
 			target.reset();
 		}
+
+		if(!maxMenuId){
+			maxMenuId=0;
+		}
 		var prefix =record.get('MENU_ID').substr(0,slicer[MENU_LVL]);
 		var nextVal = Ext.String.leftPad(parseInt(maxMenuId)+1,2,'0');
 		var MENU_ID = prefix+nextVal+suffix[MENU_LVL];
@@ -113,12 +122,13 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocaleController',
 	},
 	onCollapsePicker : function(field){
 		var rootNode =field.getStore().getRoot();
-
 		var record = rootNode.findChild(field.valueField,field.getValue(),true);
 		if(record==null){
 			return;
 		}
 		var MENU_LVL = this.getView().down('[name=MENU_LVL]');
+		var MENU_ID = this.getView().down('[name=MENU_ID]');
+		MENU_ID.reset();
 
 		var locales = this.getView().up('tabpanel').query('sys-menu-tab-locale');
 		for (var i = 0; i < locales.length; i++) {
@@ -136,8 +146,10 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocaleController',
 		var lvl = record.get('MENU_LVL')+1;
 
 		if(lvl==3 || lvl==4){
+
 			MENU_LVL.setReadOnly(false);
 		}else{
+
 			MENU_LVL.setReadOnly(true);
 		}
 

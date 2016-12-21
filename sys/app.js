@@ -6,6 +6,7 @@
 Ext.application({
     name: 'SysApp',
     extend: 'Ext.app.Application',
+    models : ['SysApp.model.SysMenu'],
     controllers: [
         'SysApp.controller.menu.MenuController'
     ],

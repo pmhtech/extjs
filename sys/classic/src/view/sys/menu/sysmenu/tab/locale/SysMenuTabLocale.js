@@ -13,7 +13,7 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocale', {
 
 	initComponent : function(){
 		var me = this;
-
+		var findIdx =SysCode['COM_000005'].find('CODE','ALL_GROUP');
 		Ext.apply(me,{
 			items: [{
 				xtype: 'textfield',
@@ -48,10 +48,11 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocale', {
 				minPickerHeight: 400,
 				minPickerWidth : 400,
 				store : Ext.create('Ext.data.TreeStore',{
-					root: {
-						MENU_NM: '',
-						text: '',
-						id : '',
+					model : 'SysApp.model.SysMenu',
+					root : {
+						MENU_ID : SysCode['COM_000005'].getAt(findIdx).get('REF2'),
+						MENU_NM : SysCode['COM_000005'].getAt(findIdx).get('REF3'),
+						id : 'ALL',
 						expanded: true
 					}
 				}),
@@ -126,8 +127,6 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tab.locale.SysMenuTabLocale', {
 				UpdateMode: 'onUpdateMode',
 				scope : this.getController()
 			}
-
-
 		});
 		me.callParent(arguments);
 	}

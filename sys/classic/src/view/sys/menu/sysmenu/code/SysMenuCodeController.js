@@ -10,6 +10,12 @@ Ext.define('SysApp.view.sys.menu.sysmenu.code.SysMenuCodeController', {
 			scope: this
 		});
 	},
+	onInitMode : function(comp){
+		var me = this.getView();
+		var store = me.down('#sysCodeGroup').getStore();
+		store.loadRawData(store.dataSnapShot);
+		me.down('#sysMenuCode').getStore().removeAll();
+	},
 	onLoadSysCodeGroup: function (resObj) {
 		var store = this.getView().down('#sysCodeGroup').getStore();
 		store.dataSnapShot = Ext.clone(resObj);

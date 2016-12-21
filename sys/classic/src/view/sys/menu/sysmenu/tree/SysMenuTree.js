@@ -4,6 +4,7 @@ Ext.define('SysApp.view.sys.menu.sysmenu.tree.SysMenuTree', {
 	rootVisible: false,
 
 	store : Ext.create('Ext.data.TreeStore',{
+		model : 'SysApp.model.SysMenu',
 		root: {
 			MENU_NM: 'All',
 			text: 'ALL',

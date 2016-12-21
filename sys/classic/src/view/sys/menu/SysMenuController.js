@@ -65,9 +65,6 @@ Ext.define('SysApp.view.sys.SysMenuController', {
         this.onBtnSearch();
     },
     onInitMode: function (comp) {
-        var store = comp.down('#sysCodeGroup').getStore();
-        store.loadRawData(store.dataSnapShot);
-        comp.down('#sysMenuCode').getStore().removeAll();
 
     },
 
@@ -88,35 +85,40 @@ Ext.define('SysApp.view.sys.SysMenuController', {
 
 
         var treeNode = PmhTech.Utils.convertListToTree(resObj['sysMenus'], 'MENU_ID', 'PRE_MENU_ID', "");
-        var copyTreeNode = Ext.clone(treeNode);
-        var treeStore = this.getView().down('sys-menu-tree').getStore();
+        var sysMenuTree = this.getView().down('sys-menu-tree');
+        var treeStore = sysMenuTree.getStore();
         treeStore.setRoot({
             MENU_NM: '',
             text: '',
             id : '',
             expanded: true,
-            children: treeNode
+            children: Ext.clone(treeNode)
         });
+        this.refreshTreePicker(treeNode);
+
+        sysMenuTree.fireEvent('storeLoad',treeStore);
+    },
+    refreshTreePicker : function(treeNode){
         var fields = this.getView().query('[name=PRE_MENU_ID]');
+
 
         for(var i=0;i<fields.length;i++){
             var field = fields[i];
             var findIdx =SysCode['COM_000005'].find('CODE','ALL_GROUP');
-
-            field.setStore(
-                Ext.create('Ext.data.TreeStore',{
-                    root : {
-                        MENU_ID : SysCode['COM_000005'].getAt(findIdx).get('REF2'),
-                        MENU_NM : SysCode['COM_000005'].getAt(findIdx).get('REF3'),
-                        id : 'ALL',
-                        expanded: true,
-                        children: copyTreeNode
-                    }
-                })
-            );
+            field.getStore().removeAll(false);
+            var tempStore =  Ext.create('Ext.data.TreeStore',{
+                model : 'SysApp.model.SysMenu',
+                root : {
+                    MENU_ID : SysCode['COM_000005'].getAt(findIdx).get('REF2'),
+                    MENU_NM : SysCode['COM_000005'].getAt(findIdx).get('REF3'),
+                    id : 'ALL',
+                    expanded: true,
+                    children: Ext.clone(treeNode)
+                }
+            });
+            field.setStore(tempStore);
         }
 
-        treeStore.fireEvent('storeLoad',treeStore);
     },
 
 
@@ -190,8 +192,6 @@ Ext.define('SysApp.view.sys.SysMenuController', {
     onSelectTree: function (selmodel, record, index, eOpts) {
 
         var findIdx = SysCode['COM_000002'].find('CODE', 'DEFAULT');
-        var defaultLang = SysCode['COM_000002'].getAt(findIdx).get('REF1');
-
         var forms = this.getView().query('tabpanel form');
 
         for (var i = 0; i < forms.length; i++) {
@@ -217,6 +217,5 @@ Ext.define('SysApp.view.sys.SysMenuController', {
 
         var store = this.getView().down('#sysMenuCode').getStore();
         store.loadRawData(resObj);
-
     }
 });
