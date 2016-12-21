@@ -13,9 +13,7 @@ Ext.define('SysApp.view.role.sysrole.center.SysRoleTree', {
 		includeParent : true
 	}],
 	store: Ext.create('Ext.data.TreeStore', {
-		fields: [
-			{	name: 'isChecked', type: 'boolean', defaultValue: false }
-		],
+		model : 'SysApp.model.SysMenu',
 		root: {
 			MENU_NM: 'All',
 			text: 'ALL',

@@ -10,10 +10,7 @@ Ext.define('SysApp.view.role.auth.sysroleauth.south.SysRoleAuthPreview',{
         , allowParentFolders: true
     }],
     store: Ext.create('Ext.data.TreeStore', {
-        fields: [
-            {	name: 'ACTIVE_YN', type: 'string', defaultValue: 'N' }
-
-        ],
+        model : 'SysApp.model.SysMenu',
         root: {
             MENU_NM: 'All',
             text: 'ALL',

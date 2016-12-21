@@ -15,6 +15,8 @@ Ext.define('SysApp.model.SysMenu', {
 		}
 		},
 		{name: 'expanded', type: 'boolean', defaultValue: true},
+		{	name: 'isChecked', type: 'boolean', defaultValue: false },
+		{	name: 'ACTIVE_YN', type: 'string', defaultValue: 'N' },
 		{name: 'leaf', type: 'boolean', convert : function(v,rec){
 			if(rec.data.MENU_LVL === 4){
 				rec.data.leaf = true;

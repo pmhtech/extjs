@@ -125,7 +125,9 @@ Ext.define('SysApp.view.role.SysRoleController', {
 		for(var i=0;i<sysRolePages.length;i++){
 			var data= sysRolePages[i];
 			var node = rootNode.findChild('MENU_ID', data.MENU_ID, true);
-			node.set('isChecked',!Ext.isEmpty(node));
+			if(node){
+				node.set('isChecked',!Ext.isEmpty(node));
+			}
 		}
 	},
 
