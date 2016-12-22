@@ -101,9 +101,9 @@ Ext.define('SysApp.view.SysCodeController', {
 		var forms = this.getView().query('sys-code-tab form');
 		for (var i = 0; i < forms.length; i++) {
 			var form = forms[i];
-			if (!PmhTech.util.ValidUtil.isValidForm(form)) {
+			/*if (!PmhTech.util.ValidUtil.isValidForm(form)) {
 				return false;
-			}
+			}*/
 			var valueObject = form.getForm().getValues();
 			sysCodeLocale.push(valueObject);
 		}

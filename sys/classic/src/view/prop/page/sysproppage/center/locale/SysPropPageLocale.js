@@ -25,24 +25,9 @@ Ext.define('SysApp.view.prop.page.sysproppage.center.locale.SysPropPageLocale',{
         listeners : {
             storeUpdate : 'onUpdateMaster'
         }
-
     },{
-        xtype : 'pmh-grid-base',
+        xtype : 'propertygrid',
         title : '기타속성값',
-        itemId : 'fieldPropertyDtl',
-        flex : 1,
-        plugins :[{
-           ptype : 'pmh-grid-excel-editor'
-        }],
-        dockedItems: [{
-            xtype: 'pmh-button-toolbar',
-            dock: 'top',
-            buttonAlign : 'right',
-            btnItems : ['insert','delete']
-        }],
-        columns : [
-            {text : 'Property'  , dataIndex :'PROPERTY', editor : {xtype : 'textfield'}},
-            {text : 'Value'     , dataIndex : 'VALUE'}
-        ]
+        itemId : 'fieldPropertyDtl'
     }]
 });
