@@ -50,8 +50,6 @@ Ext.define('SysApp.view.code.syscode.center.south.SysCodeTabController', {
     },
     onAfterRender: function (comp) {
 
-        var findIdx = SysCode['COM_000002'].find('CODE', 'DEFAULT');
-
         var localeStore = SysCode['COM_000003'];
         var items = [];
 
