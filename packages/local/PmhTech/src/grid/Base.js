@@ -18,7 +18,7 @@ Ext.define('PmhTech.grid.Base', {
     dropZone: null,
     rowNumberer: 38,
     emptyText: 'No data to display',
-
+    plugins : [],
     initComponent: function () {
         var me = this;
 
@@ -32,15 +32,12 @@ Ext.define('PmhTech.grid.Base', {
             }
         }
 
-        var plugins = [{
-            ptype: 'bufferedrenderer'
-        }];
+       me.plugins.push({ptype: 'bufferedrenderer'});
 
         Ext.apply(me, {
             columns: columns,
             store: me.configStore(),
             dockedItems: me.configDockedItems(),
-            plugins: plugins,
             viewConfig: {
                 plugins: {
                     ptype: 'gridviewdragdrop',
@@ -62,6 +59,7 @@ Ext.define('PmhTech.grid.Base', {
                 storeLoad: Ext.emptyFn,
                 storeAdd: Ext.emptyFn,
                 storeRemove: Ext.emptyFn,
+                storeUpdate : Ext.emptyFn,
                 afterrender: Ext.emptyFn
             }
         });
@@ -97,6 +95,9 @@ Ext.define('PmhTech.grid.Base', {
                 remove: function (store) {
 
                     this.fireEventArgs('storeRemove', arguments);
+                },
+                update :function(store){
+                    this.fireEventArgs('storeUpdate', arguments);
                 },
                 scope: me
 
