@@ -72,9 +72,8 @@ Ext.define('SysApp.view.role.SysRole', {
 				afterrender : 'onAfterRender',
 				scope: me.getController()
 			}
-
 		});
 		me.callParent(arguments);
-	},
+	}
 
 });
