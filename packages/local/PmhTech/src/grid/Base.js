@@ -6,31 +6,14 @@ Ext.define('PmhTech.grid.Base', {
 		fields: [],
 		rootProperty: null
 	},
-	excelMode: false,
 	frame: true,
-	isGlobal: false,
-	usePagingToolbar: true,
-	dragTarget: null,
-	dropTarget: null,
-	ddGroup: null,
-	enableDrag: true,
-	enableDrop: true,
-	dropZone: null,
-	rowNumberer: 38,
 	emptyText: 'No data to display',
 	plugins: [],
 	initComponent: function () {
 		var me = this;
 
 		var columns = Ext.clone(me.columns);
-
-
-		if (Ext.isNumber(me.rowNumberer)) {
-			if (Ext.isArray(me.columns)) {
-				columns.unshift({xtype: 'rownumberer', text: '#', width: me.rowNumberer});
-			}
-		}
-
+		me._columns=columns;
 		me.plugins.push({ptype: 'pmh-grid-extra'});
 		me.plugins.push({ptype: 'bufferedrenderer'});
 
@@ -39,22 +22,6 @@ Ext.define('PmhTech.grid.Base', {
 			columns: columns,
 			store: me.configStore(),
 			dockedItems: me.configDockedItems(),
-			viewConfig: {
-				plugins: {
-					ptype: 'gridviewdragdrop',
-					containerScroll: true,
-					enableDrag: me.enableDrag,
-					enableDrop: me.enableDrop,
-					dragGroup: me.dragGroup,
-					dropGroup: me.dropGroup,
-					ddGroup: me.ddGroup,
-					// The right hand drop zone gets special styling
-					// when dragging over it.
-					dropZone: {
-						overClass: me.dropZone
-					}
-				}
-			},
 			listeners: {
 				select: Ext.emptyFn,
 				storeLoad: Ext.emptyFn,
@@ -107,23 +74,11 @@ Ext.define('PmhTech.grid.Base', {
 
 
 	}, configDockedItems: function () {
-
 		var me = this;
 		if (!me.dockedItems) {
 			me.dockedItems = [];
 		}
-
-
 		var dockedItems = Ext.isArray(me.dockedItems) ? Ext.clone(me.dockedItems) : [];
-
-
-		if (me.usePagingToolbar) {
-			/*            dockedItems.push({
-			 xtype: 'kpmg_pagingtoolbar',
-			 dock: 'bottom'
-			 });*/
-		}
-
 		return dockedItems;
 
 	}
