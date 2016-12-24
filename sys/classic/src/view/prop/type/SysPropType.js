@@ -40,18 +40,11 @@ Ext.define('SysApp.view.prop.type.SysPropType', {
 				xtype: 'sys-prop-type-dtl-grid',
 				title : '필드속성',
 				region: 'center',
-				flex: 1,
-				listeners : {
-					containermouseout  : 'onMouseOut',
-					scope : me.getController()
-				}
+				flex: 1
 			}]
 
 		});
-
 		me.callParent(arguments);
-
-
 	}
 
 });

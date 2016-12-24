@@ -13,27 +13,34 @@ Ext.define('SysApp.view.prop.type.sysproptype.west.south.locale.SysPropTypeForm'
         fieldLabel : 'Class 명',
         name : 'CLAZZ_NM'
     },{
+        xtype : 'textfield',
+        fieldLabel : 'Label 변경함수',
+        name : 'CHANGE_FUNC'
+    },{
         xtype: 'pmhtech-radio-base',
         fieldLabel: '사용유무',
-        name: 'USE_YN',
         radioItems: [{
             xtype: 'radio',
             inputValue: 'Y',
             name: 'USE_YN',
+            checked : true,
             boxLabel: '사용'
         }, {
             xtype: 'radio',
             inputValue: 'N',
             name: 'USE_YN',
             boxLabel: '미사용'
-        }],
+        }]
     }, {
         xtype : 'textfield',
-        fieldLabel : '사용유무',
+        hidden: true,
         name : 'PROPS'
     },{
         xtype : 'numberfield',
         fieldLabel : '정렬순서',
         name : 'SORT'
-    }]
+    }],listeners : {
+        InitMode : 'onInitMode',
+        UpdateMode : 'onUpdateMode'
+    }
 });
