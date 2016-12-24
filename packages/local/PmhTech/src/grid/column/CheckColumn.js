@@ -1,6 +1,6 @@
-Ext.define('KPMG.grid.column.Check', {
+Ext.define('PmhTech.grid.column.CheckColumn', {
     extend: 'Ext.grid.column.CheckColumn',
-    alias: 'widget.kpmg_checkcolumn',
+    alias: 'widget.pmh-checkcolumn',
     text: '&#160;',
     sortable: false,
     draggable: false,

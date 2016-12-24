@@ -8,9 +8,15 @@
 		var me = this;
 		me.form = form;
 		me.form.trackResetOnLoad = true;
+
 		me.basicForm = form.getForm();
+		me.basicForm.trackResetOnLoad = true;
+
 		me.basicForm.forceReset = Ext.Function.bind(me.forceReset, me);
+		me.form.forceReset = Ext.Function.bind(me.forceReset, me);
+
 		me.basicForm.getOriginalValues = Ext.Function.bind(me.getOriginalValues, me);
+		me.form.getOriginalValues = Ext.Function.bind(me.getOriginalValues, me);
 	},
 	/**
 	 * @public
@@ -28,7 +34,6 @@
 	 */
 	forceReset : function(){
 
-
 		var me = this.basicForm;
 		var valueObject = me.getValues();
 		var fields = me.getFields().items;
@@ -38,8 +43,6 @@
 			valueObject[fieldName]=field.oriValue;
 		}
 		me.setValues(valueObject);
-		me.reset();
-
 	},
 	/**
 	 * @public
