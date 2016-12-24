@@ -1,7 +1,8 @@
 
-Ext.define('PmhTech.plugin.grid.ExcelEditor', {
+Ext.define('PmhTech.plugin.grid.ExcelEditorPlugin', {
 	extend: 'Ext.grid.plugin.CellEditing',
 	alias: 'plugin.pmh-grid-excel-editor',
+	clicksToEdit : 1,
 	onEditorKey: function (field, e) {
 		var k = e.getKey(),
 			newCell, g = this.grid,

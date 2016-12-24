@@ -1,4 +1,4 @@
-Ext.define('PmhTech.plugin.form.GridValidator', {
+Ext.define('PmhTech.plugin.form.ValidatorPlugin', {
 	extend: 'PmhTech.plugin.AbstractValidator',
 	alias: 'plugin.pmh-grid-validator',
 	init: function (form) {

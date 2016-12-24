@@ -1,4 +1,4 @@
-Ext.define('PmhTech.plugin.CsvExporter', {
+Ext.define('PmhTech.plugin.CsvExporterPlugin', {
 	extend: 'Ext.AbstractPlugin',
 	alias: 'plugin.pmh-grid-csv-exporter',
 	init: function (grid) {

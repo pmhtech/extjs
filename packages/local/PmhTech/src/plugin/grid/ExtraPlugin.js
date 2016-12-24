@@ -1,10 +1,11 @@
-Ext.define('PmhTech.plugin.form.GridExtra', {
+Ext.define('PmhTech.plugin.grid.ExtraPlugin', {
 	extend: 'Ext.AbstractPlugin',
 	alias: 'plugin.pmh-grid-extra',
-	init: function (form) {
+	init: function (grid) {
 		var me = this;
 		me.grid = grid;
-		me.grid.getSubmitDataList = Ext.Function.bind(me.getSubmitDataList, me);
+		me.grid.getSubmitData = Ext.Function.bind(me.getSubmitData, me);
+		me.grid.getDataIndexes = Ext.Function.bind(me.getDataIndexes, me);
 	},
 
 
@@ -20,9 +21,18 @@ Ext.define('PmhTech.plugin.form.GridExtra', {
 		}
 		return listDataIndex;
 	},
-	getSubmitDataList : function(){
+	/*
+	* @params options : getIndex, InjectData
+	* @params Array, injection
+	*
+	*
+	* */
+	getSubmitData : function(options){
+
 		var grid = this.grid;
-		var listDataIndex = grid.getDataIndexes();
+		if(!Ext.isArray(options)){
+			listDataIndex = this.getDataIndexes();
+		}
 		var gridStore = grid.getStore();
 		var gridDatas = [];
 		for(var i=0;i<gridStore.getCount();i++){
@@ -33,6 +43,7 @@ Ext.define('PmhTech.plugin.form.GridExtra', {
 				var index =listDataIndex[j];
 				tempObj[index] = rec.get(index);
 			}
+
 			gridDatas.push(tempObj);
 		}
 		return gridDatas;

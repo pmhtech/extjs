@@ -4,15 +4,14 @@ Ext.define('SysApp.view.global.center.GlobalCenter', {
     layout: 'fit',
     items: [{
         xtype: 'tabpanel',
+        bodyStyle : 'background-color:white',
         itemId : 'menu-tabpanel',
+        border : '1px',
         defaults: {
             bodyPadding: 0,
             scrollable: true,
             closable: true,
-            border: false,
-            plugins : [
-
-            ]
+            border: false
         }
     }]
 });
