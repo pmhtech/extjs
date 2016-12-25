@@ -33,7 +33,7 @@ Ext.define('SysApp.view.prop.page.sysproppage.center.locale.SysPropPageLocale',{
             {text : '정렬순서'       , dataIndex :'SORT'}
         ],
         listeners : {
-            storeUpdate : 'onUpdateMaster'
+            storeUpdate : 'onUpdateStore'
         }
     },{
         xtype : 'propertygrid',

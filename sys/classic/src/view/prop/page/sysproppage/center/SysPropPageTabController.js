@@ -47,7 +47,7 @@ Ext.define('SysApp.view.prop.page.sysproppage.center.SysPropPageTabController', 
 
 
 
-        var props = this.getView().query('pmh-grid-base [dataIndex=PROP_TYPE]');
+        var props = this.getView().query('pmh-grid-base [dataIndex=DOM_TYPE]');
 
         for(var i=0;i<props.length;i++){
             var PROP_TYPE = props[i];

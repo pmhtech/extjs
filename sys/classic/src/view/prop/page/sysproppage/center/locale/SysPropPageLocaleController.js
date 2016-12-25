@@ -11,6 +11,7 @@ Ext.define('SysApp.view.prop.page.sysproppage.center.locale.SysPropPageLocaleCon
         var source = Ext.decode(PROPS);
         var tempObj = {};
 
+        debugger;
         for(var i=0;i<source.length;i++){
             var data = source[i];
             tempObj[data.KEY] = data.DEFAULT_VALUE;
@@ -22,9 +23,10 @@ Ext.define('SysApp.view.prop.page.sysproppage.center.locale.SysPropPageLocaleCon
 
     },
 
-    onUpdateMaster : function(thisStore , record , operation , modifiedFieldNames , details){
+    onUpdateStore : function(thisStore , record , operation , modifiedFieldNames , details){
 
 
+        var tempObj = {};
 
 
     }
