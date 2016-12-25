@@ -52,13 +52,12 @@ Ext.define('SysApp.view.prop.page.sysproppage.center.SysPropPageTabController', 
         for(var i=0;i<props.length;i++){
             var PROP_TYPE = props[i];
             PROP_TYPE.getEditor().getStore().loadRawData(resObj);
-            debugger;
         }
     },
 
     onBtnAdd : function(button){
         var me = this.getView();
-        var grids = me.query('#fieldProperty');
+        var grids = me.query('#sysPropPageLocale');
 
         for(var i=0;i<grids.length;i++){
 
