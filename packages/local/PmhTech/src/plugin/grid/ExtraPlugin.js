@@ -32,7 +32,7 @@ Ext.define('PmhTech.plugin.grid.ExtraPlugin', {
 	getRowNumberer : function(){
 		var me = this;
 		var grid = me.grid;
-		var columns = grid._columns;
+		var columns = Ext.clone(grid._columns);
 		if (Ext.isNumber(me.rowNumberer)) {
 			if (Ext.isArray(columns)) {
 				columns.unshift({xtype: 'rownumberer', text: '#', width: me.rowNumberer});

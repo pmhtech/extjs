@@ -12,8 +12,8 @@ Ext.define('PmhTech.grid.Base', {
 	initComponent: function () {
 		var me = this;
 
-		var columns = Ext.clone(me.columns);
-		me._columns=columns;
+		var columns = me.columns;
+		me._columns=Ext.clone(columns);
 		me.plugins.push({ptype: 'pmh-grid-extra'});
 		me.plugins.push({ptype: 'bufferedrenderer'});
 
