@@ -16,17 +16,28 @@ Ext.define('SysApp.view.prop.page.sysproppage.center.locale.SysPropPageLocale',{
             ptype : 'pmh-grid-excel-editor'
         }],
         columns : [
-            {text : '필드명'        , dataIndex :'COMP_NAME',editor : {xtype : 'textfield'}},
-            {text : 'Dom 주소'     , dataIndex : 'DOM_QRY',editor : {xtype : 'textfield'}},
-            {text : '필드타입'       , dataIndex :'PROP_TYPE',editor : {xtype : 'textfield'}},
-            {text : '필드타입'       , dataIndex :'PROP_VALUE'}
-
+            {text : '필드명'        , dataIndex :'DOM_LABEL'   ,editor : {xtype : 'textfield'}},
+            {text : 'Dom 주소'     , dataIndex : 'DOM_QRY'     ,editor : {xtype : 'textfield'}},
+            {text : '필드타입'       , dataIndex :'DOM_TYPE'   ,editor : {
+                xtype : 'pmh-combo',
+                storeProps : {
+                  rootProperty : 'sysPropTypes'
+                },
+                displayField : 'XTYPE_NM',
+                valueField : 'XTYPE_NM',
+                listeners : {
+                    change : 'onChangePROP_TYPE'
+                }
+            }},
+            {text : '필드타입'       , dataIndex :'DOM_PROPS'},
+            {text : '정렬순서'       , dataIndex :'SORT'}
         ],
         listeners : {
             storeUpdate : 'onUpdateMaster'
         }
     },{
         xtype : 'propertygrid',
+        flex : 1,
         title : '기타속성값',
         itemId : 'fieldPropertyDtl'
     }]

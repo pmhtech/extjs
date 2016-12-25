@@ -24,6 +24,7 @@ Ext.define('SysApp.view.prop.type.SysPropType', {
 					xtype : 'sys-prop-type-grid',
 					title : '필드항목',
 					region : 'north'
+
 				},{
 					xtype : 'sys-prop-type-form',
 					title : '필드상세',

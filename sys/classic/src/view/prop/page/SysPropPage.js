@@ -16,6 +16,10 @@ Ext.define('SysApp.view.prop.page.SysPropPage', {
 					btnItems: ['search'],
 					scope : me.getController()
 				}],
+				listeners : {
+					select : 'onSelectSysMenuTree',
+					scope : me.getController()
+				},
 				title: '메뉴정보',
 				region: 'north',
 				height: 250

@@ -34,6 +34,26 @@ Ext.define('SysApp.view.prop.page.sysproppage.center.SysPropPageTabController', 
         }
         comp.add(items);
         comp.setActiveTab(0);
+
+        PmhTech.Ajax.request({
+            url : '/sys/prop/types',
+            method : 'GET',
+            success : this.onLoadSysPropType,
+            scope : this
+        });
+
+    },
+    onLoadSysPropType : function(resObj){
+
+
+
+        var props = this.getView().query('pmh-grid-base [dataIndex=PROP_TYPE]');
+
+        for(var i=0;i<props.length;i++){
+            var PROP_TYPE = props[i];
+            PROP_TYPE.getEditor().getStore().loadRawData(resObj);
+            debugger;
+        }
     },
 
     onBtnAdd : function(button){
