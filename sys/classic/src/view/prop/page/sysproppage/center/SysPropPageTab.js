@@ -21,6 +21,8 @@ Ext.define('SysApp.view.prop.page.sysproppage.center.SysPropPageTab',{
     },
 
     listeners : {
-        afterrender :'onAfterRender'
+        afterrender :'onAfterRender',
+        InitMode : 'onInitMode',
+        UpdateMode : 'onUpdateMode'
     }
 });

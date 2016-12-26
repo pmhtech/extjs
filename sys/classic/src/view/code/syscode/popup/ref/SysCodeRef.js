@@ -6,6 +6,9 @@ Ext.define('SysApp.view.code.syscode.popup.ref.SysCodePopupRef', {
     items: [{
         xtype: 'pmh-simple-grid',
         frame: true,
+        plugins : [{
+           ptype : 'pmh-grid-excel-editor'
+        }],
         excelMode: true,
         rowNumberer: false,
         height : 155,
@@ -52,11 +55,12 @@ Ext.define('SysApp.view.code.syscode.popup.ref.SysCodePopupRef', {
             },
             storeUpdate: function (thisStore, record, operation, modifiedFieldNames, details) {
 
-                if (modifiedFieldNames[0] == 'REF_TYPE') {
-                    if (record.get('REF_TYPE') != '20') {
-                        record.set('REF_CD', undefined);
+                if(operation=='edit'){
+                    if (modifiedFieldNames[0] == 'REF_TYPE') {
+                        if (record.get('REF_TYPE') != '20') {
+                            record.set('REF_CD', undefined);
+                        }
                     }
-                    thisStore.commitChanges();
                 }
 
 
