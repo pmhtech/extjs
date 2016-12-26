@@ -1,6 +1,6 @@
-Ext.define('PmhTech.grid.Base', {
+Ext.define('PmhTech.grid.SimpleGrid', {
 	extend: 'Ext.grid.Panel',
-	alias: ['widget.pmhtech-grid-base', 'widget.pmh-grid-base'],
+	alias: ['widget.pmh-simple-grid'],
 	storeProps: {
 		url: null,
 		fields: [],

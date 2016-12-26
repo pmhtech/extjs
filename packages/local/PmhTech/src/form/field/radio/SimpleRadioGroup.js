@@ -1,7 +1,8 @@
-Ext.define('PmhTech.form.field.check.Base', {
-    extend: 'Ext.container.Container',
-    alias: 'widget.pmhtech-check-base',
-    height : 50,
+Ext.define('PmhTech.form.field.radio.SimpleRadioGroup', {
+    extend: 'Ext.form.FieldContainer',
+    alias: 'widget.pmh-radio-group',
+    height : 24,
+    onChangeRadioGroup : Ext.emptyFn,
     initComponent: function () {
         var me = this;
 
@@ -20,16 +21,16 @@ Ext.define('PmhTech.form.field.check.Base', {
         Ext.apply(me, {
             items: [{
                 xtype: 'fieldset',
-                title: title,
-
+                height : 24,
                 defaults: {
                     anchor: '100%'
                 },
                 items: [{
-                    xtype: 'checkboxgroup',
-                    flex : 1,
-                    columns : me.columns,
-                    items: me.checkItems
+                    xtype: 'radiogroup',
+                    listeners : {
+                      change : me.onChangeRadioGroup
+                    },
+                    items: me.radioItems
                 }]
             }]
         });

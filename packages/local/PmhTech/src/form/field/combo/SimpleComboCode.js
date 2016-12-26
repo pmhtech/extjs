@@ -1,6 +1,6 @@
-Ext.define('PmhTech.form.field.combo.Code',{
+Ext.define('PmhTech.form.field.combo.SimpleComboCode',{
     extend : 'Ext.form.field.ComboBox',
-    alias: ['widget.pmh-combobox-code', 'widget.pmh-combo-code'],
+    alias: ['widget.pmh-simple-combo-code', 'widget.pmh-combo-code'],
     sysCodeName : null,
     displayField : 'CODE_NM',
     valueField : 'CODE',

@@ -6,6 +6,7 @@ Ext.define('PmhTech.form.field.NumericField', {
 	thousandSeparator: ',',
 	alwaysDisplayDecimals: false,
 	fieldStyle: 'text-align: right;',
+
 	initComponent: function () {
 		if (this.useThousandSeparator && this.decimalSeparator == ',' && this.thousandSeparator == ',')
 			this.thousandSeparator = '.';

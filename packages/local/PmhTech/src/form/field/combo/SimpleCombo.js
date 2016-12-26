@@ -1,6 +1,6 @@
-Ext.define('PmhTech.form.field.combo.Base',{
+Ext.define('PmhTech.form.field.combo.SimpleComboBox',{
     extend : 'Ext.form.field.ComboBox',
-    alias: ['widget.pmh-combobox', 'widget.pmh-combo'],
+    alias: ['widget.pmh-combo', 'widget.pmh-simple-combo'],
     isShowCode : false,
     storeProps: {
         url: null,
