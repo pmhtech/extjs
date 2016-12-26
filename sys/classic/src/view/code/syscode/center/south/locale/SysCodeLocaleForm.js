@@ -83,7 +83,7 @@ Ext.define('SysApp.view.code.syscode.center.south.locale.SysCodeLocaleForm',{
         height: 100
 
     }, {
-        xtype: 'pmhtech-radio-base',
+        xtype: 'pmh-radio-group',
         fieldLabel: '사용유무',
         name: 'USE_YN',
         radioItems: [{

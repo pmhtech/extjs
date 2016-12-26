@@ -42,7 +42,6 @@ Ext.define('SysApp.view.prop.page.sysproppage.center.locale.SysPropPageLocaleCon
 	},
 	onChangePropertyGrid: function (DOM_TYPE) {
 
-		debugger;
 		var field =this.getView().down('#sysPropPageLocale [dataIndex=DOM_TYPE]').getEditor();
 
 		var findIdx = field.getStore().find('XTYPE_NM', DOM_TYPE);

@@ -7,7 +7,7 @@ Ext.define('SysApp.view.menu.sysmenu.code.SysMenuCode', {
 		align: 'stretch'
 	},
 	items : [{
-		xtype : 'pmhtech-grid-base',
+		xtype : 'pmh-simple-grid',
 		itemId : 'sysMenuCode',
 		storeProps :{
 			rootProperty : 'sysMenuCodes'
@@ -46,7 +46,7 @@ Ext.define('SysApp.view.menu.sysmenu.code.SysMenuCode', {
 		]
 
 	},{
-		xtype : 'pmhtech-grid-base',
+		xtype : 'pmh-simple-grid',
 		itemId : 'sysCodeGroup',
 		storeProps : {
 			rootProperty : 'sysCodeGroups'

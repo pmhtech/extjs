@@ -21,7 +21,8 @@ Ext.define('SysApp.view.code.syscode.west.SysCodeGroupGridController', {
         var params = {};
         var options = {
             mode : 'INSERT',
-            params : params
+            params : params,
+            callbackScope : this
         };
         PmhTech.Utils.showPopup('sys-code-popup',options);
 
@@ -38,7 +39,8 @@ Ext.define('SysApp.view.code.syscode.west.SysCodeGroupGridController', {
 
         var options = {
             mode : 'UPDATE',
-            params : record.data
+            params : record.data,
+            callbackScope : this
         };
         PmhTech.Utils.showPopup('sys-code-popup',options);
     }

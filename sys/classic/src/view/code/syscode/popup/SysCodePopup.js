@@ -1,5 +1,5 @@
 Ext.define('SysApp.view.code.syscode.popup.SysCodePopup', {
-    extend: 'PmhTech.window.Base',
+    extend: 'PmhTech.window.SingleToneWindow',
     alias: 'widget.sys-code-popup',
     controller: 'sys-code-popup',
     width: 600,

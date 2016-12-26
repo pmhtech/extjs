@@ -17,7 +17,7 @@ Ext.define('SysApp.view.prop.type.sysproptype.west.south.locale.SysPropTypeForm'
         fieldLabel : 'Label 변경함수',
         name : 'CHANGE_FUNC'
     },{
-        xtype: 'pmhtech-radio-base',
+        xtype: 'pmh-radio-group',
         fieldLabel: '사용유무',
         radioItems: [{
             xtype: 'radio',

@@ -1,6 +1,6 @@
 
 Ext.define('SysApp.view.code.syscode.center.north.SysCodeGrid',{
-    extend : 'PmhTech.grid.Base',
+    extend : 'PmhTech.grid.SimpleGrid',
     alias : 'widget.sys-code-grid',
     controller : 'sys-code-grid',
     storeProps : {

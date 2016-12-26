@@ -1,6 +1,6 @@
 
 Ext.define('SysApp.view.prop.type.sysproptype.center.SysPropTypeDtlGrid',{
-    extend: 'PmhTech.grid.Base',
+    extend: 'PmhTech.grid.SimpleGrid',
     alias : 'widget.sys-prop-type-dtl-grid',
     controller : 'sys-prop-type-dtl-grid',
     plugins:[

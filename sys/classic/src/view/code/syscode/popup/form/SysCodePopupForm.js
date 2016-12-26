@@ -39,7 +39,7 @@ Ext.define('SysApp.view.code.syscode.popup.form.SysCodePopupForm', {
             value: '0000000000',
             name: 'CODE'
         }, {
-            xtype: 'pmhtech-radio-base',
+            xtype: 'pmh-radio-group',
             fieldLabel: '사용유무',
             name: 'USE_YN',
             radioItems: [{

@@ -43,7 +43,7 @@ Ext.define('SysApp.view.role.sysrole.west.south.locale.SysRoleLocale', {
 				name : 'LOCALE_CD',
 				value : me.LOCALE_CD
 			},{
-				xtype: 'pmhtech-radio-base',
+				xtype: 'pmh-radio-group',
 				fieldLabel: '사용유무',
 				name: 'USE_YN',
 				radioItems: [{

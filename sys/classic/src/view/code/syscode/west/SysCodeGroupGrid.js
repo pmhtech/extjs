@@ -1,5 +1,5 @@
 Ext.define('SysApp.view.code.syscode.west.SysCodeGroupGrid',{
-    extend: 'PmhTech.grid.Base',
+    extend: 'PmhTech.grid.SimpleGrid',
     alias: 'widget.sys-code-group-grid',
     controller: 'sys-code-group-grid',
     height : '100%',

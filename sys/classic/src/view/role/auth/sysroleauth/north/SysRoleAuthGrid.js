@@ -1,5 +1,5 @@
 Ext.define('SysApp.view.role.auth.sysroleauth.north.SysRoleAuthGrid', {
-	extend: 'PmhTech.grid.Base',
+	extend: 'PmhTech.grid.SimpleGrid',
 	alias: 'widget.sys-role-auth-grid',
 	controller : 'sys-role-auth-grid',
 	dockedItems: [{

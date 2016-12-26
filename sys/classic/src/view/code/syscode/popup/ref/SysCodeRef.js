@@ -4,7 +4,7 @@ Ext.define('SysApp.view.code.syscode.popup.ref.SysCodePopupRef', {
     collapsible: true,
     title: '세부정보 설정',
     items: [{
-        xtype: 'pmhtech-grid-base',
+        xtype: 'pmh-simple-grid',
         frame: true,
         excelMode: true,
         rowNumberer: false,

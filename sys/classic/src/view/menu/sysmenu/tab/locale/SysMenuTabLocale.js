@@ -95,7 +95,7 @@ Ext.define('SysApp.view.menu.sysmenu.tab.locale.SysMenuTabLocale', {
 					change: 'onChangeNotify'
 				}
 			}, {
-				xtype: 'pmhtech-radio-base',
+				xtype: 'pmh-radio-group',
 				fieldLabel: '사용유무',
 				name: 'USE_YN',
 				radioItems: [{

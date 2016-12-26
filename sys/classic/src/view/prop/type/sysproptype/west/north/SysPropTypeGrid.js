@@ -1,6 +1,6 @@
 
 Ext.define('SysApp.view.prop.type.sysproptype.west.north.SysPropTypeGrid',{
-    extend: 'PmhTech.grid.Base',
+    extend: 'PmhTech.grid.SimpleGrid',
     alias : 'widget.sys-prop-type-grid',
     controller: 'sys-prop-type-grid',
 

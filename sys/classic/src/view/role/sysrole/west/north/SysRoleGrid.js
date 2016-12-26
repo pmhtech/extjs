@@ -1,5 +1,5 @@
 Ext.define('SysApp.view.role.sysrole.west.north.SysRoleGrid', {
-	extend: 'PmhTech.grid.Base',
+	extend: 'PmhTech.grid.SimpleGrid',
 	alias: 'widget.sys-role-grid',
 	controller: 'sys-role-grid',
 	storeProps: {
