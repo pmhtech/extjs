@@ -3,10 +3,7 @@ Ext.define('SysApp.view.prop.page.sysproppage.center.locale.SysPropPageLocale',{
     extend: 'Ext.panel.Panel',
     alias : 'widget.sys-prop-page-locale',
     controller: 'sys-prop-page-locale',
-    layout : {
-        type : 'hbox',
-        align : 'stretch'
-    },
+    layout : 'border',
 
     initComponent : function(){
         var me = this;
@@ -16,6 +13,9 @@ Ext.define('SysApp.view.prop.page.sysproppage.center.locale.SysPropPageLocale',{
             items : [{
                 xtype : 'pmh-simple-grid',
                 itemId : 'sysPropPageLocale',
+                region : 'center',
+                collapsible : true,
+                collapseDirection : 'left',
                 title : '컴포넌트 속성',
                 storeProps : {
                     fields :[
@@ -39,6 +39,7 @@ Ext.define('SysApp.view.prop.page.sysproppage.center.locale.SysPropPageLocale',{
                     ptype : 'pmh-grid-checker'
                 }],
                 columns : [
+                    {text : '라벨'        , dataIndex :'DOM_LABEL'   ,width: 100,editor : {xtype : 'textfield'}},
                     {text : '화면위젯'        , dataIndex :'MASTER_DOM'   ,width: 100,editor : {xtype : 'textfield'}},
                     {text : '상세DOM'        , dataIndex :'DETAIL_DOM'   ,width: 100,editor : {xtype : 'textfield'}},
                     {text : '필드타입'       , dataIndex :'DOM_TYPE', width: 100,
@@ -56,13 +57,12 @@ Ext.define('SysApp.view.prop.page.sysproppage.center.locale.SysPropPageLocale',{
                             xtype : 'textfield'
                         }
                     },
-                    {text : '라벨'        , dataIndex :'DOM_LABEL'   ,width: 100,editor : {xtype : 'textfield'}},
                     {text : '정렬순서'       , dataIndex :'SORT', width : 40,
                         editor : {
                             xtype : 'numberfield'
                         }
                     },
-                    {text : '필드타입'       , dataIndex :'DOM_PROPS'}
+                    {text : '필드타입'       , dataIndex :'DOM_PROPS' ,hidden : true}
 
                 ],
                 listeners : {
@@ -72,6 +72,8 @@ Ext.define('SysApp.view.prop.page.sysproppage.center.locale.SysPropPageLocale',{
                 }
             },{
                 xtype : 'propertygrid',
+                region : 'east',
+                collapsible : true,
                 flex : 1,
                 title : '기타속성값',
                 itemId : 'fieldPropertyDtl',

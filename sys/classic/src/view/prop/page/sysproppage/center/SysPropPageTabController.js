@@ -55,10 +55,7 @@ Ext.define('SysApp.view.prop.page.sysproppage.center.SysPropPageTabController', 
             }
             items.push({
                 xtype: 'sys-prop-page-locale',
-                layout : {
-                    type : 'hbox',
-                    align : 'stretch'
-                },
+                layout : 'border',
                 LOCALE_CD: locale,
                 title: title
             });

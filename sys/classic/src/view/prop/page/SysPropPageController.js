@@ -72,6 +72,14 @@ Ext.define('SysApp.view.prop.page.SysPropPageController', {
 
     onSelectSysMenuTree:function(selmodel,record,index){
 
+
+        var sysCodeLocales= this.getView().query('sys-prop-page-locale');
+
+        for(var i=0;i<sysCodeLocales.length;i++){
+            sysCodeLocales[i].fireEventArgs('InitMode');
+        }
+
+
         var SYSTEM = record.data.SYSTEM;
         var SHORT_NM = record.data.SHORT_NM;
 

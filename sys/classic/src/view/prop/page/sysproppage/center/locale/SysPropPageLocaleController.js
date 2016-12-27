@@ -20,7 +20,9 @@ Ext.define('SysApp.view.prop.page.sysproppage.center.locale.SysPropPageLocaleCon
 		var dataObj = this.getDOM_PROPS(rec);
 
 		if(dataObj!==false){
-			Ext.applyIf(dataObj.source,source);
+
+			var template = Ext.decode(dataObj.source);
+			dataObj.source = Ext.encode(Ext.applyIf(source,template));
 			this.setPropertyGrid(rec,dataObj);
 		}
 		for(var i=0;i<grids.length;i++){
