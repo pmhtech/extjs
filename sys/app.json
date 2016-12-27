@@ -22,6 +22,7 @@
      */
     "classpath": [
         "app",
+        "app/src/PmhTech",
         "${toolkit.name}/src"
     ],
 
@@ -33,7 +34,7 @@
      * in the "override" property is also included.
      */
     "overrides": [
-        "overrides",
+        "app/src/PmhTech/override",
         "${toolkit.name}/overrides"
     ],
 
@@ -55,7 +56,6 @@
      *      ]
      */
     "requires": [
-        "PmhTech",
         "font-awesome",
         "ext-ux"
 

@@ -7,6 +7,9 @@ Ext.application({
     name: 'SysApp',
     extend: 'Ext.app.Application',
     models : ['SysApp.model.SysMenu'],
+    paths : {
+        'PmhTech' : './app/src/PmhTech'
+    },
     controllers: [
         'SysApp.controller.menu.MenuController'
     ],
