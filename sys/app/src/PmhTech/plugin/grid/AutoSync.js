@@ -1,4 +1,11 @@
-Ext.define('PmhTech.plugin.AutoSyncPlugin', {
+/**
+ *
+ *
+ *
+ *
+ *
+ */
+Ext.define('PmhTech.plugin.AutoSync', {
 	extend: 'Ext.AbstractPlugin',
 	alias: 'plugin.pmh-grid-autosync',
 	init: function (grid) {

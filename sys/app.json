@@ -34,8 +34,7 @@
      * in the "override" property is also included.
      */
     "overrides": [
-        "app/src/PmhTech/override",
-        "${toolkit.name}/overrides"
+        "app/src/PmhTech/override"
     ],
 
     /**

@@ -1,4 +1,11 @@
-Ext.define('PmhTech.plugin.form.FormValidator', {
+/**
+ *
+ *
+ *  Form Validation으로 Form상에서 발생된 에러메시지들을 가져온다.
+ *
+ *
+ */
+Ext.define('PmhTech.plugin.form.Validator', {
 	extend: 'PmhTech.plugin.AbstractValidator',
 	alias: 'plugin.pmh-form-validator',
 	init: function (form) {
@@ -6,12 +13,13 @@ Ext.define('PmhTech.plugin.form.FormValidator', {
 		me.form = form;
 		me.basicForm = form.getForm();
 		me.basicForm.isValidForm = Ext.Function.bind(me.isValidForm, me);
+		me.form.isValidForm = Ext.Function.bind(me.isValidForm, me);
 	},
 	/**
-	 * @public
-	 * Form Validation
-	 * @param {Ext.form.Panel}
-	 * @return {boolean} 오류 발생시 false 없으면 true
+	 *
+	 * 오류발생시 에러를 출력한다
+	 *
+	 * @return {Boolean} 오류 발생시 false 없으면 true
 	 *
 	 */
 	isValidForm: function() {

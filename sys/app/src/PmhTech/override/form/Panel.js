@@ -1,3 +1,6 @@
+/**
+ *
+ */
 Ext.define('Samjong.override.form.Panel', {
     override: 'Ext.form.Panel',
 	plugins : [{

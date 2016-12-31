@@ -1,7 +1,8 @@
+/**
+ *
+ */
 Ext.define('PmhTech.override.form.field.vtype.IpAddress',{
    override : 'Ext.form.field.VTypes',
-
-
 
     /**
      * IP주소
@@ -10,7 +11,7 @@ Ext.define('PmhTech.override.form.field.vtype.IpAddress',{
      *
      * @param value
      * @param field
-     * @returns {boolean}
+     * @returns {Boolean}
      */
     ipAddress: function (value, field) {
         ipAddressMask = /[\d\.]/i;
@@ -27,7 +28,7 @@ Ext.define('PmhTech.override.form.field.vtype.IpAddress',{
      *
      * @param value
      * @param field
-     * @returns {boolean}
+     * @returns {Boolean}
      */
     netIpAddress: function (value, field) {
         return /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/.test(v);

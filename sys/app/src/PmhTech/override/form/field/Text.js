@@ -1,3 +1,6 @@
+/**
+ *
+ */
 Ext.define('PmhTech.override.form.field.Text', {
     override: 'Ext.form.field.Text',
     initComponent: function () {

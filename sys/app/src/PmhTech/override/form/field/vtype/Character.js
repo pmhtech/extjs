@@ -1,13 +1,14 @@
+/**
+ *
+ */
 Ext.define('PmhTech.override.form.field.vtype.Character',{
    override : 'Ext.form.field.VTypes',
-
-
     /**
      *  코드용 - 숫자,영어 대문자, - 만 입력가능
      *  vtype : engOnly
      * @param value
      * @param field
-     * @returns {boolean}
+     * @returns {Boolean}
      */
     codeOnly: function (value, field) {
         return /^[0-9|A-Z]+$/.test(value);
@@ -20,7 +21,7 @@ Ext.define('PmhTech.override.form.field.vtype.Character',{
      *  vtype : engOnly
      * @param value
      * @param field
-     * @returns {boolean}
+     * @returns {Boolean}
      */
     engOnly: function (value, field) {
         return /^[a-z|A-Z]+$/.test(value);
@@ -32,7 +33,7 @@ Ext.define('PmhTech.override.form.field.vtype.Character',{
      *  vtype : korOnly
      * @param value
      * @param field
-     * @returns {boolean}
+     * @returns {Boolean}
      */
     korOnly: function (value, field) {
         return true;/^[a-z|A-Z]+$/.test(value);
@@ -44,7 +45,7 @@ Ext.define('PmhTech.override.form.field.vtype.Character',{
      *  vtype : engKorNumberSpaceOnly
      * @param value
      * @param field
-     * @returns {boolean}
+     * @returns {Boolean}
      */
     engKorNumberSpaceOnly: function (value, field) {
         return /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9\ ]+$/.test(value);

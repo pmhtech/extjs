@@ -2,7 +2,7 @@
  *
  * TreePanel에서 Checkbox 자동체크를 하는 플러그인
  *
- * @example
+ * 	   @example
  *     Ext.create('Ext.tree.Panel,{
  * 		plugins: [{
  *			ptype : 'pmh-treechecker',
@@ -18,8 +18,8 @@
  *				text: 'ALL',
  *				id: 'root',
  *				expanded: true
- *		}
- *		}
+ *		    }
+ *		 }
  *	   });
  *
  *
@@ -32,7 +32,7 @@ Ext.define('PmhTech.plugin.TreeChecker', {
 
 	/***
 	 * @cfg {String} dataIndex
-	 * CheckColumn의 dataIndex를 지정 , 미지정 또는 checked일경우는 Tree의 기본 checked 필드 사
+	 * CheckColumn의 dataIndex를 지정 , 미지정 또는 checked일경우는 Tree의 기본 checked 필드 사용
 	 */
 	dataIndex: 'checked',
 	/***

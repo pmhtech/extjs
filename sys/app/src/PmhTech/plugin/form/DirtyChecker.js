@@ -1,7 +1,11 @@
-/*
-*
-*
-*/Ext.define('PmhTech.plugin.form.DirtyCheckerPlugin', {
+/**
+ *
+ * trackResetOnLoad 를 활성화시켜 loadData 또는 setValues할때 Original값을 유지시키도록 하는 함수
+ * 최초 렌더링되었을때 값을 돌려주는 함수가 없으므로 forceReset을 구현하였습니다.
+ *
+ *
+ */
+Ext.define('PmhTech.plugin.form.DirtyCheckerPlugin', {
 	extend: 'Ext.AbstractPlugin',
 	alias: 'plugin.pmh-form-dirtychecker',
 	init: function (form) {
@@ -19,17 +23,9 @@
 		me.form.getOriginalValues = Ext.Function.bind(me.getOriginalValues, me);
 	},
 	/**
-	 * @public
-	 * Form Validation
+	 * 데이터를 입력모드로 전환시킴
 	 * @param {Ext.form.Panel}
-	 * @return {boolean} 오류 발생시 false 없으면 true
-	 *
-	 */
-	/**
-	 * @public
-	 * Form Validation
-	 * @param {Ext.form.Panel}
-	 * @return {boolean} 오류 발생시 false 없으면 true
+	 * @return {Boolean} 오류 발생시 false 없으면 true
 	 *
 	 */
 	forceReset : function(){
@@ -45,10 +41,8 @@
 		me.setValues(valueObject);
 	},
 	/**
-	 * @public
-	 * Form Validation
-	 * @param {Ext.form.Panel}
-	 * @return {boolean} 오류 발생시 false 없으면 true
+	 * 변경되기전 Original값을 가져온다
+	 * @return {Object} 변경되기전값을 리턴한다
 	 *
 	 */
 	getOriginalValues: function(){

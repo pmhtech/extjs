@@ -1,3 +1,6 @@
+/**
+ *
+ */
 Ext.define('PmhTech.override.grid.column.Column', {
 	override: 'Ext.grid.column.Column',
 	style: 'text-align:center',

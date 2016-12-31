@@ -1,17 +1,24 @@
+/**
+ *
+ *
+ *
+ *
+ *
+ */
 Ext.define('PmhTech.plugin.TreeFilter', {
 	extend: 'Ext.AbstractPlugin'
 	, alias: 'plugin.pmh-treefilter'
 	/**
-	 * @cfg {String} [displayField=text]
+	 * @cfg {Boolean}
 	 * The field inside the model that will be used as the node's text.
 	 */
-	, collapseOnClear: true                                             // collapse all nodes when clearing/resetting the filter
+	, collapseOnClear: true
 
 	/**
-	 * @cfg {String} [displayField=text]
-	 * The field inside the model that will be used as the node's text.
+	 * @cfg {Boolean} [displayField=text]
+	 * 필터를 시켰을때 상위 Node를 표시하는지 유무
 	 */
-	, allowParentFolders: false                                         // allow nodes not designated as 'leaf' (and their child items) to  be matched by the filter
+	, allowParentFolders: false
 
 	, init: function (tree) {
 		var me = this;
@@ -21,7 +28,10 @@ Ext.define('PmhTech.plugin.TreeFilter', {
 		tree.filterBy = Ext.Function.bind(me.filterBy, me);
 		tree.clearFilter = Ext.Function.bind(me.clearFilter, me);
 	}
-
+	/**
+	 * @cfg {Boolean} [displayField=text]
+	 * 필터를 시켰을때 상위 Node를 표시하는지 유무
+	 */
 	, filterBy : function(filterFunc){
 		var me = this
 			, tree = me.tree

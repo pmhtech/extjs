@@ -1,4 +1,11 @@
-Ext.define('PmhTech.plugin.CsvExporterPlugin', {
+/**
+ *
+ *
+ *
+ *
+ *
+ */
+Ext.define('PmhTech.plugin.CsvExporter', {
 	extend: 'Ext.AbstractPlugin',
 	alias: 'plugin.pmh-grid-csv-exporter',
 	init: function (grid) {
@@ -8,7 +15,7 @@ Ext.define('PmhTech.plugin.CsvExporterPlugin', {
 	},
 
 	/**
-	 * @public
+
 	 * @param {String} downloadFileName : 다운로드명
 	 */
 	exportCsvFile: function(downloadFileName){

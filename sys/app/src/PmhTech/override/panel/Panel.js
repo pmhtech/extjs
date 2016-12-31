@@ -1,3 +1,6 @@
+/**
+ *
+ */
 Ext.define('PmhTech.override.panel.Panel', {
     override: 'Ext.panel.Panel',
 

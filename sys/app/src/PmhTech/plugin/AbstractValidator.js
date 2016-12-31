@@ -1,19 +1,19 @@
+/**
+ *
+ *
+ * Validator Plugin 함수
+ *
+ *
+ */
 Ext.define('PmhTech.plugin.AbstractValidator', {
 	extend: 'Ext.AbstractPlugin',
 	/**
+	 *  Form Field상의 에러메시지를 전부 가져온다.
+	 *
 	 * @private
-	 * @param {Array} Ext.form.field.Base
-	 * @return {Object} Prototype으로 리턴합니다. obj.errorField, obj.errorMessage
+	 * @param {Array} arrField Ext.form.field.Base를 상속받은 객체들이 들어와야만 합니다
+	 * @return {Object} 에러가 없다면 null을 리턴 Prototype으로 리턴합니다. obj.errorField, obj.errorMessage 만약에
 	 *
-	 *  사용법은 다음과 같습니다.
-	 *  아래코드 사용시 column내부의 editor들의 Validation을 가져오고 오류 발생시 가장 첫번째 editor로 focus됩니다.
-	 *
-	 *	rowEditPlugin.addListener('validateedit', function(editor, context, eOpts) {
-         *
-         *		if(!PmhTech.util.ValidateUtil.isValidGridEditor(this)){
-         *  		return false;
-         * 		}
-         *	});
 	 */
 	getFieldsErrorMessage : function(arrField){
 		var returnObj = {

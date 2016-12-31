@@ -1,12 +1,23 @@
-Ext.define('PmhTech.plugin.grid.ExtraPlugin', {
+/**
+ *
+ *
+ *
+ *
+ *
+ */
+Ext.define('PmhTech.plugin.grid.Extra', {
 	extend: 'Ext.AbstractPlugin',
 	alias: 'plugin.pmh-grid-extra',
+	/***
+	 * @cfg {Number|Boolean} rowNumberer
+	 * RowNumber를 자동으로 넣어준다 만일 0 또는 false입력시 RowNumberer를 숨겨준다.
+	 *
+	 */
 	rowNumberer : 38,
 	init: function (grid) {
 		var me = this;
 		me.grid = grid;
 		me.grid.getSubmitData = Ext.Function.bind(me.getSubmitData, me);
-		me.grid.getDataIndexes = Ext.Function.bind(me.getDataIndexes, me);
 		me.grid.getHttpMethod = Ext.Function.bind(me.getHttpMethod, me);
 
 		var columns = me.getRowNumberer();
@@ -60,9 +71,6 @@ Ext.define('PmhTech.plugin.grid.ExtraPlugin', {
 		var gridStore = grid.getStore();
 		var gridDatas = [];
 
-		if(Ext.isEmpty(injectDatas)){
-			injectDatas=[];
-		}
 
 		for (var i = 0; i < gridStore.getCount(); i++) {
 			var rec = gridStore.getAt(i);
@@ -80,10 +88,10 @@ Ext.define('PmhTech.plugin.grid.ExtraPlugin', {
 				});
 			}
 
-			for (var k= 0; k < injectDatas.length; k++) {
-				var injectData = injectDatas[k];
+			if(Ext.isObject(injectDatas)){
 				Ext.apply(tempObj,injectData);
 			}
+
 
 			gridDatas.push(tempObj);
 		}

@@ -1,4 +1,11 @@
-Ext.define('KPMG.toolbar.Paging', {
+/**
+ *
+ *
+ *
+ *
+ *
+ */
+Ext.define('PmhTech.toolbar.Paging', {
     extend: 'Ext.toolbar.Paging',
     alias: 'widget.pmh-pagingtoolbar',
 

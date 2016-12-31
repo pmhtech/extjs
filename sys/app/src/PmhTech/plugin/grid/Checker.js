@@ -1,4 +1,12 @@
-Ext.define('PmhTech.plugin.grid.CheckerPlugin', {
+/**
+ *
+ *
+ *   CheckBoxSelectionModel을 사용하면 Check 기능을 넣을수 있습니다.
+ *   하지만 Check와 Select를 따로 적용시킬때 사용되는 플러그인입니다.
+ *
+ *
+ */
+Ext.define('PmhTech.plugin.grid.Checker', {
 	extend: 'Ext.AbstractPlugin',
 	alias: 'plugin.pmh-grid-checker',
 	requires: [
@@ -17,6 +25,11 @@ Ext.define('PmhTech.plugin.grid.CheckerPlugin', {
 			me.setAutoCheckChange()
 		}
 	},
+	/**
+	 * @private
+	 * 값이 변경이 되면 자동으로 Check된다.
+	 *
+	 */
 	setAutoCheckChange : function(){
 		var me = this;
 		var grid = me.grid;
@@ -35,6 +48,11 @@ Ext.define('PmhTech.plugin.grid.CheckerPlugin', {
 		});
 	},
 
+	/*
+	 * 현재 Check된 Record들을 반환한다
+	 * @return {Array}  Ext.data.Model 의 구성됨
+	 *
+	 * */
 	getCheckedRecord: function () {
 		var me = this;
 		var store = this.grid.getStore();
@@ -49,33 +67,17 @@ Ext.define('PmhTech.plugin.grid.CheckerPlugin', {
 		return arr;
 	},
 
-	getDataIndexes: function () {
-		var grid = this.grid;
-		var gridColumns = grid.getColumns();
-		var listDataIndex = [];
-		for (var i = 0; i < gridColumns.length; i++) {
-			var dataIndex = gridColumns[i].dataIndex;
-			if (!Ext.isEmpty(dataIndex)) {
-				listDataIndex.push(dataIndex);
-			}
-		}
-		return listDataIndex;
-	},
 	/*
-	 * @params options : getIndex, InjectData
-	 * @params Array, injection
-	 *
+	 * @params {Array} listDataIndex  가져올 대상 DataIndex
+	 * @params {Object} injectDatas (optional) 각 요소별로 추가시킬요소
+	 * @return {Array} Check
 	 *
 	 * */
-	getCheckedSubmitData: function (listDataIndex,injectDatas) {
+	getCheckedSubmitData: function (listDataIndex,injectData) {
 
 		var grid = this.grid;
 		var gridStore = grid.getStore();
 		var gridDatas = [];
-
-		if(Ext.isEmpty(injectDatas)){
-			injectDatas=[];
-		}
 
 		for (var i = 0; i < gridStore.getCount(); i++) {
 			var rec = gridStore.getAt(i);
@@ -96,11 +98,9 @@ Ext.define('PmhTech.plugin.grid.CheckerPlugin', {
 				});
 			}
 
-			for (var k= 0; k < injectDatas.length; k++) {
-				var injectData = injectDatas[k];
+			if(Ext.isObject(injectData)){
 				Ext.apply(tempObj,injectData);
 			}
-
 			gridDatas.push(tempObj);
 		}
 		return gridDatas;

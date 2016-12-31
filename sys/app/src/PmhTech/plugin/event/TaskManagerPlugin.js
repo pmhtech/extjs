@@ -52,178 +52,177 @@
 
  */
 Ext.define('PmhTech.plugin.event.TaskManagerManager', {
+	singleton: true,
 
-    statics: {
 
-        /**
-         * @public
-         * StaticTask 초기화함수
-         * @param {Object} 사용할 StaticTask  task : null 형태로 저장
-         * @return {String} 해당 task의 종류
-         *
-         */
-        setStaticTask: function (staticTask) {
-            this.StaticTask = staticTask;
-        },
+	/**
+	 * @public
+	 * StaticTask 초기화함수
+	 * @param {Object} 사용할 StaticTask  task : null 형태로 저장
+	 * @return {String} 해당 task의 종류
+	 *
+	 */
+	setStaticTask: function (staticTask) {
+		this.StaticTask = staticTask;
+	},
 
-        /**
-         * @public
-         *  GlobalTask 초기화함수
-         * @param {Object} 사용할 StaticTask  task : null 형태로 저장
-         * @return {String} 해당 task의 종류
-         *
-         */
-        setGlobalTask: function (globalTask) {
-            this.GlobalTask = globalTask;
-        },
+	/**
+	 * @public
+	 *  GlobalTask 초기화함수
+	 * @param {Object} 사용할 StaticTask  task : null 형태로 저장
+	 * @return {String} 해당 task의 종류
+	 *
+	 */
+	setGlobalTask: function (globalTask) {
+		this.GlobalTask = globalTask;
+	},
 
-        initTask: function () {
+	initTask: function () {
 
-            if (Ext.isEmpty(this.StaticTask) && Ext.isEmpty(this.GlobalTask)) {
-                alert('Task가 생성되지 않았습니다');
-            }
-        },
+		if (Ext.isEmpty(this.StaticTask) && Ext.isEmpty(this.GlobalTask)) {
+			alert('Task가 생성되지 않았습니다');
+		}
+	},
 
-        /**
-         * @private
-         *  Task 타입 가져오기
-         * @param {String} taskName task 이름
-         * @return {String} 해당 task의 종류
-         *
-         */
-        getTaskType: function (taskName) {
-            if (this.StaticTask[taskName] === undefined && this.GlobalTask[taskName] === undefined) {
-                return null;
-            }
-            return this.StaticTask[taskName] === undefined ? 'GlobalTask' : 'StaticTask';
-        },
+	/**
+	 * @private
+	 *  Task 타입 가져오기
+	 * @param {String} taskName task 이름
+	 * @return {String} 해당 task의 종류
+	 *
+	 */
+	getTaskType: function (taskName) {
+		if (this.StaticTask[taskName] === undefined && this.GlobalTask[taskName] === undefined) {
+			return null;
+		}
+		return this.StaticTask[taskName] === undefined ? 'GlobalTask' : 'StaticTask';
+	},
 
-        /**
-         * @public
-         *  Task 생성
-         * @param {String} taskName Task 이름
-         * @param {String} taskFunction 생성 콜백 함수
-         * @param {String} scope 콜백 함수 scope
-         * @param {String} delay task 수행 주기
-         *
-         */
-        createTask: function (taskName, taskFunction, scope, delay) {
+	/**
+	 * @public
+	 *  Task 생성
+	 * @param {String} taskName Task 이름
+	 * @param {String} taskFunction 생성 콜백 함수
+	 * @param {String} scope 콜백 함수 scope
+	 * @param {String} delay task 수행 주기
+	 *
+	 */
+	createTask: function (taskName, taskFunction, scope, delay) {
 
-            if (this.StaticTask === undefined) {
-                this.initTask();
+		if (this.StaticTask === undefined) {
+			this.initTask();
 
-            }
-            var taskType = this.getTaskType(taskName);
-            if (Ext.isEmpty(taskType)) {
-                alert(taskName + '은 정의되지 않은 Task입니다.');
-                return;
-            } else if (this[taskType][taskName] !== null) {
-                var task = this[taskType][taskName];
-                Ext.util.TaskManager.stop(task);
-            }
+		}
+		var taskType = this.getTaskType(taskName);
+		if (Ext.isEmpty(taskType)) {
+			alert(taskName + '은 정의되지 않은 Task입니다.');
+			return;
+		} else if (this[taskType][taskName] !== null) {
+			var task = this[taskType][taskName];
+			Ext.util.TaskManager.stop(task);
+		}
 
-            var task = Ext.util.TaskManager.newTask({
-                run: taskFunction,
-                interval: Ext.isEmpty(delay) ? 5000 : delay,
-                scope: scope
-            });
-            console.log('CREATE TASK : ' + taskName);
-            this[taskType][taskName] = task;
-        }
-        ,
+		var task = Ext.util.TaskManager.newTask({
+			run     : taskFunction,
+			interval: Ext.isEmpty(delay) ? 5000 : delay,
+			scope   : scope
+		});
+		console.log('CREATE TASK : ' + taskName);
+		this[taskType][taskName] = task;
+	}
+	,
 
-        /**
-         * @public
-         *  Task 삭제
-         * @param {String} taskName Task 이름
-         *
-         */
-        removeTask: function (taskName) {
-            var taskType = this.getTaskType(taskName);
-            if (Ext.isEmpty(this[taskType][taskName])) {
-                this[taskType][taskName].stop();
-            }
-            this[taskType][taskName] = null;
-        }
-        ,
+	/**
+	 * @public
+	 *  Task 삭제
+	 * @param {String} taskName Task 이름
+	 *
+	 */
+	removeTask: function (taskName) {
+		var taskType = this.getTaskType(taskName);
+		if (Ext.isEmpty(this[taskType][taskName])) {
+			this[taskType][taskName].stop();
+		}
+		this[taskType][taskName] = null;
+	}
+	,
 
-        /**
-         * @public
-         *  Task 시작
-         * @param {String} taskName Task 이름
-         * @param {Boolean} 시작 여부
-         *
-         */
-        startTask: function (taskName) {
-            var taskType = this.getTaskType(taskName);
-            if (!Ext.isEmpty(this[taskType][taskName])) {
-                var task = this[taskType][taskName];
-                Ext.util.TaskManager.start(task);
-                console.log('TASK START : ' + taskName);
-                return true;
-            }
-            return false;
-        }
-        ,
+	/**
+	 * @public
+	 *  Task 시작
+	 * @param {String} taskName Task 이름
+	 * @param {Boolean} 시작 여부
+	 *
+	 */
+	startTask: function (taskName) {
+		var taskType = this.getTaskType(taskName);
+		if (!Ext.isEmpty(this[taskType][taskName])) {
+			var task = this[taskType][taskName];
+			Ext.util.TaskManager.start(task);
+			console.log('TASK START : ' + taskName);
+			return true;
+		}
+		return false;
+	}
+	,
 
-        /**
-         * @public
-         *  Task 멈춤
-         * @param {String} taskName Task 이름
-         * @param {Boolean} 시작 여부
-         *
-         */
-        stopTask: function (taskName) {
-            var taskType = this.getTaskType(taskName);
+	/**
+	 * @public
+	 *  Task 멈춤
+	 * @param {String} taskName Task 이름
+	 * @param {Boolean} 시작 여부
+	 *
+	 */
+	stopTask: function (taskName) {
+		var taskType = this.getTaskType(taskName);
 
-            if (!Ext.isEmpty(this[taskType][taskName])) {
-                var task = this[taskType][taskName];
-                Ext.util.TaskManager.stop(task);
-                console.log('TASK STOP : ' + taskName);
-                return true;
-            }
-            return false;
-        }
-        ,
+		if (!Ext.isEmpty(this[taskType][taskName])) {
+			var task = this[taskType][taskName];
+			Ext.util.TaskManager.stop(task);
+			console.log('TASK STOP : ' + taskName);
+			return true;
+		}
+		return false;
+	}
+	,
 
-        /**
-         * @public
-         * global task를 제외한 모든 Task 멈춤
-         */
-        stopAllTask: function () {
-            var me = this;
-            Ext.iterate(this.StaticTask, function (key, value) {
-                if (!Ext.isEmpty(value)) {
-                    me.stopTask(key);
-                }
-            });
-        }
-        ,
+	/**
+	 * @public
+	 * global task를 제외한 모든 Task 멈춤
+	 */
+	stopAllTask: function () {
+		var me = this;
+		Ext.iterate(this.StaticTask, function (key, value) {
+			if (!Ext.isEmpty(value)) {
+				me.stopTask(key);
+			}
+		});
+	}
+	,
 
-        /**
-         * @public
-         *  Task 등록
-         *  화면 이동시 실행/멈춤 관리가 병행된다
-         * @param {String} taskName Task 이름
-         * @param {String} taskFunction 생성 콜백 함수
-         * @param {String} scope 콜백 함수 scope
-         * @param {String} delay task 수행 주기
-         */
-        registerTask: function (taskName, taskFunction, scope, delay) {
-            var me = scope;
+	/**
+	 * @public
+	 *  Task 등록
+	 *  화면 이동시 실행/멈춤 관리가 병행된다
+	 * @param {String} taskName Task 이름
+	 * @param {String} taskFunction 생성 콜백 함수
+	 * @param {String} scope 콜백 함수 scope
+	 * @param {String} delay task 수행 주기
+	 */
+	registerTask: function (taskName, taskFunction, scope, delay) {
+		var me = scope;
 
-            var TaskUtil = this;
+		var TaskUtil = this;
 
-            TaskUtil.createTask(taskName, taskFunction, me, delay);
+		TaskUtil.createTask(taskName, taskFunction, me, delay);
 
-            if (this.getTaskType(taskName) == 'StaticTask') {
-                me.addListener('afterlayout', function (component) {
-                    TaskUtil.startTask(taskName);
-                });
-                me.addListener('deactivate', function (component) {
-                    TaskUtil.stopTask(taskName);
-                });
-            }
-        }
-    }
+		if (this.getTaskType(taskName) == 'StaticTask') {
+			me.addListener('afterlayout', function (component) {
+				TaskUtil.startTask(taskName);
+			});
+			me.addListener('deactivate', function (component) {
+				TaskUtil.stopTask(taskName);
+			});
+		}
+	}
 });

@@ -1,5 +1,11 @@
-
-Ext.define('PmhTech.plugin.grid.ExcelEditorPlugin', {
+/**
+ *
+ *
+ *
+ *
+ *
+ */
+Ext.define('PmhTech.plugin.grid.ExcelEditor', {
 	extend: 'Ext.grid.plugin.CellEditing',
 	alias: 'plugin.pmh-grid-excel-editor',
 	clicksToEdit : 1,

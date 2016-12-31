@@ -1,6 +1,8 @@
+/**
+ *
+ */
 Ext.define('PmhTech.override.form.field.Checkbox', {
     override: 'Ext.form.field.Checkbox',
-
     initComponent: function () {
         var me = this;
         me.callParent(arguments);

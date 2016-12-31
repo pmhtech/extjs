@@ -25,15 +25,10 @@ Ext.define('SysApp.controller.menu.MenuController', {
 				afterrender: this.createMainMenu
 			},
 			'centerTabPanel': {
-				tabchange: this.onGlobalCenterTabChange,
-				beforetabchange: this.onGlobalCenterBeforeTabChange
+				tabchange: this.onGlobalCenterTabChange
 			}
 		});
 
-
-	},
-
-	onGlobalCenterBeforeTabChange: function (comp, newcard, oldcard) {
 
 	},
 
@@ -49,11 +44,10 @@ Ext.define('SysApp.controller.menu.MenuController', {
 
 		var globalWest = this.getGlobalWest();
 
-		var accordions = globalWest.query('treepanel[collapsed=true]');
+		var accordions = globalWest.query('treepanel');
 
 
 		for (var i = 0; i < accordions.length; i++) {
-
 			accordions[i].getSelectionModel().deselectAll();
 		}
 

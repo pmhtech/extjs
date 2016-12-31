@@ -1,9 +1,6 @@
 Ext.define('PmhTech.override.form.field.Base', {
     override: 'Ext.form.field.Base',
-    //labelAlign : 'top',
     labelSeparator : '',
-    //labelStyle : 'font-size:12px;',
-    enableKeyEvents : true,
     initComponent: function () {
         var me = this;
         me.callParent(arguments);

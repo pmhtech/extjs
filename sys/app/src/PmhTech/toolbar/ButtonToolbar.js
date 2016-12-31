@@ -1,4 +1,11 @@
-Ext.define('KPMG.toolbar.ButtonToolbar', {
+/**
+ *
+ *
+ *
+ *
+ *
+ */
+Ext.define('PmhTech.toolbar.ButtonToolbar', {
     extend: 'Ext.toolbar.Toolbar',
     alias: 'widget.pmh-button-toolbar',
     layout : {

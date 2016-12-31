@@ -1,4 +1,11 @@
-Ext.define('PmhTech.plugin.form.ValidatorPlugin', {
+/**
+ *
+ *
+ *
+ *
+ *
+ */
+Ext.define('PmhTech.plugin.grid.Validator', {
 	extend: 'PmhTech.plugin.AbstractValidator',
 	alias: 'plugin.pmh-grid-validator',
 	init: function (form) {
@@ -8,11 +15,19 @@ Ext.define('PmhTech.plugin.form.ValidatorPlugin', {
 		me.basicForm.isValidGrid = Ext.Function.bind(me.isValidGrid, me);
 	},
 
+	/**
+	 *  Form Field상의 에러메시지를 전부 가져온다.
+	 *
+	 * @private
+	 * @param {Array} arrField Ext.form.field.Base를 상속받은 객체들이 들어와야만 합니다
+	 * @return {Object} 에러가 없다면 null을 리턴 Prototype으로 리턴합니다. obj.errorField, obj.errorMessage 만약에
+	 *
+	 */
+
 
 	/**
-	 * @public
-	 * Grid상의 모든 editor를 가져온다.
-	 * @param {Ext.grid.Panel} 대상 그리드
+	 *
+	 * Grid에 존재하는 Column내에 있는 모든 editor를 가져온다.
 	 * @return{Array} Ext.form.field.Base를 상속받는 객체들
 	 */
 	getGridEditor : function(){
@@ -39,15 +54,7 @@ Ext.define('PmhTech.plugin.form.ValidatorPlugin', {
 	 * RowEditingPlugin 사용시 그리드의 데이터 Validation
 	 * @return {boolean} 오류 발생시 return false
 	 *
-	 *  사용법은 다음과 같습니다.
-	 *  아래코드 사용시 column내부의 editor들의 Validation을 가져오고 오류 발생시 가장 첫번째 editor로 focus됩니다.
 	 *
-	 *	rowEditPlugin.addListener('validateedit', function(editor, context, eOpts) {
-         *
-         *		if(!PmhTech.util.isValidGridEditor(this)){
-         *  		return false;
-         * 		}
-         *	});
 	 */
 	isValidGrid : function(){
 		var grid = this.grid;
