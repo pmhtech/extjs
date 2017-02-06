@@ -4,7 +4,7 @@
  *
  * 		@example
  *     	PmhTech.Ajax.request({
-	 *			url : 'resources/json/AjaxTestData.json',
+	 *			url : '/resources/json/AjaxTestData.json',
  	 *			method : 'GET',
  	 *			confirmMsg : {
  	 *				title : '확인',
@@ -31,7 +31,7 @@ Ext.define('PmhTech.Ajax', {
 	 *
 	 *     @example
 	 *     PmhTech.Ajax.request({
-	 *			url : '/resources/json/AjaxTestData.json',
+	 *			url : 'resources/json/AjaxTestData.json',
  	 *			method : 'GET',
  	 *			confirmMsg : {
  	 *				title : '확인',
